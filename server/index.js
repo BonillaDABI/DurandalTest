@@ -6,22 +6,19 @@ const port = process.env.PORT;
 
 app.use(express.json());
 
-require("dotenv").config();
+require('dotenv').config()
 
-const db_Host = process.env.db_host;
-const db_User = process.env.db_user;
-const db_Password = process.env.db_password;
-const db_Database = process.env.db_database;
-const db_Port = process.env.db_port;
+console.log("Host: " + process.env.HOST);
 
+/*
 const dbTest = mysql.createPool({
     connectionLimit: 10,
     user: db_User,
-    host: db_Host,
-    password: db_Password,
-    database: db_Database,
-    port: db_Port
-});
+    host: db_host,
+    password: db_password,
+    database: db_database,
+    port: db_port
+});*/
 
 dbTest.getConnection((err, connection) => {
     if (err) throw (err)
