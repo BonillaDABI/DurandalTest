@@ -20,7 +20,7 @@ export default function (props) {
               </span>
             </div>
             <div className="form-group mt-3">
-              <label>Username</label>
+              <label className="form_input_labels">Username</label>
               <input
                 type="text"
                 className="form-control mt-1"
@@ -28,7 +28,7 @@ export default function (props) {
               />
             </div>
             <div className="form-group mt-3">
-              <label>Password</label>
+              <label className="form_input_labels">Password</label>
               <input
                 type="password"
                 className="form-control mt-1"
@@ -61,7 +61,7 @@ export default function (props) {
             </span>
           </div>
           <div className="form-group mt-3">
-            <label>Name</label>
+            <label className="form_input_labels">Name</label>
             <input
               type="text"
               className="form-control mt-1"
@@ -69,7 +69,7 @@ export default function (props) {
             />
           </div>
           <div className="form-group mt-3">
-            <label>First Surname</label>
+            <label className="form_input_labels">First Surname</label>
             <input
               type="text"
               className="form-control mt-1"
@@ -77,7 +77,7 @@ export default function (props) {
             />
           </div>
           <div className="form-group mt-3">
-            <label>Second Surname</label>
+            <label className="form_input_labels">Second Surname</label>
             <input
               type="text"
               className="form-control mt-1"
@@ -85,7 +85,7 @@ export default function (props) {
             />
           </div>
           <div className="form-group mt-3">
-            <label>Email address</label>
+            <label className="form_input_labels">Email address</label>
             <input
               type="email"
               className="form-control mt-1"
@@ -93,7 +93,7 @@ export default function (props) {
             />
           </div>
           <div className="form-group mt-3">
-            <label>Password</label>
+            <label className="form_input_labels">Password</label>
             <input
               type="password"
               className="form-control mt-1"
