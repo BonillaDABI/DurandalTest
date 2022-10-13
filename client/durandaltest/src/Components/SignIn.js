@@ -10,8 +10,8 @@ const SignIn = () => {
 
   const logUser = () => {
     axios.post('http://localhost:3000/login', { // url to POST
-      username: userName,
-      password: password
+      user_name: userName,
+      user_password: password
     })
     .then((response) => {
       localStorage.setItem("token", JSON.stringify(response));

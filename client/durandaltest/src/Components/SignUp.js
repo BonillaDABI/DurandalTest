@@ -14,12 +14,12 @@ import axios from "axios";
   
       const createAccount = () => {
         axios.post('http://localhost:3000/register', { // url to POST
-            username: userName,
+            user_name: userName,
             first_name: firstName,
             first_surname: firstSurname,
             second_surname: secondSurname,
             email: email,
-            password: password
+            user_password: password
     
         })
         .then((response) => {
@@ -27,7 +27,7 @@ import axios from "axios";
         }, (error) => {
             console.log(error);
         });
-        navigate('/signin', {state:{username:userName}});
+        navigate('/signin', {state:{user_name:userName}});
       }
 
     
@@ -47,7 +47,7 @@ import axios from "axios";
             <h3 className="Auth-form-title">DABI Test | Sign Up</h3>
             <div className="text-center">
               Already registered?{" "}
-              <span className="Auth-links" onClick={() => navigate('/signin', {state:{username:userName}})}>
+              <span className="Auth-links" onClick={() => navigate('/signin', {state:{user_name:userName}})}>
                 Sign In
               </span>
             </div>
