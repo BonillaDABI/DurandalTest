@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-const SignIn = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPW] = useState("");
@@ -20,7 +20,7 @@ const SignIn = () => {
     }, (error) => {
       console.log(error);
     });
-    navigate('/menu');
+    navigate('/dashboard');
   }
 
   /*
@@ -36,13 +36,7 @@ const SignIn = () => {
     <div className="Auth-form-container">
       <form className="Auth-form">
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">DABI Test | Sign In</h3>
-          <div className="text-center">
-            Not registered yet?{" "}
-            <span className="Auth-links" onClick={() => navigate('/')}>
-              Sign Up
-            </span>
-          </div>
+          <h3 className="Auth-form-title">DABI Durandal | Login</h3>
           <div className="form-group mt-3">
             <label className="form_input_labels">Email</label>
             <input
@@ -76,7 +70,7 @@ const SignIn = () => {
     </div >
   );
 }
-export default SignIn;
+export default Login;
 
 
 

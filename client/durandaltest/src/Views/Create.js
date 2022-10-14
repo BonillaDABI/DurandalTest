@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-const SignUp = () => {
+const Create = () => {
   const navigate = useNavigate();
   const [userName, setUser] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ const SignUp = () => {
       }, (error) => {
         console.log(error);
       });
-    navigate('/signin', { state: { name: name } });
+    //navigate('/signin', { state: { name: name } });
   }
 
 
@@ -44,13 +44,7 @@ const SignUp = () => {
     <div className="Auth-form-container">
       <form className="Auth-form">
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">DABI Test | Sign Up</h3>
-          <div className="text-center">
-            Already registered?{" "}
-            <span className="Auth-links" onClick={() => navigate('/signin', { state: { user_name: userName } })}>
-              Sign In
-            </span>
-          </div>
+          <h3 className="Auth-form-title">DABI Durandal | Create</h3>
           <div className="form-group mt-3">
             <label className="form_input_labels">Username</label>
             <input
@@ -121,7 +115,7 @@ const SignUp = () => {
     </div>
   );
 }
-export default SignUp;
+export default Create;
 
 
 

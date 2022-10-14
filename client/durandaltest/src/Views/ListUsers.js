@@ -3,15 +3,15 @@
 //import axios from "axios";
 
 
-const Menu = () => {
+const ListUser = () => {
 
     return (
-      <div className="Menu-container">
-        <h1>Menu Test</h1>
+      <div className="ListUsers-container">
+        <h1>ListUsers Test</h1>
       </div>
     );
   }
-  export default Menu;
+  export default ListUser;
   
 
 
