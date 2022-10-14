@@ -13,7 +13,7 @@ const SignUp = () => {
   const [password, setPW] = useState("");
 
   const createAccount = () => {
-    axios.post('http://localhost:3000/register', { // url to POST
+    axios.post('http://localhost:3001/register', { // url to POST
       user_name: userName,
       first_name: firstName,
       first_surname: firstSurname,
@@ -27,7 +27,7 @@ const SignUp = () => {
       }, (error) => {
         console.log(error);
       });
-    navigate('/signin', { state: { user_name: userName } });
+    navigate('/signin', { state: { first_name: firstName } });
   }
 
 

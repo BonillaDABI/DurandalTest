@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 
 //Configuraciones
-app.set('port', process.env.PORT || 3000);
+//app.set('port', process.env.PORT || 3000);
 
 //Middlewares
 app.use(express.json());
@@ -18,7 +18,8 @@ const routes = require('./build/routes/index.routes');
 app.use(routes);
 
 //Empezar el servidor
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log("Running server");
 })
+
 
