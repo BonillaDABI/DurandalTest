@@ -7,14 +7,11 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPW] = useState("");
-  //const [firstName, setFirst] = useState("");
-
-  //const [loginStatus, setLoginStatus] = useState("");
 
   const logUser = () => {
     axios.post('http://localhost:3001/login', { // url to POST
       email: email,
-      user_password: password
+      password: password
     }).then((response) => {
       localStorage.setItem("token", JSON.stringify(response));
       localStorage.setItem("isAuthenticated", "true");
@@ -26,13 +23,6 @@ const SignIn = () => {
     navigate('/menu');
   }
 
-  /*.then((response) => {
-      if (response.data.message) {
-        setLoginStatus(response.data.message)
-      } else {
-        setLoginStatus(response.data[0].email)
-      }
-    })*/
   /*
   const onSuccess = (res) => {
     console.log('success:', res);

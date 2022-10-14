@@ -7,7 +7,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [userName, setUser] = useState("");
   const [email, setEmail] = useState("");
-  const [firstName, setFirst] = useState("");
+  const [name, setFirst] = useState("");
   const [firstSurname, setFirstSurname] = useState("");
   const [secondSurname, setSecondSurname] = useState("");
   const [password, setPW] = useState("");
@@ -15,11 +15,11 @@ const SignUp = () => {
   const createAccount = () => {
     axios.post('http://localhost:3001/register', { // url to POST
       user_name: userName,
-      first_name: firstName,
+      name: name,
       first_surname: firstSurname,
       second_surname: secondSurname,
       email: email,
-      user_password: password
+      password: password
 
     })
       .then((response) => {
@@ -27,7 +27,7 @@ const SignUp = () => {
       }, (error) => {
         console.log(error);
       });
-    navigate('/signin', { state: { first_name: firstName } });
+    navigate('/signin', { state: { name: name } });
   }
 
 
@@ -67,7 +67,7 @@ const SignUp = () => {
               type="text"
               className="form-control mt-1"
               placeholder="e.g Miguel"
-              value={firstName}
+              value={name}
               onChange={(e) => setFirst(e.target.value)}
             />
           </div>

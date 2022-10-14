@@ -4,16 +4,17 @@ const controller = {}
 
 
 //Controlador para registrar usuarios
-controller.register = (req, res) => {
+controller.register = async (req, res) => {
 
-    const user_password = req.body.user_password;
-    const first_name = req.body.first_name;
-    const first_surname = req.body.first_surname;
-    const second_surname = req.body.second_surname;
-    const email = req.body.email;
+    const { name, first_surname, second_surname, email, password } = req.body;
 
-    pool.query("INSERT INTO `users` (`name`, `first_surname`, `second_surname`, `email`, `password`) VALUES(?, ?, ?, ?, ?)",
-        [first_name, first_surname, second_surname, email, user_password],
+    pool.query("INSERT INTO `users` SET ?", [{
+        name,
+        first_surname,
+        second_surname,
+        email,
+        password
+    }],
         (err, result) => {
             console.log(err);
         }
@@ -21,13 +22,12 @@ controller.register = (req, res) => {
 };
 
 //Controlador para ingresar a la cuenta
-controller.login = (req, res) => {
-    const email = req.body.email;
-    const user_password = req.body.user_password;
+controller.login = async (req, res) => {
+    const { email, password } = req.body;
 
     pool.query(
         "SELECT * FROM `users` WHERE `email` = ? AND `password` = ?",
-        [email, user_password],
+        [email, password],
         (err, result) => {
             if (err) {
                 res.status(500).send(err);
