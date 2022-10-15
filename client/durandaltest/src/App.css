@@ -1,10 +1,11 @@
-.App {
-  text-align: center;
-}
-
 body {
   background-color: #F0EBEB;
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
+
+/* Login CSS */
 
 .Auth-form-container {
   display: flex;
@@ -54,5 +55,39 @@ body {
   font-weight: 600;
   color: #171716;
 }
+
+/* Create & Update CSS */
+
+.title {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.cu-content-container {
+  text-align: center;
+  font-family: 'Helvetica';
+}
+
+.input-label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.input-field {
+  margin-bottom: 15px;
+  border-radius: 7px;
+  width: 15%;
+}
+
+.cu-button {
+  border-radius: 5px;
+  width: 120px;
+  height: 40px;
+  color: whitesmoke;
+  font-weight: bold;
+  background-color: #171716;
+  margin-top: 17px;
+}
+
 
 
