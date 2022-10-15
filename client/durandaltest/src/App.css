@@ -39,15 +39,22 @@ body {
 }
 
 .Auth-links {
-  color: #7A0A00;
+  color: whitesmoke;
   pointer-events: all;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.Auth-links:hover {
+  color: black;
+  
 }
 
 #Auth-button {
-  background-color: #7A0A00;
+  background-color: black;
   border: none;
   font-weight: bold;
+  color: whitesmoke;
 }
 
 .form_input_labels {
@@ -77,6 +84,7 @@ body {
   margin-bottom: 15px;
   border-radius: 7px;
   width: 15%;
+  height: 35px;
 }
 
 .cu-button {

@@ -83,7 +83,7 @@ const Create = () => {
             <input
               type="email"
               className="input-field"
-              placeholder="Enter your email address"
+              placeholder="Enter the email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -94,7 +94,7 @@ const Create = () => {
             <input
               type="password"
               className="input-field"
-              placeholder="Enter your password"
+              placeholder="Enter the password"
               value={password}
               onChange={(e) => setPW(e.target.value)}
             />
