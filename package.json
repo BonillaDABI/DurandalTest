@@ -4,6 +4,7 @@
     "dotenv": "^16.0.3",
     "find-config": "^1.0.0",
     "morgan": "^1.10.0",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "mysql2-promise": "^0.1.4"
   }
 }
