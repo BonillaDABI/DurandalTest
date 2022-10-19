@@ -1,4 +1,4 @@
-const pool = require('../database')
+const connection = require('../config/database')
 
 const controller = {}
 
@@ -8,7 +8,7 @@ controller.register = async (req, res) => {
 
     const { name, first_surname, second_surname, email, password } = req.body;
 
-    pool.query("INSERT INTO `users` SET ?", [{
+    connection.query("INSERT INTO `users` SET ?", [{
         name,
         first_surname,
         second_surname,
@@ -25,7 +25,7 @@ controller.register = async (req, res) => {
 controller.login = async (req, res) => {
     const { email, password } = req.body;
 
-    pool.query(
+    connection.query(
         "SELECT * FROM `users` WHERE `email` = ? AND `password` = ?",
         [email, password],
         (err, result) => {
@@ -41,6 +41,24 @@ controller.login = async (req, res) => {
         }
     )
 };
+
+//Controlador para update
+controller.update = async (req, res) => {
+    
+    const { name, first_surname, second_surname, email, password} = req.body;
+
+    connection.query("UPDATE users SET second_surname = ?, email = ?, password = ? WHERE name = ? AND first_surname = ?", [{
+        second_surname,
+        email,
+        password,
+        name,
+        first_surname
+    }],
+        (err, result) => {
+            console.log(err);
+        }
+    )
+}
 
 
 module.exports = controller

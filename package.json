@@ -2,6 +2,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "find-config": "^1.0.0"
+    "find-config": "^1.0.0",
+    "mysql2": "^2.3.3"
   }
 }
