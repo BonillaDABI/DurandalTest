@@ -24,10 +24,11 @@ const Create = () => {
     })
       .then((response) => {
         console.log(response);
+        alert("Usuario creado exitosamente en la base de datos.");
       }, (error) => {
         console.log(error);
+        alert("Error al crear usuario. Vuelve a intentarlo.");
       });
-    //navigate('/signin', { state: { name: name } });
   }
 
   /*

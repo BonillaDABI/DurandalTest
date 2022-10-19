@@ -16,11 +16,13 @@ const Login = () => {
       localStorage.setItem("token", JSON.stringify(response));
       localStorage.setItem("isAuthenticated", "true");
       console.log(response);
+      navigate('/dashboard');
+      alert("Login exitoso. Bienvenido!");
 
     }, (error) => {
       console.log(error);
+      alert("Los datos ingresados no corresponden a un usuario registrado. Vuelve a intentarlo.");
     });
-    navigate('/dashboard');
   }
 
   /*
@@ -58,12 +60,12 @@ const Login = () => {
             />
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button type="submit" id="Auth-button" className="btn btn-primary" onClick={() => logUser()}>
+            <button type="button" id="Auth-button" className="btn btn-primary" onClick={() => logUser()}>
               Login
             </button>
           </div>
           <p className="text-center mt-2">
-            <a className="Auth-links" href="#">Forgot password?</a>
+            <a className="Auth-links" href="/recovery">Forgot password?</a>
           </p>
         </div>
       </form >

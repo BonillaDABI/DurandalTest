@@ -1,3 +1,5 @@
+import React from "react";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css'
@@ -7,12 +9,14 @@ import Dashboard from "./Pages/Dashboard";
 import Create from "./Pages/Create";
 import Update from "./Pages/Update";
 import ListUsers from "./Pages/ListUsers";
+import Recovery from "./Pages/Recovery";
 
 function App() {
   return (
     <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route exact path="/" element={<Login />} />
+          <Route exact path="/recovery" element={<Recovery />} /> {/* PENDING */}
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
           <Route exact path="/create" element={<Create />} />
           <Route exact path="/update" element={<Update />} /> {/* PENDING */}

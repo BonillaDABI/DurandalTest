@@ -13,7 +13,7 @@ const Create = () => {
   const [password, setPW] = useState("");
 
   const updateUser = () => {
-    axios.post('http://localhost:3001/register', { // url to POST
+    axios.get('http://localhost:3001/update', { // url to POST
       //user_name: userName,
       name: name,
       first_surname: firstSurname,
@@ -24,8 +24,10 @@ const Create = () => {
     })
       .then((response) => {
         console.log(response);
+        alert("Usuario actualizado exitosamente en la base de datos.");
       }, (error) => {
         console.log(error);
+        alert("Error al actualizar datos del usuario. Vuelve a intentarlo.");
       });
     //navigate('/signin', { state: { name: name } });
   }

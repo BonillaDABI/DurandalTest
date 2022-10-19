@@ -63,18 +63,6 @@ body {
   color: #171716;
 }
 
-/* Create & Update CSS */
-
-.title {
-  margin-bottom: 30px;
-  margin-top: 30px;
-}
-
-.cu-content-container {
-  text-align: center;
-  font-family: 'Helvetica';
-}
-
 .input-label {
   margin-right: 10px;
   font-weight: bold;
@@ -87,6 +75,19 @@ body {
   height: 35px;
 }
 
+
+/* Create & Update CSS */
+
+.title {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.cu-content-container {
+  text-align: center;
+  font-family: 'Helvetica';
+}
+
 .cu-button {
   border-radius: 5px;
   width: 120px;
@@ -97,5 +98,19 @@ body {
   margin-top: 17px;
 }
 
+/* Recovery CSS */
+.Recovery-container {
+  text-align: center;
+  margin-top: 300px;
+}
 
+.rec-button {
+  border-radius: 5px;
+  width: 120px;
+  height: 40px;
+  color: whitesmoke;
+  font-weight: bold;
+  background-color: #171716;
+  margin-top: 17px;
+}
 
