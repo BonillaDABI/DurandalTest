@@ -1,10 +1,10 @@
-import React ,{ useState } from "react";
-//import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../Components/Navbar";
 
 const Create = () => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   //const [userName, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -13,7 +13,7 @@ const Create = () => {
   const [password, setPW] = useState("");
 
   const updateUser = () => {
-    axios.get('http://localhost:3001/update', { // url to POST
+    axios.patch('http://localhost:3001/update', { // url to POST
       //user_name: userName,
       name: name,
       first_surname: firstSurname,
@@ -29,7 +29,7 @@ const Create = () => {
         console.log(error);
         alert("Error al actualizar datos del usuario. Vuelve a intentarlo.");
       });
-    //navigate('/signin', { state: { name: name } });
+    navigate('/signin', { state: { name: name } });
   }
 
   /*

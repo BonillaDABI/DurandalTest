@@ -1,28 +1,15 @@
-const connection = require('../config/database')
+import { connection } from "../config/database.js";
 
-const controller = {}
-
-
-//Controlador para registrar usuarios
-controller.register = async (req, res) => {
-
-    const { name, first_surname, second_surname, email, password } = req.body;
-
-    connection.query("INSERT INTO `users` SET ?", [{
-        name,
-        first_surname,
-        second_surname,
-        email,
-        password
-    }],
-        (err, result) => {
-            console.log(err);
-        }
-    )
+export const getUsers = async (req, res) => {
+    try {
+        const [rows] = await connection.query("SELECT * FROM employee");
+        res.json(rows);
+    } catch (error) {
+        return res.status(500).json({ message: "Something goes wrong" });
+    }
 };
 
-//Controlador para ingresar a la cuenta
-controller.login = async (req, res) => {
+export const login = async (req, res) => {
     const { email, password } = req.body;
 
     connection.query(
@@ -40,11 +27,33 @@ controller.login = async (req, res) => {
             }
         }
     )
+}
+
+
+export const createUser = async (req, res) => {
+    const { name, first_surname, second_surname, email, password } = req.body;
+
+    connection.query("INSERT INTO `users` SET ?", [{
+        name,
+        first_surname,
+        second_surname,
+        email,
+        password
+    }],
+        (err, result) => {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                if (result.length > 0) {
+                    res.status(200).send(result[0])
+                    con
+                }
+            }
+        }
+    )
 };
 
-//Controlador para update
-controller.update = async (req, res) => {
-
+export const updateUser = async (req, res) => {
     try {
         const { name } = req.body;
         const { first_surname, second_surname, email, password } = req.body;
@@ -66,14 +75,3 @@ controller.update = async (req, res) => {
         return res.status(500).json({ message: "Something goes wrong" });
     }
 };
-
-controller.listAll = async (req, res) => {
-    try {
-        const [rows] = await pool.query("SELECT * FROM employee");
-        res.json(rows);
-    } catch (error) {
-        return res.status(500).json({ message: "Something goes wrong" });
-    }
-};
-
-module.exports = controller
