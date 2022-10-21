@@ -3,6 +3,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import NavBar from "../Components/Navbar";
 
+// const token = localStorage.getItem("token")
+
+// axios.interceptors.request.use(
+//   config => {
+//     config.headers.authorization = `Bearer ${token}`;
+//   }
+// )
+
+
 const Create = () => {
   // const navigate = useNavigate();
   //const [userName, setUser] = useState("");
@@ -14,6 +23,7 @@ const Create = () => {
 
   const updateUser = () => {
     axios.patch('http://localhost:3001/update', { // url to POST
+      'Authorization': "bearer " + localStorage.getItem('token'),
       //user_name: userName,
       name: name,
       first_surname: firstSurname,
@@ -21,7 +31,8 @@ const Create = () => {
       email: email,
       password: password
 
-    })
+
+    },)
       .then((response) => {
         console.log(response);
         alert("Usuario actualizado exitosamente en la base de datos.");

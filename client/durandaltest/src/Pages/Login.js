@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { useEffect } from "react"
 
 const Login = () => {
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/dashboard')
+    }
+  })
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPW] = useState("");
@@ -13,7 +20,7 @@ const Login = () => {
       email: email,
       password: password
     }).then((response) => {
-      localStorage.setItem("token", JSON.stringify(response));
+      localStorage.setItem('token', JSON.stringify(response.data));
       localStorage.setItem("isAuthenticated", "true");
       console.log(response);
       navigate('/dashboard');
