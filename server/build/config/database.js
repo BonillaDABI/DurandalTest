@@ -1,6 +1,3 @@
-// import { config } from "dotenv";
-// config();
-// import { createPool } from "mysql2/promise";
 if (process.env.NODE_ENV != 'production') {
     require('dotenv').config();
 }

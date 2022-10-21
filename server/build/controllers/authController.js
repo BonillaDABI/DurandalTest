@@ -99,7 +99,6 @@ authController.login = async (req, res) => {
 
     const dbPassword = user.password;
     await bcrypt.compare(password, dbPassword).then((match) => {
-        console.log(match)
         if (!match) {
             res
                 .status(400)
@@ -125,7 +124,7 @@ authController.delete = async (req, res) => {
 
     // if (!user) res.status(400).json({ error: "User Doesn't Exist" });
 
-    
+
 }
 
 authController.dashboard = (req, res) => {
