@@ -114,7 +114,7 @@ const userRegister = async (name, first_surname, second_surname, email, password
 const getUserByEmail = (email) => {
     return new Promise((resolve, reject) => {
         connection.query('SELECT * FROM users WHERE email = ?', [email], (err, rows) => {
-            if (err) reject(err)
+            if (err) {reject(err)}
             resolve(rows[0])
         })
     })

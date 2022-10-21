@@ -15,6 +15,7 @@ const Create = () => {
   const createUser = () => {
     axios.post('http://localhost:3001/register', { // url to POST
       //user_name: userName,
+      'Authorization': "bearer " + localStorage.getItem('token'),
       name: name,
       first_surname: firstSurname,
       second_surname: secondSurname,

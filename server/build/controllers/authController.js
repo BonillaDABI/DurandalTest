@@ -26,21 +26,11 @@ authController.listAll = async (req, res) => {
 
 
 authController.update = async (req, res) => {
-    const token = req.body.Authorization;
-    console.log(token)
-    // const token = req.body.token.split(' ')[0];
-    // console.log(token)
-    // // const payload = jwtDecode(token)
-    // // console.log(payload)
+    const token = req.body.Authorization.split(' ')[1];
 
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
 
-    console.log(userID)
-
-    // User.jwtVerify(token, "jwtsecret").then(data => {
-    //     if (!data.id) return res.error(Codes.invalidLoginToken);
-    // })
     const date = new Date()
     const { name } = req.body;
     const password = await bcrypt.hash(req.body.password, 10)
@@ -54,7 +44,7 @@ authController.update = async (req, res) => {
                 second_surname,
                 email,
                 password,
-                updated_by: data.id,
+                updated_by: userID,
                 updated_at: date
             }, name],
         )
@@ -65,6 +55,11 @@ authController.update = async (req, res) => {
 }
 
 authController.register = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+
     const password = await bcrypt.hash(req.body.password, 10)
     const date = new Date()
 
@@ -74,14 +69,13 @@ authController.register = async (req, res) => {
 
     if (!user) {
         connection.query("INSERT INTO `users` SET ?", [{
-            id: 03,
             name,
             first_surname,
             second_surname,
             email,
             password,
             is_active: 01,
-            created_by: 01,
+            created_by: userID,
             created_at: date,
             updated_at: date
         }]
@@ -111,10 +105,6 @@ authController.login = async (req, res) => {
                 .status(400)
                 .json({ error: "Wrong Username and Password Combination!" });
         } else {
-            // storage.setState({
-            //     token: jwt.sign({ user: req.body.email }, "supersecretword", { expiresIn: "2h" }),
-            //     user: user.dataValues
-            // })
 
             const accessToken = createTokens(user);
             // const accessToken = jwt.sign({ email: user.email, id: user.id }, "+hvS23x&9^tsMQzyA9UWxu!H_ApezBAVLcAWEPBA*ecAweS", { expiresIn: '12h' })
@@ -128,46 +118,17 @@ authController.login = async (req, res) => {
     });
 }
 
-authController.logout = (req, res) => {
+authController.delete = async (req, res) => {
+    // const { email } = req.body;
 
+    // const user = await User.getUserByEmail(email);
+
+    // if (!user) res.status(400).json({ error: "User Doesn't Exist" });
+
+    
 }
 
 authController.dashboard = (req, res) => {
 
 }
-
-// app.post('/login', (req, res) => {
-//     var { email, password } = req.body;
-//     if (!email || email.length < 5 || !password) return res.error(Codes.missingInfo);
-
-//     User.login(email, password).then(user => {
-//         if (!user) return res.error(Codes.invalidCredentials);
-//         Util.jwtSign({ u: user.admin_id }, Constants.keys.USER_JWT).then(token => {
-//             return res.success({ token, user });
-//         }).catch(err => {
-//             return res.error(Codes.markers.login(2));
-//         });
-//     }).catch(err => {
-//         return res.error(Codes.markers.login(1));
-//     });
-// });
-
-// app.all('*', (req, res, next) => {
-//     var token = req.headers.token || req.body.token;
-//     if (!token || token.length < 8) return res.error(Codes.invalidLoginToken);
-
-//     Util.jwtVerify(token, Constants.keys.USER_JWT).then(data => {
-//         if (!data.u || Number.isNaN(data.u)) return res.error(Codes.invalidLoginToken);
-//         User.withPermissions(data.u, false).then(user => {
-//             if (!user || user.deleted) return res.error(Codes.invalidLoginToken);
-//             req.user = user;
-//             req.admin_id = user.admin_id;
-//             return next();
-//         }).catch(err => {
-//             return res.error(Codes.markers.verifyToken(2));
-//         });
-//     }).catch(err => {
-//         return res.error(Codes.markers.verifyToken(1));
-//     });
-// })
 module.exports = authController;

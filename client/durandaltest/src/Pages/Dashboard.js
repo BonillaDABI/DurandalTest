@@ -1,6 +1,6 @@
 import NavBar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 
 
 const Dashboard = () => {

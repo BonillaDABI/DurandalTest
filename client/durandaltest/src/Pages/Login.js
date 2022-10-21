@@ -20,7 +20,7 @@ const Login = () => {
       email: email,
       password: password
     }).then((response) => {
-      localStorage.setItem('token', JSON.stringify(response.data));
+      localStorage.setItem('token', response.data);
       localStorage.setItem("isAuthenticated", "true");
       console.log(response);
       navigate('/dashboard');
