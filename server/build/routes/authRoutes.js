@@ -14,7 +14,7 @@ router.post("/login", authController.login);
 router.patch("/update", authController.update)
 
 
-router.get("/delete", authController.delete);
+router.get("/delete/:name", authController.delete);
 
 
 router.get("/listAll", authController.listAll);

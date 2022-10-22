@@ -25,11 +25,11 @@ const handleLogin = (email, password) => {
 };
 
 
-let findUserById = (id) => {
+let findUserById = (name) => {
     return new Promise((resolve, reject) => {
         try {
             connection.query(
-                ' SELECT * FROM `users` WHERE `id` = ?  ', id,
+                ' SELECT * FROM `users` WHERE `name` = ?  ', id,
                 function (err, rows) {
                     if (err) {
                         reject(err)
@@ -44,9 +44,27 @@ let findUserById = (id) => {
     });
 };
 
+const deleteByName = (name) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connection.query(
+                ' DELETE FROM `users` WHERE `name` = ?  ', name,
+                function (err, rows) {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(true);
+                }
+            );
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
 const getAll = () => {
-    return new Promise((resolve, reject) => {
-        connection.query('Select * FROM users', (err, rows) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('Select * FROM users', (err, rows) => {
             if (err) reject(err)
             resolve(rows);
         });
@@ -114,7 +132,7 @@ const userRegister = async (name, first_surname, second_surname, email, password
 const getUserByEmail = (email) => {
     return new Promise((resolve, reject) => {
         connection.query('SELECT * FROM users WHERE email = ?', [email], (err, rows) => {
-            if (err) {reject(err)}
+            if (err) { reject(err) }
             resolve(rows[0])
         })
     })
@@ -153,5 +171,6 @@ exports.createToken = createToken;
 exports.comparePassword = comparePassword;
 exports.findUserById = findUserById;
 exports.handleLogin = handleLogin;
+exports.deleteByName = deleteByName;
 
 // exports.jwtVerify = jwtVerify;

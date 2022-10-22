@@ -15,12 +15,17 @@ const jwtDecode = require('jwt-decode')
 const authController = {}
 
 authController.listAll = async (req, res) => {
-    try {
-        await connection.query("SELECT * FROM users");
-        res.status(200).send('Todos los usuarios.')
-    } catch (error) {
-        return res.status(500).json({ message: "Something goes wrong" });
+
+    const users = await User.getAll()
+
+    if (users) {
+        res.json(users)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener usuarios')
+
     }
+
 }
 
 
@@ -95,35 +100,41 @@ authController.login = async (req, res) => {
 
     const user = await User.getUserByEmail(email);
 
-    if (!user) res.status(400).json({ error: "User Doesn't Exist" });
+    if (!user) {
+        res.status(400).json({ error: "User Doesn't Exist" });
+    } else {
+        const dbPassword = user.password;
+        await bcrypt.compare(password, dbPassword).then((match) => {
+            if (!match) {
+                res
+                    .status(400)
+                    .json({ error: "Wrong Username and Password Combination!" });
+            } else {
 
-    const dbPassword = user.password;
-    await bcrypt.compare(password, dbPassword).then((match) => {
-        if (!match) {
-            res
-                .status(400)
-                .json({ error: "Wrong Username and Password Combination!" });
-        } else {
+                const accessToken = createTokens(user);
+                // const accessToken = jwt.sign({ email: user.email, id: user.id }, "+hvS23x&9^tsMQzyA9UWxu!H_ApezBAVLcAWEPBA*ecAweS", { expiresIn: '12h' })
 
-            const accessToken = createTokens(user);
-            // const accessToken = jwt.sign({ email: user.email, id: user.id }, "+hvS23x&9^tsMQzyA9UWxu!H_ApezBAVLcAWEPBA*ecAweS", { expiresIn: '12h' })
+                // res.cookie("access-token", accessToken, {
+                //     maxAge: 60 * 60 * 24 * 30 * 1000,
+                //     httpOnly: true,
+                // });
+                res.json(accessToken)
+            }
+        });
+    }
 
-            // res.cookie("access-token", accessToken, {
-            //     maxAge: 60 * 60 * 24 * 30 * 1000,
-            //     httpOnly: true,
-            // });
-            res.json(accessToken)
-        }
-    });
+
 }
 
 authController.delete = async (req, res) => {
-    // const { email } = req.body;
+    const name = req.params.name
+    const deleted = await User.deleteByName(name);
 
-    // const user = await User.getUserByEmail(email);
-
-    // if (!user) res.status(400).json({ error: "User Doesn't Exist" });
-
+    if (deleted) {
+        res.status(200).send('Usuario borrado.')
+    } else {
+        res.status(400).send('Error al borrar usuario')
+    }
 
 }
 
