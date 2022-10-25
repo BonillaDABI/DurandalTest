@@ -122,3 +122,19 @@ body {
   margin-top: 17px;
 }
 
+/* List All Users */
+.head-row {
+  background-color: rgb(5, 5, 95);
+  color: white;
+}
+
+.table-rows {
+  background-color: #e4f0f5;
+}
+
+td,th {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 5px 10px;
+    text-align: center;
+}
+
