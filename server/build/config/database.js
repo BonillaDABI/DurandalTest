@@ -5,10 +5,10 @@ const mysql = require('mysql')
 const { promisify } = require('util');
 
 const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host: "localhost",
+    user: "root",
+    password: "Onfire77..",
+    database: "login"
 });
 connection.connect((err) => {
     if (err) throw err;

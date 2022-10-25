@@ -12,7 +12,7 @@ import NavBar from "../Components/Navbar";
 // )
 
 
-const Create = () => {
+const Update = () => {
   // const navigate = useNavigate();
   //const [userName, setUser] = useState("");
   const [email, setEmail] = useState("");
@@ -122,7 +122,7 @@ const Create = () => {
     </div>
   );
 }
-export default Create;
+export default Update;
 
 
 
