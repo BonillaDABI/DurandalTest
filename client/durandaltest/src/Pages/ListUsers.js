@@ -2,6 +2,9 @@ import {React, useEffect, useState } from "react";
 import axios from "axios";
 import NavBar from "../Components/Navbar";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+
 function ListUser() { 
   const [data, setData] = useState([]);
 
@@ -21,6 +24,9 @@ function ListUser() {
       getData();
     }, []);
       
+    const deleteData = () => {
+      
+    }
 
     return (
       <div className="ListUsers-container">
@@ -31,12 +37,18 @@ function ListUser() {
             <th>Name</th>
             <th>First Surname</th>
             <th>Email</th>
+            <th>Delete</th>
           </tr>
           {data.map((item, index) => (
             <tr key={index} className="table-rows">
               <td>{item.name}</td>
               <td>{item.first_surname}</td>
               <td>{item.email}</td>
+              <td>
+                <button>
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
