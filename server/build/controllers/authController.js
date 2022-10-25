@@ -28,34 +28,39 @@ authController.listAll = async (req, res) => {
 
 }
 
-
-
 authController.update = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
 
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getAllPermissions(userRoleID)
 
-    const date = new Date()
-    const { name } = req.body;
-    const password = await bcrypt.hash(req.body.password, 10)
-    const { first_surname, second_surname, email } = req.body;
+    if (userPermissions.includes(2)) {
+        const date = new Date()
+        const { name } = req.body;
+        const password = await bcrypt.hash(req.body.password, 10)
+        const { first_surname, second_surname, email } = req.body;
 
-    try {
-        await connection.query(
-            "UPDATE users SET ? WHERE name = ?",
-            [{
-                first_surname,
-                second_surname,
-                email,
-                password,
-                updated_by: userID,
-                updated_at: date
-            }, name],
-        )
-        res.status(200).send('Usuario actualizado.')
-    } catch (error) {
-        res.status(400).send('Combinacion de correo y contrasena equivocada.')
+        try {
+            await connection.query(
+                "UPDATE users SET ? WHERE name = ?",
+                [{
+                    first_surname,
+                    second_surname,
+                    email,
+                    password,
+                    updated_by: userID,
+                    updated_at: date
+                }, name],
+            )
+            res.status(200).send('Usuario actualizado.')
+        } catch (error) {
+            res.status(400).send('Combinacion de correo y contrasena equivocada.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
     }
 }
 
@@ -64,30 +69,36 @@ authController.register = async (req, res) => {
 
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getAllPermissions(userRoleID)
 
-    const password = await bcrypt.hash(req.body.password, 10)
-    const date = new Date()
+    if (userPermissions.includes(1)) {
+        const password = await bcrypt.hash(req.body.password, 10)
+        const date = new Date()
 
-    const { name, first_surname, second_surname, email } = req.body;
+        const { name, first_surname, second_surname, email } = req.body;
 
-    const user = await User.getUserByEmail(email);
+        const user = await User.getUserByEmail(email);
 
-    if (!user) {
-        connection.query("INSERT INTO `users` SET ?", [{
-            name,
-            first_surname,
-            second_surname,
-            email,
-            password,
-            is_active: 01,
-            created_by: userID,
-            created_at: date,
-            updated_at: date
-        }]
-        )
-        res.status(200).send('Usuario creado.')
+        if (!user) {
+            connection.query("INSERT INTO `users` SET ?", [{
+                name,
+                first_surname,
+                second_surname,
+                email,
+                password,
+                is_active: 01,
+                created_by: userID,
+                created_at: date,
+                updated_at: date
+            }]
+            )
+            res.status(200).send('Usuario creado.')
+        } else {
+            res.status(400).send('Combinacion de correo y contrasena equivocada.')
+        }
     } else {
-        res.status(400).send('Combinacion de correo y contrasena equivocada.')
+        res.status(400).send('No tienes permiso.')
     }
 }
 
@@ -140,5 +151,12 @@ authController.delete = async (req, res) => {
 
 authController.dashboard = (req, res) => {
 
+}
+
+authController.permissions = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
 }
 module.exports = authController;
