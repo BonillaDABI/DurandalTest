@@ -138,6 +138,38 @@ const getUserByEmail = (email) => {
     })
 }
 
+const getAllPermissions = (role_id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT p.id FROM roles r, permissions p, permissions_roles pr WHERE ? = r.id AND r.id = pr.role_id AND pr.id = p.id;', [role_id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.stringify(rows))
+        })
+    })
+}
+
+// const getExtraPermissions = (id) => {
+//     return new Promise((resolve, reject) => {
+//         connection.query('SELECT p.id FROM user u, permissions p, permissions_users pu WHERE ? = pu.user_id AND pu.id = p.id;', [id], (err, rows) => {
+//             if (err) {
+//                 reject(err)
+//             }
+//             resolve(JSON.stringify(rows))
+//         })
+//     })
+// }
+
+const getUserRoleID = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT roles_id FROM users u WHERE ? = u.id', [id], (err, rows) => {
+            if (err) { reject(err) }
+            resolve(rows[0].roles_id)
+        })
+    })
+}
+
+
 const comparePassword = (password, userObject) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -164,13 +196,15 @@ const createToken = (user) => {
     return jwt.encode(payload, process.env.TOKEN_KEY);
 }
 
-exports.userRegister = userRegister;
-exports.getAll = getAll;
-exports.getUserByEmail = getUserByEmail;
-exports.createToken = createToken;
-exports.comparePassword = comparePassword;
-exports.findUserById = findUserById;
-exports.handleLogin = handleLogin;
-exports.deleteByName = deleteByName;
-
-// exports.jwtVerify = jwtVerify;
+module.exports = {
+    userRegister,
+    getAll,
+    getUserByEmail,
+    createToken,
+    comparePassword,
+    findUserById,
+    handleLogin,
+    deleteByName,
+    getUserRoleID,
+    getAllPermissions
+}
