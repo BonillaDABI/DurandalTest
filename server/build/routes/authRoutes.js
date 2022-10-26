@@ -16,6 +16,14 @@ router.patch("/update", authController.update)
 
 router.get("/delete/:name", authController.delete);
 
+router.post("/addPerms", authController.rudPermissions)
+
+router.get("/roles", authController.getAllRoles)
+
+router.post("/createRoles", authController.createRoles)
+
+router.patch("/updateRoles", authController.updateRoles)
+
 
 router.get("/listAll", authController.listAll);
 

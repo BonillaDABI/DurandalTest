@@ -71,6 +71,14 @@ const getAll = () => {
     });
 };
 
+const getRoleById = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM roles WHERE id = ?', [id], (err, rows) => {
+            if (err) { reject(err) }
+            resolve(rows[0])
+        })
+    })
+}
 // const checkUser = (req, res, next) => {
 //     const token = req.cookies.jwt;
 
@@ -140,7 +148,7 @@ const getUserByEmail = (email) => {
 
 const getAllPermissions = (role_id) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT p.id FROM roles r, permissions p, permissions_roles pr WHERE ? = r.id AND r.id = pr.role_id AND pr.id = p.id;', [role_id], (err, rows) => {
+        connection.query('SELECT p.id FROM roles r, permissions p, permissions_roles pr WHERE ? = r.id AND r.id = pr.role_id AND pr.id = p.id', [role_id], (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -149,22 +157,86 @@ const getAllPermissions = (role_id) => {
     })
 }
 
-// const getExtraPermissions = (id) => {
-//     return new Promise((resolve, reject) => {
-//         connection.query('SELECT p.id FROM user u, permissions p, permissions_users pu WHERE ? = pu.user_id AND pu.id = p.id;', [id], (err, rows) => {
-//             if (err) {
-//                 reject(err)
-//             }
-//             resolve(JSON.stringify(rows))
-//         })
-//     })
-// }
+const sendAllPermissionsNames = (role_id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT p.id, m.name, f.name FROM roles r, permissions p, permissions_roles pr, modules m, functions f WHERE ? = r.id AND r.id = pr.role_id AND pr.id = p.id AND p.module_id = m.id AND p.functions_id = f.id', [role_id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.stringify(rows))
+        })
+    })
+}
+
+const getExtraPermissions = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT p.id FROM permissions p, permissions_user pu WHERE ? = pu.user_id AND pu.permissions_id = p.id;', [id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.stringify(rows))
+        })
+    })
+}
+
+const addPermissions = (id, data) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('DELETE FROM permissions_user WHERE ? = user_id', [id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+        })
+        var permissions = data.map(a => ([id, a.id]));
+        await connection.query('INSERT INTO permissions_user(user_id, permissions_id) VALUES ?', [permissions], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.stringify(rows))
+        })
+    })
+}
 
 const getUserRoleID = (id) => {
     return new Promise((resolve, reject) => {
         connection.query('SELECT roles_id FROM users u WHERE ? = u.id', [id], (err, rows) => {
             if (err) { reject(err) }
             resolve(rows[0].roles_id)
+        })
+    })
+}
+
+const getRoles = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, role_name FROM roles', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(rows)
+        })
+    })
+}
+
+const createRoles = (id, role_name) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('INSERT INTO roles SET ?', [{
+            id,
+            role_name
+        }], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve("Rol creado exitosamente.")
+        })
+    })
+}
+
+const updateRoles = (id, role_name) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('UPDATE roles SET ? WHERE id = ?', [{ role_name }, id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve("Rol actualizado exitosamente.")
         })
     })
 }
@@ -206,5 +278,12 @@ module.exports = {
     handleLogin,
     deleteByName,
     getUserRoleID,
-    getAllPermissions
+    getAllPermissions,
+    getExtraPermissions,
+    sendAllPermissionsNames,
+    addPermissions,
+    updateRoles,
+    createRoles,
+    getRoles,
+    getRoleById
 }

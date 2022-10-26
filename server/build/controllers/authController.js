@@ -159,4 +159,74 @@ authController.permissions = async (req, res) => {
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
 }
+
+authController.rudPermissions = async (req, res) => {
+    const id = req.body.id
+    const id_perms = [{
+        id: 05,
+        id: 04
+    }]
+
+    User.addPermissions(id, id_perms)
+
+}
+
+authController.getAllRoles = async (req, res) => {
+    const roles = await User.getRoles()
+
+    if (roles) {
+        res.json(roles)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener usuarios')
+    }
+
+}
+
+authController.createRoles = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getAllPermissions(userRoleID)
+
+    if (userPermissions.includes(1)) {
+        const { id, role_name } = req.body
+        const role = await User.getRoleById(id)
+
+        if (!role) {
+            await User.createRoles(id, role_name)
+            res.status(200).send('Rol creado.')
+        } else {
+            res.status(400).send('Rol ya existe.')
+        }
+
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
+
+authController.updateRoles = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getAllPermissions(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const { id, role_name } = req.body
+
+        try {
+            await User.updateRoles(id, role_name)
+            res.status(200).send('Rol actualizado.')
+        } catch (error) {
+            res.status(400).send('Error al actualizar usuario.')
+        }
+
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
 module.exports = authController;
