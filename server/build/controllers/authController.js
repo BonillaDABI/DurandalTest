@@ -69,7 +69,7 @@ authController.register = async (req, res) => {
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
     const userRoleID = await User.getUserRoleID(userID);
-    const userPermissions = await User.getAllPermissions(userRoleID)
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
     if (userPermissions.includes(1)) {
         const password = await bcrypt.hash(req.body.password, 10)
