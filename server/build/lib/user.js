@@ -146,13 +146,42 @@ const getUserByEmail = (email) => {
     })
 }
 
-const getAllPermissions = (role_id) => {
+const getPermissionByRoleId = (role_id) => {
     return new Promise((resolve, reject) => {
         connection.query('SELECT p.id FROM roles r, permissions p, permissions_roles pr WHERE ? = r.id AND r.id = pr.role_id AND pr.id = p.id', [role_id], (err, rows) => {
             if (err) {
                 reject(err)
             }
             resolve(JSON.stringify(rows))
+        })
+    })
+}
+
+const getAllPermissions = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, per_name FROM permissions', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(rows)
+        })
+    })
+}
+
+const getModuleById = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT m.name FROM permissions p, modules m WHERE p.id = 2 AND p.module_id = m.id', [id], (err, rows) => {
+            if (err) { reject(err) }
+            resolve(rows)
+        })
+    })
+}
+
+const getFunctionById = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT f.name FROM permissions p, functions f WHERE p.id = 2 AND p.functions_id = f.id', [id], (err, rows) => {
+            if (err) { reject(err) }
+            resolve(rows)
         })
     })
 }
@@ -285,5 +314,7 @@ module.exports = {
     updateRoles,
     createRoles,
     getRoles,
-    getRoleById
+    getRoleById,
+    getModuleById,
+    getFunctionById
 }

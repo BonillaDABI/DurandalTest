@@ -23,7 +23,6 @@ authController.listAll = async (req, res) => {
         // res.status(200).send('Usuarios creados')
     } else {
         res.status(400).send('Error al obtener usuarios')
-
     }
 
 }
@@ -154,10 +153,32 @@ authController.dashboard = (req, res) => {
 }
 
 authController.permissions = async (req, res) => {
-    const token = req.body.Authorization.split(' ')[1];
+    // const token = req.body.Authorization.split(' ')[1];
 
-    const decodedToken = jwt.verify(token, "jwtsecret")
-    const userID = decodedToken.id
+    // const decodedToken = jwt.verify(token, "jwtsecret")
+    // const userID = decodedToken.id
+    const permissions = await User.getAllPermissions()
+
+    if (permissions) {
+        res.status(200).json(permissions)
+    } else {
+        res.status(400).send('Error al obtener permisos')
+    }
+}
+
+authController.modulesANDfunctions = async (req, res) => {
+    const id = req.params.id
+
+    const mod = await User.getModuleById(id)
+    const func = await User.getFunctionById(id)
+
+
+    if (mod && func) {
+        res.status(200).json([mod, func])
+    } else {
+        res.status(400).send('Error al obtener permisos')
+    }
+
 }
 
 authController.rudPermissions = async (req, res) => {

@@ -24,6 +24,10 @@ router.post("/createRoles", authController.createRoles)
 
 router.patch("/updateRoles", authController.updateRoles)
 
+router.get("/permissions", authController.permissions)
+
+router.get("/permissions/:id", authController.modulesANDfunctions)
+
 
 router.get("/listAll", authController.listAll);
 
