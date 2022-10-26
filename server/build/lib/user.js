@@ -208,15 +208,16 @@ const getExtraPermissions = (id) => {
     })
 }
 
-const addPermissions = (id, data) => {
+const addPermissions = (user_id, data, id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('DELETE FROM permissions_user WHERE ? = user_id', [id], (err, rows) => {
+        await connection.query('DELETE FROM permissions_user WHERE ? = user_id', [user_id], (err, rows) => {
             if (err) {
                 reject(err)
             }
         })
-        var permissions = data.map(a => ([id, a.id]));
-        await connection.query('INSERT INTO permissions_user(user_id, permissions_id) VALUES ?', [permissions], (err, rows) => {
+        var permissions = data.map(a => ([user_id, a.id, id]));
+        console.log(permissions)
+        await connection.query('INSERT INTO permissions_user(id, permissions_id, user_id) VALUES ?', [permissions], (err, rows) => {
             if (err) {
                 reject(err)
             }

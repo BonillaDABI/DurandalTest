@@ -182,13 +182,12 @@ authController.modulesANDfunctions = async (req, res) => {
 }
 
 authController.rudPermissions = async (req, res) => {
-    const id = req.body.id
+    const { id, user_id } = req.body
     const id_perms = [{
-        id: 05,
-        id: 04
+        id: 05
     }]
 
-    User.addPermissions(id, id_perms)
+    User.addPermissions(user_id, id_perms, id)
 
 }
 
