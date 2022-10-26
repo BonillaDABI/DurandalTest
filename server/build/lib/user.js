@@ -159,7 +159,7 @@ const getPermissionByRoleId = (role_id) => {
 
 const getAllPermissions = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id FROM permissions', (err, rows) => {
+        await connection.query('SELECT id, per_name FROM permissions', (err, rows) => {
             if (err) {
                 reject(err)
             }
