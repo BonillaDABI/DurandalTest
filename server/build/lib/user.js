@@ -170,7 +170,7 @@ const getAllPermissions = () => {
 
 const getModuleById = (id) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT m.name FROM permissions p, modules m WHERE p.id = 2 AND p.module_id = m.id', [id], (err, rows) => {
+        connection.query('SELECT m.name FROM permissions p, modules m WHERE p.id = ? AND p.module_id = m.id', [id], (err, rows) => {
             if (err) { reject(err) }
             resolve(rows)
         })
@@ -179,7 +179,7 @@ const getModuleById = (id) => {
 
 const getFunctionById = (id) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT f.name FROM permissions p, functions f WHERE p.id = 2 AND p.functions_id = f.id', [id], (err, rows) => {
+        connection.query('SELECT f.name FROM permissions p, functions f WHERE p.id = ? AND p.functions_id = f.id', [id], (err, rows) => {
             if (err) { reject(err) }
             resolve(rows)
         })
