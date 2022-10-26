@@ -31,7 +31,7 @@ function ListPermissions() {
     return (
       <div className="ListPermissions-container">
         <NavBar />
-        <h1>ListRoles Test</h1>
+        <h1>ListPermissions Test</h1>
         <tbody className="users-table">
           <tr className="head-row">
             <th>Id</th>
