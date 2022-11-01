@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook ,faGoogle } from "@fortawesome/free-brands-svg-icons"
+
+import '../SCSS/Elements/_footer.scss'
+import '../SCSS/Elements/_login.scss'
 
 const Login = () => {
 
@@ -42,44 +47,45 @@ const Login = () => {
   */
 
   return (
-    <div className="Auth-form-container">
-      <form className="Auth-form">
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">DABI Durandal | Login</h3>
-          <div className="form-group mt-3">
-            <label className="form_input_labels">Email</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+    <div id="login-page">
+      <div className="container">
+        <div className="form-container login-container">
+          <form>
+            <h1>Login</h1>
+            <div className="social-container">
+              <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
+              <a href="#" className="social"><FontAwesomeIcon icon={faGoogle} /></a>
+            </div>
+            <span>o usa tu cuenta</span>
+            <input 
+              type="email" placeholder="E-mail"
+              value={email} onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
-          <div className="form-group mt-3">
-            <label className="form_input_labels">Password</label>
-            <input
-              type="password"
-              className="form-control mt-1"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPW(e.target.value)}
+            <input 
+              type="password" placeholder="Contraseña"
+              value={password} onChange={(e) => setPW(e.target.value)}
             />
-          </div>
-          <div className="d-grid gap-2 mt-3">
-            <button type="button" id="Auth-button" className="btn btn-primary" onClick={() => logUser()}>
-              Login
-            </button>
-          </div>
-          <p className="text-center mt-2">
-            <a className="Auth-links" href="/recovery">Forgot password?</a>
-          </p>
+            <a href="/recovery">Olvidaste tu contraseña?</a>
+            <button type="button" id="login-button" onClick={() => logUser()}>Iniciar sesión</button>
+          </form>
         </div>
-      </form >
-    </div >
+        <div className="overlay-container">
+          <div className="overlay">
+            <div className="overlay-panel overlay-right">
+              <h1 id="overlay-primary-text">Hola, Bienvenido</h1>
+              <p id="overlay-initialp">Optimizamos tus operaciones</p>
+              <p id="overlay-primaryp">Generamos ahorros, facilitando la toma de decisiones para tus servicios en campo.</p>
+              <button id="overlay-button">más información</button>
+            </div>
+          </div>
+        </div>
+      </div >
+      <footer>
+        Design by DABI
+      </footer>
+    </div>
   );
 }
 export default Login;
-
 
 
