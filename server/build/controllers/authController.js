@@ -116,13 +116,15 @@ authController.login = async (req, res, res2) => {
         res.status(400).json({ error: "User Doesn't Exist" });
     } else {
         const dbPassword = user.password;
+        const role_id = user.roles_id
+        const user_id = user.id
+        const permissions = await User.getAllPermissionsFromUser(role_id, user_id)
         await bcrypt.compare(password, dbPassword).then((match) => {
             if (!match) {
                 res
                     .status(400)
                     .json({ error: "Wrong Username and Password Combination!" });
             } else {
-
                 const accessToken = createTokens(user);
                 // const accessToken = jwt.sign({ email: user.email, id: user.id }, "+hvS23x&9^tsMQzyA9UWxu!H_ApezBAVLcAWEPBA*ecAweS", { expiresIn: '12h' })
 
@@ -131,7 +133,7 @@ authController.login = async (req, res, res2) => {
                 //     httpOnly: true,
                 // });
 
-                res.json({ accessToken, user })
+                res.json({ accessToken, user, permissions })
 
             }
         });

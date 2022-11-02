@@ -177,6 +177,17 @@ const getAllPermissions = () => {
     })
 }
 
+const getAllPermissionsFromUser = (role_id, id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT p.id, per_name FROM roles r, permissions p, permissions_roles pr WHERE ? = r.id AND r.id = pr.role_id AND pr.permissions_id = p.id UNION SELECT p.id, per_name FROM permissions p, permissions_user pu WHERE ? = pu.user_id AND pu.permissions_id = p.id', [role_id, id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(rows)
+        })
+    })
+}
+
 const getModuleById = (id) => {
     return new Promise((resolve, reject) => {
         connection.query('SELECT m.name FROM permissions p, modules m WHERE p.id = ? AND p.module_id = m.id', [id], (err, rows) => {
@@ -201,7 +212,7 @@ const sendAllPermissionsNames = (role_id) => {
             if (err) {
                 reject(err)
             }
-            resolve(JSON.stringify(rows))
+            resolve(rows)
         })
     })
 }
@@ -227,7 +238,7 @@ const addPermissions = (user_id, permissions_id, id) => {
         permissions_id.forEach(async permissions_id => {
             const permissions = [id, permissions_id, user_id]
             console.log(permissions)
-            await connection.query('INSERT INTO permissions_user(id, permissions_id, user_id) VALUES ?', [permissions], (err, rows) => {
+            await connection.query('INSERT INTO permissions_user(id, permissions_id, user_id) VALUES (?)', [permissions], (err, rows) => {
                 if (err) {
                     reject(err)
                 }
@@ -330,5 +341,6 @@ module.exports = {
     getModuleById,
     getFunctionById,
     getPermissionByRoleId,
-    getUserByPasswordToken
+    getUserByPasswordToken,
+    getAllPermissionsFromUser
 }
