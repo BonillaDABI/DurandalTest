@@ -146,9 +146,18 @@ const getUserByEmail = (email) => {
     })
 }
 
+const getUserByPasswordToken = (token) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM users WHERE passwordResetToken = ?', [token], (err, rows) => {
+            if (err) { reject(err) }
+            resolve(rows[0])
+        })
+    })
+}
+
 const getPermissionByRoleId = (role_id) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT p.id FROM roles r, permissions p, permissions_roles pr WHERE ? = r.id AND r.id = pr.role_id AND pr.id = p.id', [role_id], (err, rows) => {
+        connection.query('SELECT p.id FROM roles r, permissions p, permissions_roles pr WHERE ? = r.id AND r.id = pr.role_id AND pr.permissions_id = p.id', [role_id], (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -199,7 +208,7 @@ const sendAllPermissionsNames = (role_id) => {
 
 const getExtraPermissions = (id) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT p.id FROM permissions p, permissions_user pu WHERE ? = pu.user_id AND pu.permissions_id = p.id;', [id], (err, rows) => {
+        connection.query('SELECT p.id FROM permissions p, permissions_user pu WHERE ? = pu.user_id AND pu.permissions_id = p.id', [id], (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -208,20 +217,22 @@ const getExtraPermissions = (id) => {
     })
 }
 
-const addPermissions = (user_id, data, id) => {
+const addPermissions = (user_id, permissions_id, id) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('DELETE FROM permissions_user WHERE ? = user_id', [user_id], (err, rows) => {
             if (err) {
                 reject(err)
             }
         })
-        var permissions = data.map(a => ([user_id, a.id, id]));
-        console.log(permissions)
-        await connection.query('INSERT INTO permissions_user(id, permissions_id, user_id) VALUES ?', [permissions], (err, rows) => {
-            if (err) {
-                reject(err)
-            }
-            resolve(JSON.stringify(rows))
+        permissions_id.forEach(async permissions_id => {
+            const permissions = [id, permissions_id, user_id]
+            console.log(permissions)
+            await connection.query('INSERT INTO permissions_user(id, permissions_id, user_id) VALUES ?', [permissions], (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(JSON.stringify(rows))
+            })
         })
     })
 }
@@ -318,5 +329,6 @@ module.exports = {
     getRoleById,
     getModuleById,
     getFunctionById,
-    getPermissionByRoleId
+    getPermissionByRoleId,
+    getUserByPasswordToken
 }

@@ -26,9 +26,9 @@ const Login = () => {
       email: email,
       password: password
     }).then((response) => {
-      localStorage.setItem('token', response.data);
+      localStorage.setItem('token', response.data.accessToken);
       localStorage.setItem("isAuthenticated", "true");
-      console.log(response);
+      console.log(response.data.accessToken);
       navigate('/dashboard');
       alert("Login exitoso. Bienvenido!");
 
@@ -58,11 +58,11 @@ const Login = () => {
               <a href="#" className="social"><FontAwesomeIcon icon={faGooglePlusG} /></a>
             </div>
             <span>o usar tu cuenta</span>
-            <input 
+            <input
               type="email" placeholder="E-mail"
               value={email} onChange={(e) => setEmail(e.target.value)}
             />
-            <input 
+            <input
               type="password" placeholder="Contraseña"
               value={password} onChange={(e) => setPW(e.target.value)}
             />

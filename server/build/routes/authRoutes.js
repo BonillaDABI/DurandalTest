@@ -24,6 +24,9 @@ router.post("/createRoles", authController.createRoles)
 
 router.patch("/updateRoles", authController.updateRoles)
 
+router.post("/forgotPassword", authController.forgotPassword)
+router.patch("/resetPassword/:resetToken", authController.resetPassword)
+
 router.get("/permissions", authController.permissions)
 
 router.get("/permissions/:id", authController.modulesANDfunctions)

@@ -11,6 +11,8 @@ const { Users } = require("../models/Login");
 const { createTokens, validateToken } = require("../config/JWT");
 const { verify } = require("jsonwebtoken");
 const jwtDecode = require('jwt-decode')
+const crypto = require('crypto')
+const sendEmail = require('../lib/email')
 
 const authController = {}
 
@@ -34,7 +36,7 @@ authController.update = async (req, res) => {
     const userID = decodedToken.id
     // const userID = validateToken()
     const userRoleID = await User.getUserRoleID(userID);
-    const userPermissions = await User.getAllPermissions(userRoleID)
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
     if (userPermissions.includes(2)) {
         const date = new Date()
@@ -105,7 +107,7 @@ authController.showLogin = (req, res) => {
 
 }
 
-authController.login = async (req, res) => {
+authController.login = async (req, res, res2) => {
     const { email, password } = req.body;
 
     const user = await User.getUserByEmail(email);
@@ -128,12 +130,86 @@ authController.login = async (req, res) => {
                 //     maxAge: 60 * 60 * 24 * 30 * 1000,
                 //     httpOnly: true,
                 // });
-                res.json(accessToken)
+
+                res.json({ accessToken, user })
+
             }
         });
     }
+}
+
+authController.forgotPassword = async (req, res, next) => {
+    //Get user email
+    const email = req.body.email
+    const user = await User.getUserByEmail(email)
+
+    if (!user) {
+        res.status(400).send('No existe usuario con ese correo.')
+        return next()
+    }
+
+    //Generar random token
+    const resetToken = crypto.randomBytes(32).toString('hex')
+
+    const passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    console.log({ resetToken }, { passwordResetToken })
 
 
+    const passwordResetExpires = new Date()
+    passwordResetExpires.setMinutes(passwordResetExpires.getMinutes() + 10);
+
+
+    connection.query("UPDATE `users` SET ? WHERE email = ?", [{
+        passwordResetToken,
+        passwordResetExpires
+    }, email])
+
+    //Send it to user's email
+    const resetUrl = `${req.protocol}://${req.get('host')}/resetPassword/${resetToken}`;
+
+    const message = `Forgot your password? Go to: ${resetUrl}`
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: 'Your password reset token (valid 10 min)',
+            message
+        })
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Token sent to email'
+        })
+    } catch (err) {
+        res.status(400).json(err)
+    }
+
+}
+
+authController.resetPassword = async (req, res) => {
+    //Get user based on token
+    const hashedToken = crypto.createHash('sha256').update(req.params.resetToken).digest('hex')
+
+    const user = await User.getUserByPasswordToken(hashedToken)
+    const nodeTime = new Date();
+
+    if (user) {
+        const userTime = new Date(user.passwordResetExpires).getTime()
+        if (nodeTime < userTime) {
+            const password = await bcrypt.hash(req.body.password, 10)
+            connection.query("UPDATE `users` SET ? WHERE passwordResetToken = ?", [{
+                password,
+                passwordResetToken: null,
+                passwordResetExpires: null
+            }, hashedToken])
+
+            res.status(200).json("Success")
+        } else {
+            res.status(400).json("Your time expired, try again")
+        }
+    } else {
+        res.status(400).json("No user with that token")
+    }
 }
 
 authController.delete = async (req, res) => {
@@ -183,9 +259,7 @@ authController.modulesANDfunctions = async (req, res) => {
 
 authController.rudPermissions = async (req, res) => {
     const { id, user_id } = req.body
-    const id_perms = [{
-        id: 05
-    }]
+    const id_perms = [05, 06]
 
     User.addPermissions(user_id, id_perms, id)
 
@@ -209,9 +283,10 @@ authController.createRoles = async (req, res) => {
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
     const userRoleID = await User.getUserRoleID(userID);
-    const userPermissions = await User.getAllPermissions(userRoleID)
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
-    if (userPermissions.includes(1)) {
+
+    if (userPermissions.includes(9)) {
         const { id, role_name } = req.body
         const role = await User.getRoleById(id)
 
@@ -233,9 +308,9 @@ authController.updateRoles = async (req, res) => {
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
     const userRoleID = await User.getUserRoleID(userID);
-    const userPermissions = await User.getAllPermissions(userRoleID)
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
-    if (userPermissions.includes(2)) {
+    if (userPermissions.includes(10)) {
         const { id, role_name } = req.body
 
         try {
@@ -249,4 +324,6 @@ authController.updateRoles = async (req, res) => {
         res.status(400).send('No tienes permiso.')
     }
 }
+
+
 module.exports = authController;
