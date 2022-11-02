@@ -64,7 +64,7 @@ const deleteByName = (name) => {
 
 const getAll = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('Select id, name, first_surname, email, roles_id, is_active, created_by, updated_by, created_at, updated_at, notes, updated_reason FROM users ', (err, rows) => {
+        await connection.query('Select id, name, email, is_active, created_at FROM users ', (err, rows) => {
             if (err) reject(err)
             resolve(rows);
         });
