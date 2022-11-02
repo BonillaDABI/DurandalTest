@@ -8,13 +8,16 @@
     src: url(../Media/Fonts/Quicksand/Quicksand-Regular.ttf);
 }
 
+$red-dabi: #dc1f0f;
+$gray-dabi: #4a4a4a;
+
 /* || LOGIN */
 $primary-background: #F6F5F7;
-$overlay-background: #4a4a4a;
+$overlay-background: $gray-dabi;
 $login-background: #FFFFFF;
 $overlay-ptext-color: #FFFFFF;
 $overlay-button-color: #FFFFFF;
-$login-button-bg: #dc1f0f;
+$login-button-bg: $red-dabi;
 $login-button-color: white;
 $menu-font: RobotoCondensedBold;
 $general-font: Quicksand;

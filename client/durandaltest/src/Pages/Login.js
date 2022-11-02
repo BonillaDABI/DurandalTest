@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook ,faFacebookF,faGoogle, faGooglePlus, faGooglePlusG } from "@fortawesome/free-brands-svg-icons"
+import { faFacebookF, faGooglePlusG } from "@fortawesome/free-brands-svg-icons"
 import logo from "../Media/Logos/logo-dabi-line-white.png"
 
 import '../SCSS/Elements/_footer.scss'
@@ -82,7 +82,9 @@ const Login = () => {
         </div>
       </div >
       <footer>
-        Design by DABI
+        <span>
+          Design by DABI
+        </span>
       </footer>
     </div>
   );

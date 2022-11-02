@@ -1,0 +1,14 @@
+@import "../_variables.scss";
+
+.Recovery-container {
+    font-family: $general-font;
+}
+
+.recovery-p {
+    font-weight: bold;
+}
+
+.rec-button {
+    background-color: $red-dabi;
+    border-width: 0px;
+}

@@ -20,18 +20,20 @@
         color: $overlay-ptext-color;
         font-family: $menu-font;
         letter-spacing: 1.2px;
+        margin-bottom: 25px;
     }
     
     #overlay-initialp {
         text-transform: uppercase;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 100;
         letter-spacing: 0.5px;
         font-family: $general-font;
+        margin-bottom: 1px;
     }
     
     #overlay-primaryp {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 100;
         font-family: $general-font;
     }
@@ -42,6 +44,7 @@
         border-radius: 20px;
         background-color: transparent;
         border-color: $overlay-button-color;
+        border-width: 1px;
 
         a {
             color: $overlay-button-color;
@@ -91,12 +94,13 @@
         background-color: $login-button-bg;
         color: $login-button-color;
         text-transform: uppercase;
-        width: 250px;
+        width: 200px;
         height: 40px;
         border-radius: 20px;
-        border-color: $login-button-color;
+        border-width: 0px;
         font-family: $general-font;
         font-weight: bold;
+        font-size: 13px;
     }
 
     #logo {
