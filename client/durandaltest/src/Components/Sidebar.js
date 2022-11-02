@@ -1,12 +1,21 @@
-import { faHome, faBars, faUsers, faPlus, faPen, faGear, faKey } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faBars, faUsers, faPlus, faPen, faGear, faKey, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import '../SCSS/Components/_sidebar.scss'
 import logo from "../Media/Logos/logo-dabi-line.png"
+import { useNavigate } from "react-router-dom";
 
 
 const SideBar = ({children}) => {
+    const navigate = useNavigate();
+    const logoutUser = () => {
+        localStorage.removeItem("token");
+        localStorage.setItem("isAuthenticated", "false");
+        navigate("/");
+    }
+
     const [isOpen, setIsOpen] = useState(false)
     const toggle = () => setIsOpen(!isOpen)
 
@@ -50,8 +59,34 @@ const SideBar = ({children}) => {
                         </NavLink>
                     ))
                 }
+            </div>            
+            <div style={{marginLeft: isOpen ? "-280px" : "-400px"}} className='main-content'>
+                <nav style={{
+                    marginLeft: isOpen ? "-10px" : "-37px", 
+                    height: isOpen ? "82px" : "60px",
+                    width: isOpen? "1683px" : "1830px"
+                    }} 
+                    className='mainHeader'>
+                        <NavDropdown
+                                id="user-tab"
+                                menuVariant="dark"
+                                title = {<><FontAwesomeIcon icon={faUser} /> Usuario</>}
+                            >
+                                <NavDropdown.Item onClick={logoutUser}> Logout <FontAwesomeIcon icon={faRightFromBracket} /></NavDropdown.Item>  
+                        </NavDropdown>
+                    </nav>
+                <main>
+                    {children}
+                </main>
+                <footer  style={{
+                    marginLeft: isOpen ? "-10px" : "-37px", 
+                    height: isOpen ? "82px" : "60px",
+                    width: isOpen? "1683px" : "1830px"
+                    }}
+                    className='mainFooter'>
+                        <span>2022 © DABI.</span>
+                </footer>
             </div>
-            <main>{children}</main>
         </div>
     )
 }

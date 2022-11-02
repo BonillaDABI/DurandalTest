@@ -81,7 +81,7 @@ const Login = () => {
           </div>
         </div>
       </div >
-      <footer>
+      <footer className="loginFooter">
         <span>
           Design by DABI
         </span>

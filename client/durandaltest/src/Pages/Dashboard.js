@@ -1,5 +1,4 @@
 import SideBar from "../Components/Sidebar";
-import HeaderBar from "../Components/Headerbar";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react"
 
@@ -16,7 +15,6 @@ const Dashboard = () => {
 
   return (
       <SideBar>
-        <HeaderBar />
         <h1>Dashboard Test</h1>
       </SideBar>
   );

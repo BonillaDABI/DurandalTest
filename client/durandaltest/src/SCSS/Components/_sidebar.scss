@@ -3,26 +3,48 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: $general-font;
 }
 
 
 body {
-    background-color: #F5F6F8;
+    background-color: $background;
 }
 
 .container {
     display: flex;
-    width: 1000px;
-    
+    width: 100vh;
 }
 
-main {
-    width: 100%;
-    padding: 20px;
+.main-content {
+    height: 100vh;
+    right: 100vh;
+}
+
+.mainHeader {
+    background-color: $primary-bars-color;
+    height: 60px;
+    width: 1830px;
+}
+
+.mainFooter {
+    border-top: 3px solid $primary-bars-color;
+    border-left: 3px solid $primary-bars-color;
+    background-color: $background;
+    height: 60px;
+    width: 1830px;
+    bottom: 0;
+    position: fixed;
+    display: table;
+
+    span {
+        display:table-cell; 
+        vertical-align:middle
+    }
 }
 
 .sidebar {
-    background-color: #FFFFFF;
+    background-color: $primary-bars-color;
     color: black;
     height: 100vh;
     width: 200px;
