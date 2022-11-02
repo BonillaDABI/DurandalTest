@@ -1,6 +1,8 @@
 import {React, useEffect, useState } from "react";
 import axios from "axios";
-import NavBar from "../Components/Navbar";
+//import NavBar from "../Components/Navbar";
+import SideBar from "../Components/Sidebar";
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
@@ -29,8 +31,7 @@ function ListPermissions() {
     }
 
     return (
-      <div className="ListPermissions-container">
-        <NavBar />
+      <SideBar>
         <h1>ListPermissions Test</h1>
         <tbody className="users-table">
           <tr className="head-row">
@@ -50,7 +51,7 @@ function ListPermissions() {
             </tr>
           ))}
         </tbody>
-      </div>
+      </SideBar>
     );
   }
   export default ListPermissions;

@@ -1,6 +1,7 @@
 import {React, useEffect, useState } from "react";
 import axios from "axios";
-import NavBar from "../Components/Navbar";
+import SideBar from "../Components/Sidebar";
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
@@ -29,8 +30,7 @@ function ListRoles() {
     }
 
     return (
-      <div className="ListRoles-container">
-        <NavBar />
+      <SideBar>
         <h1>ListRoles Test</h1>
         <tbody className="users-table">
           <tr className="head-row">
@@ -50,7 +50,7 @@ function ListRoles() {
             </tr>
           ))}
         </tbody>
-      </div>
+      </SideBar>
     );
   }
   export default ListRoles;
