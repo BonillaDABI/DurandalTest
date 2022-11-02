@@ -7,10 +7,10 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        font-family: 'Montserrat', sans-serif;
         height: 100vh;
         overflow: hidden;
     }
+    
     
     /* || OVERLAY CSS */
     
@@ -18,6 +18,8 @@
         font-weight: bold;
         font-size: 35px;
         color: $overlay-ptext-color;
+        font-family: $menu-font;
+        letter-spacing: 1.2px;
     }
     
     #overlay-initialp {
@@ -25,21 +27,29 @@
         font-size: 14px;
         font-weight: 100;
         letter-spacing: 0.5px;
+        font-family: $general-font;
     }
     
     #overlay-primaryp {
         font-size: 14px;
         font-weight: 100;
+        font-family: $general-font;
     }
     
     #overlay-button {
-        color: $overlay-button-color;
-        text-transform: uppercase;
         width: 250px;
         height: 40px;
         border-radius: 20px;
         background-color: transparent;
         border-color: $overlay-button-color;
+
+        a {
+            color: $overlay-button-color;
+            text-transform: uppercase;
+            font-family: $general-font; 
+            font-weight: bold;
+            letter-spacing: 0.8px;
+        }
     }
     
     .overlay-container {
@@ -85,10 +95,18 @@
         height: 40px;
         border-radius: 20px;
         border-color: $login-button-color;
+        font-family: $general-font;
+        font-weight: bold;
+    }
+
+    #logo {
+        width: 82px;
+        height: 25px;
     }
 
     span {
         font-size: 12px;
+        font-family: $general-font;
     }
     
     a {
@@ -96,6 +114,7 @@
         font-size: 14px;
         text-decoration: none;
         margin: 15px 0;
+        font-family: $general-font;
     }
     
     form {
@@ -115,6 +134,8 @@
         padding: 12px 15px;
         margin: 8px 0;
         width: 100%;
+        font-family: $general-font;
+        font-size: 13px;
     }
     
     /* || CONTAINERS CSS */
@@ -162,7 +183,7 @@
         margin: 0 5px;
         height: 40px;
         width: 40px;
-        font-size: 20px;
+        font-size: 15px;
     }
 }
 

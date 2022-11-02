@@ -1,11 +1,23 @@
+@font-face {
+    font-family: RobotoCondensedBold;
+    src: url(../Media/Fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf);
+}
+
+@font-face {
+    font-family: Quicksand;
+    src: url(../Media/Fonts/Quicksand/Quicksand-Regular.ttf);
+}
+
 /* || LOGIN */
 $primary-background: #F6F5F7;
-$overlay-background: rgb(32, 30, 30);
+$overlay-background: #4a4a4a;
 $login-background: #FFFFFF;
 $overlay-ptext-color: #FFFFFF;
 $overlay-button-color: #FFFFFF;
-$login-button-bg: red;
+$login-button-bg: #dc1f0f;
 $login-button-color: white;
+$menu-font: RobotoCondensedBold;
+$general-font: Quicksand;
 
 /* || FOOTER LOGIN*/
 $footer_bg_color: #000000;

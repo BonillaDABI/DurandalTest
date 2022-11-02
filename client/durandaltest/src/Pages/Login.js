@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook ,faGoogle } from "@fortawesome/free-brands-svg-icons"
+import { faFacebook ,faFacebookF,faGoogle, faGooglePlus, faGooglePlusG } from "@fortawesome/free-brands-svg-icons"
+import logo from "../Media/Logos/logo-dabi-line-white.png"
 
 import '../SCSS/Elements/_footer.scss'
 import '../SCSS/Elements/_login.scss'
@@ -51,12 +52,12 @@ const Login = () => {
       <div className="container">
         <div className="form-container login-container">
           <form>
-            <h1>Login</h1>
+            <img src={logo} id="logo"></img>
             <div className="social-container">
-              <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
-              <a href="#" className="social"><FontAwesomeIcon icon={faGoogle} /></a>
+              <a href="#" className="social"><FontAwesomeIcon icon={faFacebookF} /></a>
+              <a href="#" className="social"><FontAwesomeIcon icon={faGooglePlusG} /></a>
             </div>
-            <span>o usa tu cuenta</span>
+            <span>o usar tu cuenta</span>
             <input 
               type="email" placeholder="E-mail"
               value={email} onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +66,7 @@ const Login = () => {
               type="password" placeholder="Contraseña"
               value={password} onChange={(e) => setPW(e.target.value)}
             />
-            <a href="/recovery">Olvidaste tu contraseña?</a>
+            <a href="/recovery">¿Olvidaste tu contraseña?</a>
             <button type="button" id="login-button" onClick={() => logUser()}>Iniciar sesión</button>
           </form>
         </div>
@@ -75,7 +76,7 @@ const Login = () => {
               <h1 id="overlay-primary-text">Hola, Bienvenido</h1>
               <p id="overlay-initialp">Optimizamos tus operaciones</p>
               <p id="overlay-primaryp">Generamos ahorros, facilitando la toma de decisiones para tus servicios en campo.</p>
-              <button id="overlay-button">más información</button>
+              <button id="overlay-button" ><a href="https://www.dabi.io" target="_blank">más información</a></button>
             </div>
           </div>
         </div>
