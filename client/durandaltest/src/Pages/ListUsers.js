@@ -1,9 +1,12 @@
 import {React, useEffect, useState } from "react";
 import axios from "axios";
-import SideBar from "../Components/Sidebar";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import Sidebar from "../Components/Sidebar/Sidebar";
+import Navbar from "../Components/Navbar/Navbar";
+
+import "../SCSS/Elements/_design.scss"
 
 function ListUser() { 
   const [data, setData] = useState([]);
@@ -29,29 +32,39 @@ function ListUser() {
     }
 
     return (
-      <SideBar>
-        <h1>ListUsers Test</h1>
-        <tbody className="users-table">
-          <tr className="head-row">
-            <th>Name</th>
-            <th>First Surname</th>
-            <th>Email</th>
-            <th>Delete</th>
-          </tr>
-          {data.map((item, index) => (
-            <tr key={index} className="table-rows">
-              <td>{item.name}</td>
-              <td>{item.first_surname}</td>
-              <td>{item.email}</td>
-              <td>
-                <button>
-                  <FontAwesomeIcon icon={faTrashCan} />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </SideBar>
+      <div className="home">
+        <Sidebar />
+        <div className="homeContainer">
+          <Navbar />
+          <div className="content">
+            <h1>ListUsers Test</h1>
+            <tbody className="users-table">
+              <tr className="head-row">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Estatus</th>
+                <th>Fecha de alta</th>
+                <th>Delete</th>
+              </tr>
+              {data.map((item, index) => (
+                <tr key={index} className="table-rows">
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.is_active}</td>
+                  <td>{item.created_at}</td>
+                  <td>
+                    <button>
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </div>
+        </div>
+      </div>
     );
   }
   export default ListUser;

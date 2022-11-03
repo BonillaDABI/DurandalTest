@@ -1,0 +1,15 @@
+@import "../_variables.scss";
+
+.home {
+    display: flex;
+
+    .homeContainer {
+        flex: 6;
+    }
+
+    .content {
+        background-color: $background;
+        height: 92.8vh;
+        
+    }
+}

@@ -1,9 +1,9 @@
-import SideBar from "../Components/Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react"
+import Sidebar from "../Components/Sidebar/Sidebar"
+import Navbar from "../Components/Navbar/Navbar"
 
-import "../SCSS/Elements/_dashboard.scss"
-
+import "../SCSS/Elements/_design.scss"
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -14,9 +14,15 @@ const Dashboard = () => {
   })
 
   return (
-      <SideBar>
-        <h1>Dashboard Test</h1>
-      </SideBar>
+    <div className="home">
+      <Sidebar />
+      <div className="homeContainer">
+        <Navbar />
+          <div className="content">
+            <h1>Dashboard Test</h1>
+          </div>
+      </div>
+    </div>
   );
 }
 

@@ -28,6 +28,7 @@ const Login = () => {
     }).then((response) => {
       localStorage.setItem('token', response.data.accessToken);
       localStorage.setItem("isAuthenticated", "true");
+      console.log(response.data.user);
       console.log(response.data.accessToken);
       navigate('/dashboard');
       alert("Login exitoso. Bienvenido!");

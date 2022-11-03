@@ -1,0 +1,48 @@
+.app.dark {
+    background-color: #222;
+    color: whitesmoke;
+
+    .navbar {
+        color: #999;
+        border-color: #444;
+
+        .search {
+            border-color: gray;
+        }
+    }
+
+    .sidebar {
+        background-color: #111;
+        border-color: #444;
+
+        .top {
+            .logo {
+                color: #999;
+            }
+        }
+
+        hr {
+            border-color: #444;
+        }
+
+        ul {
+            li {
+                &:hover{
+                    background-color: #444;
+                }
+
+                .icon {
+                    color: #999;
+                }
+
+                span {
+                    color: whitesmoke;
+                }
+            }
+        }
+    }
+
+    h1, td {
+        color: black;
+    }
+}

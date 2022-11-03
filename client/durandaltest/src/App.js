@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css'
+import "./Style/dark.scss"
 
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
@@ -14,13 +15,18 @@ import ListUsers from "./Pages/ListUsers";
 import ListRoles from "./Pages/ListRoles";
 import ListPermissions from "./Pages/ListPermissions";
 import Recovery from "./Pages/Recovery";
+import { DarkModeContext } from "./Context/darkModeContext";
 
 function App() {
+
+  const {darkMode} = useContext(DarkModeContext)
+
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Login />} />
-          <Route exact path="/recovery" element={<Recovery />} /> {/* PENDING */}
+          <Route exact path="/recovery" element={<Recovery />} /> 
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
           <Route exact path="/create" element={<Create />} />
           <Route exact path="/createR" element={<CreateR />} /> {/* PENDING */}
@@ -31,6 +37,7 @@ function App() {
           <Route exact path="/listAllP" element={<ListPermissions />} /> {/* PENDING */}
         </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 
