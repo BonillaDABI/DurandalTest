@@ -1,0 +1,47 @@
+@import "../_variables.scss";
+
+
+.datatable {
+    height: 600px;
+    padding: 20px;
+    font-family: $general-font;
+
+    .dabiWebText {
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    .MuiDataGrid-columnHeaders {
+        background-color: $table-header;
+    }
+
+    .cellAction {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+
+        .viewButton {
+            padding: 2px 5px;
+            border-radius: 5px;
+            color: darkblue;
+            border: 1px dotted rgba(0,0,139,0.596);
+            cursor: pointer;
+        }
+
+        .editButton {
+            padding: 2px 5px;
+            border-radius: 5px;
+            color: darkorange;
+            border: 1px dotted rgba(139, 83, 0, 0.596);
+            cursor: pointer;
+        }
+
+        .deleteButton {
+            padding: 2px 5px;
+            border-radius: 5px;
+            color: crimson;
+            border: 1px dotted rgba(220,20,60,0.6);
+            cursor: pointer;
+        }
+    }
+}
