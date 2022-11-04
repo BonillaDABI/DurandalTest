@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import "../../SCSS/Components/_sidebar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell, faBorderAll, faGear, faKey, faRightFromBracket, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faBell, faBook, faBorderAll, faCalendarDays, faGear, faKey, faLocationDot, faRightFromBracket, faSquarePollVertical, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { DarkModeContext } from "../../Context/darkModeContext";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -36,7 +36,32 @@ const Sidebar = () => {
                             <span>Inicio</span>
                         </li>
                     </Link>
-                    <p className="title">LISTS</p>
+                    <p className="title">GENERALES</p>
+                    <Link to="#" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faBook} className="icon"/>
+                            <span>Clientes</span>
+                        </li>
+                    </Link>
+                    <Link to="#" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faCalendarDays} className="icon"/>
+                            <span>Agenda</span>
+                        </li>
+                    </Link>
+                    <Link to="#" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faSquarePollVertical} className="icon"/>
+                            <span>Indicadores</span>
+                        </li>
+                    </Link>
+                    <Link to="#" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faLocationDot} className="icon"/>
+                            <span>Tracking</span>
+                        </li>
+                    </Link>
+                    <p className="title">LISTAS</p>
                     <Link to="/ListAll" style={{textDecoration: 'none'}} >
                         <li>
                             <FontAwesomeIcon icon={faUsers} className="icon"/>
@@ -55,7 +80,7 @@ const Sidebar = () => {
                             <span>Permisos</span>                        
                         </li>
                     </Link>
-                    <p className="title">EXTRA</p>
+                    <p className="title">EXTRAS</p>
                     <li>
                         <FontAwesomeIcon icon={faBell} className="icon"/>
                         <span>Notificaciones</span>
@@ -64,7 +89,7 @@ const Sidebar = () => {
                         <FontAwesomeIcon icon={faGear} className="icon"/>
                         <span>Ajustes</span>
                     </li>
-                    <p className="title">USER</p>
+                    <p className="title">USUARIO</p>
                     <li>
                         <FontAwesomeIcon icon={faUser} className="icon"/>
                         <span>{localStorage.getItem("username")}</span>
