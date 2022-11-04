@@ -7,6 +7,7 @@ import { DarkModeContext } from "../../Context/darkModeContext";
 import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../Media/Logos/logo-dabi-line.png"
+import axios from "axios";
 
 
 const Sidebar = () => {
@@ -66,7 +67,7 @@ const Sidebar = () => {
                     <p className="title">USER</p>
                     <li>
                         <FontAwesomeIcon icon={faUser} className="icon"/>
-                        <span>Perfil</span>
+                        <span>{localStorage.getItem("username")}</span>
                     </li>
                     <li onClick={() => logoutUser()}>
                         <FontAwesomeIcon icon={faRightFromBracket} className="icon"/>

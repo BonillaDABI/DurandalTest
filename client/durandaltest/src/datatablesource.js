@@ -28,8 +28,7 @@ export const UserTableAxios = () => {
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <div className="viewButton">Ver</div>
-                        <div className="editButton">Editar</div>
+                        <div className="vieweditButton">Ver / Editar</div>
                         <div className="deleteButton">Borrar</div>
                     </div>
                 )
@@ -103,8 +102,7 @@ export const PermissionsTableAxios = () => {
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <div className="viewButton">Ver</div>
-                        <div className="editButton">Editar</div>
+                        <div className="vieweditButton">Ver / Editar</div>
                         <div className="deleteButton">Borrar</div>
                     </div>
                 )
@@ -163,8 +161,7 @@ export const RolesTableAxios = () => {
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <div className="viewButton">Ver</div>
-                        <div className="editButton">Editar</div>
+                        <div className="vieweditButton">Ver / Editar</div>
                         <div className="deleteButton">Borrar</div>
                     </div>
                 )
