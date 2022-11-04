@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
-import { color, fontFamily, fontSize } from "@mui/system";
+
 
 export const UserTableAxios = () => {
     // Config de hooks
@@ -59,7 +59,7 @@ export const UserTableAxios = () => {
             headerName: 'Estatus', 
             width: 150,
             renderCell: (params) => {
-                if (params.row.is_active == "Activo"){
+                if (params.row.is_active === "Activo"){
                     return (
                         <div>
                           <span className="statusActive">{params.row.is_active}</span>
