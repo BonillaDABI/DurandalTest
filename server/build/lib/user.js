@@ -66,7 +66,7 @@ const getAll = () => {
     return new Promise(async (resolve, reject) => {
         await connection.query('Select id, name, email, is_active, created_at FROM users ', (err, rows) => {
             if (err) reject(err)
-            resolve(rows);
+            resolve(JSON.parse(JSON.stringify(rows)))
         });
     });
 };

@@ -13,12 +13,22 @@ const { verify } = require("jsonwebtoken");
 const jwtDecode = require('jwt-decode')
 const crypto = require('crypto')
 const sendEmail = require('../lib/email')
+const moment = require('moment')
 
 const authController = {}
 
 authController.listAll = async (req, res) => {
 
-    const users = await User.getAll()
+    var users = await User.getAll()
+
+    for (let i = 0; i < users.length; i++) {
+        users[i].created_at = moment(users[i].created_at).format("MMMM Do YY")
+        if (users[i].is_active === 1) {
+            users[i].is_active = "Activo"
+        } else {
+            users[i].is_active = "Inactivo"
+        }
+    }
 
     if (users) {
         res.json(users)
@@ -39,7 +49,7 @@ authController.update = async (req, res) => {
     const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
     if (userPermissions.includes(2)) {
-        const date = new Date()
+        const date = new Date().toDateString()
         const { name } = req.body;
         const password = await bcrypt.hash(req.body.password, 10)
         const { first_surname, second_surname, email } = req.body;
@@ -75,7 +85,7 @@ authController.register = async (req, res) => {
 
     if (userPermissions.includes(1)) {
         const password = await bcrypt.hash(req.body.password, 10)
-        const date = new Date()
+        const date = new Date().toDateString()
 
         const { name, first_surname, second_surname, email } = req.body;
 
@@ -110,7 +120,7 @@ authController.showLogin = (req, res) => {
 authController.login = async (req, res, res2) => {
     const { email, password } = req.body;
 
-    const user = await User.getUserByEmail(email);
+    var user = await User.getUserByEmail(email);
 
     if (!user) {
         res.status(400).json({ error: "User Doesn't Exist" });
@@ -119,6 +129,8 @@ authController.login = async (req, res, res2) => {
         const role_id = user.roles_id
         const user_id = user.id
         const permissions = await User.getAllPermissionsFromUser(role_id, user_id)
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        user.created_at = user.created_at.toLocaleDateString("en-US", options)
         await bcrypt.compare(password, dbPassword).then((match) => {
             if (!match) {
                 res
@@ -133,7 +145,7 @@ authController.login = async (req, res, res2) => {
                 //     httpOnly: true,
                 // });
 
-                res.json({ accessToken, user, permissions })
+                res.json({ accessToken, user, permissions, date })
 
             }
         });
