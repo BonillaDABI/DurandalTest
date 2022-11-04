@@ -145,7 +145,7 @@ authController.login = async (req, res, res2) => {
                 //     httpOnly: true,
                 // });
 
-                res.json({ accessToken, user, permissions, date })
+                res.json({ accessToken, user, permissions })
 
             }
         });

@@ -36,4 +36,24 @@
             cursor: pointer;
         }
     }
+
+    .statusActive {
+        color: green;
+        background-color: rgba(0,128,0,0.05);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 7px;
+        padding-left: 7px;
+        border-radius: 15px;
+    }
+
+    .statusInactive {
+        color: goldenrod;
+        background-color: rgba(255,0,0,0.05);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 7px;
+        padding-left: 7px;
+        border-radius: 15px;
+    }
 }
