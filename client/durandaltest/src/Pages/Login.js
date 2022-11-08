@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faGooglePlusG } from "@fortawesome/free-brands-svg-icons"
+import { faFacebookF, faGooglePlusG, faWindows } from "@fortawesome/free-brands-svg-icons"
 import logo from "../Media/Logos/logo-dabi-line-white.png"
 
 import '../SCSS/Elements/_footer.scss'
@@ -56,7 +56,7 @@ const Login = () => {
           <form>
             <img src={logo} id="logo"></img>
             <div className="social-container">
-              <a href="#" className="social"><FontAwesomeIcon icon={faFacebookF} /></a>
+              <a href="#" className="social"><FontAwesomeIcon icon={faWindows} /></a>
               <a href="#" className="social"><FontAwesomeIcon icon={faGooglePlusG} /></a>
             </div>
             <span>o usar tu cuenta</span>
