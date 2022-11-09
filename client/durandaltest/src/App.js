@@ -15,6 +15,7 @@ import ListUsers from "./Pages/ListUsers";
 import ListRoles from "./Pages/ListRoles";
 import ListPermissions from "./Pages/ListPermissions";
 import Recovery from "./Pages/Recovery";
+import Clients from "./Pages/Clients";
 import { DarkModeContext } from "./Context/darkModeContext";
 
 function App() {
@@ -28,13 +29,14 @@ function App() {
           <Route exact path="/" element={<Login />} />
           <Route exact path="/recovery" element={<Recovery />} /> 
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
+          <Route exact path="/clients" element={<Clients />} />
           <Route exact path="/create" element={<Create />} />
           <Route exact path="/createR" element={<CreateR />} /> {/* PENDING */}
           <Route exact path="/update" element={<Update />} /> 
           <Route exact path="/updateR" element={<UpdateR />} /> {/* PENDING */}
-          <Route exact path="/listAll" element={<ListUsers />} /> {/* PENDING */}
-          <Route exact path="/listAllR" element={<ListRoles />} /> {/* PENDING */}
-          <Route exact path="/listAllP" element={<ListPermissions />} /> {/* PENDING */}
+          <Route exact path="/listAll" element={<ListUsers />} /> 
+          <Route exact path="/listAllR" element={<ListRoles />} /> 
+          <Route exact path="/listAllP" element={<ListPermissions />} /> 
         </Routes>
     </BrowserRouter>
     </div>

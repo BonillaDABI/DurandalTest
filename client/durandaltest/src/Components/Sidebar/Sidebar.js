@@ -7,7 +7,6 @@ import { DarkModeContext } from "../../Context/darkModeContext";
 import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../Media/Logos/logo-dabi-line.png"
-import axios from "axios";
 
 
 const Sidebar = () => {
@@ -23,7 +22,7 @@ const Sidebar = () => {
         <div className="sidebar">
             <div className="top">
                 <span className="logo">
-                    <img src={logo} id="logo"></img>
+                    <img src={logo} id="logo" alt="dabi logo"></img>
                 </span>
             </div>
             <hr />
@@ -37,7 +36,7 @@ const Sidebar = () => {
                         </li>
                     </Link>
                     <p className="title">GENERALES</p>
-                    <Link to="#" style={{textDecoration: 'none'}} >
+                    <Link to="/clients" style={{textDecoration: 'none'}} >
                         <li>
                             <FontAwesomeIcon icon={faBook} className="icon"/>
                             <span>Clientes</span>

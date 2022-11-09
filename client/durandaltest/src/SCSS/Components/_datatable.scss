@@ -20,7 +20,21 @@
         align-items: center;
         gap: 25px;
 
-        .vieweditButton {
+        .detail-icons {
+            cursor: pointer;
+            width: 18px;      
+            height: 18px;          
+        }
+
+        #update-icon {
+            color: $gray-dabi;
+        }
+
+        #delete-icon {
+            color: $red-dabi;
+        }
+
+        /*.vieweditButton {
             padding: 2px 5px;
             border-radius: 5px;
             color: darkblue;
@@ -34,7 +48,7 @@
             color: crimson;
             border: 1px dotted rgba(220,20,60,0.6);
             cursor: pointer;
-        }
+        }*/
     }
 
     .statusActive {

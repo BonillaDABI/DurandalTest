@@ -1,6 +1,115 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
+export const ClientsTableAxios = () => {
+    // Config de hooks
+    const [clientData, setClientData] = useState ( [] )
+
+    const endpoint = 'http://localhost:3001/clients'
+
+    const getData = async() => {
+        await axios.get(endpoint).then((response) => {
+            const clientData = response.data
+            //console.log(clientData)
+            setClientData(clientData)
+        })
+    }
+
+    useEffect( () => {
+        getData()
+    }, [])
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: () => {
+                return (
+                    <div className="cellAction">
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const clientColumns = [
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 100
+        },
+        { 
+            field: 'user_id', 
+            headerName: 'Usuario', 
+            width: 130 
+        },
+        { 
+            field: 'business_name', 
+            headerName: 'Cliente', 
+            width: 180 
+        },
+        { 
+            field: 'rfc', 
+            headerName: 'RFC', 
+            width: 180 
+        },
+        { 
+            field: 'tax_id', 
+            headerName: 'Tax ID', 
+            width: 180 
+        },
+        { 
+            field: 'parent_id', 
+            headerName: 'Parent ID', 
+            width: 180 
+        },
+        { 
+            field: 'is_active', 
+            headerName: 'Estatus', 
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo"){
+                    return (
+                        <div>
+                          <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }else{
+                    return (
+                        <div>
+                          <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }
+
+              },
+              valueGetter: (params) => params.row.is_active
+        },
+        { 
+            field: 'created_at', 
+            headerName: 'Fecha de alta', 
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+                rows={clientData}
+                columns={clientColumns.concat(actionColumn)}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+        />
+    )
+}
 
 
 export const UserTableAxios = () => {
@@ -25,12 +134,12 @@ export const UserTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 250,
+            width: 120,
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <div className="vieweditButton">Ver / Editar</div>
-                        <div className="deleteButton">Borrar</div>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
                     </div>
                 )
             }
@@ -116,12 +225,12 @@ export const PermissionsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 250,
+            width: 120,
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <div className="vieweditButton">Ver / Editar</div>
-                        <div className="deleteButton">Borrar</div>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
                     </div>
                 )
             }
@@ -175,12 +284,12 @@ export const RolesTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 250,
+            width: 120,
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <div className="vieweditButton">Ver / Editar</div>
-                        <div className="deleteButton">Borrar</div>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
                     </div>
                 )
             }
