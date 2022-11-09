@@ -32,6 +32,7 @@ const Navbar = () => {
                         <div className="counter">1</div>
                     </div>
                     <div className="item">
+                        <span>{localStorage.getItem("username")}</span>
                         <img
                             src="https://images.pexels.com/photos/3344325/pexels-photo-3344325.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                             alt=""
