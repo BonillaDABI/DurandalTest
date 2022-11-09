@@ -13,7 +13,9 @@ const { verify } = require("jsonwebtoken");
 const jwtDecode = require('jwt-decode')
 const crypto = require('crypto')
 const sendEmail = require('../lib/email')
-const moment = require('moment')
+const moment = require('moment');
+const { ClientRequest } = require("http");
+const Client = require('../lib/clients')
 
 const authController = {}
 
@@ -32,6 +34,28 @@ authController.listAll = async (req, res) => {
 
     if (users) {
         res.json(users)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener usuarios')
+    }
+
+}
+
+authController.listClients = async (req, res) => {
+
+    var clients = await Client.getAllClients()
+
+    for (let i = 0; i < clients.length; i++) {
+        clients[i].created_at = moment(clients[i].created_at).format("MMMM Do YY")
+        if (clients[i].is_active === 1) {
+            clients[i].is_active = "Activo"
+        } else {
+            clients[i].is_active = "Inactivo"
+        }
+    }
+
+    if (clients) {
+        res.json(clients)
         // res.status(200).send('Usuarios creados')
     } else {
         res.status(400).send('Error al obtener usuarios')
@@ -85,7 +109,7 @@ authController.register = async (req, res) => {
 
     if (userPermissions.includes(1)) {
         const password = await bcrypt.hash(req.body.password, 10)
-        const date = new Date().toDateString()
+        const date = new Date()
 
         const { name, first_surname, second_surname, email } = req.body;
 
@@ -113,8 +137,30 @@ authController.register = async (req, res) => {
     }
 }
 
-authController.showLogin = (req, res) => {
+authController.createClients = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
 
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(1)) {
+        const date = new Date()
+        const { user_id, business_name, rfc, tax_id } = req.body
+
+        const client = await Client.getClientByRFC(rfc)
+
+        if (!client) {
+            await Client.insertClient(user_id, business_name, rfc, tax_id, userID, date)
+            res.status(200).send('Usuario creado.')
+        } else {
+            res.status(400).send('Cliente ya existe.')
+        }
+
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
 }
 
 authController.login = async (req, res, res2) => {

@@ -8,7 +8,7 @@ router.use(cookieParser());
 router.post("/register", authController.register);
 
 
-router.get("/login", authController.showLogin);
+// router.get("/login", authController.showLogin);
 router.post("/login", authController.login);
 
 router.patch("/update", authController.update)
@@ -31,6 +31,9 @@ router.get("/permissions", authController.permissions)
 
 router.get("/permissions/:id", authController.modulesANDfunctions)
 
+router.post("createClients")
+
+router.get("/listClients", authController.listClients)
 
 router.get("/listAll", authController.listAll);
 
