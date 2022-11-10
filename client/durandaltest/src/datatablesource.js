@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -92,6 +92,7 @@ export const ClientsTableAxios = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
@@ -184,6 +185,7 @@ export const UserTableAxios = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
@@ -243,6 +245,7 @@ export const PermissionsTableAxios = () => {
                 pageSize={10}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
@@ -302,6 +305,7 @@ export const RolesTableAxios = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
