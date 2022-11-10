@@ -89,10 +89,6 @@ const Sidebar = () => {
                         <span>Ajustes</span>
                     </li>
                     <p className="title">USUARIO</p>
-                    <li>
-                        <FontAwesomeIcon icon={faUser} className="icon"/>
-                        <span>{localStorage.getItem("username")}</span>
-                    </li>
                     <li onClick={() => logoutUser()}>
                         <FontAwesomeIcon icon={faRightFromBracket} className="icon"/>
                         <span>Logout</span>

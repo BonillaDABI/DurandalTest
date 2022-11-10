@@ -5,14 +5,42 @@ import { useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faGooglePlusG, faWindows } from "@fortawesome/free-brands-svg-icons"
 import logo from "../Media/Logos/logo-dabi-line-white.png"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import '../SCSS/Elements/_footer.scss'
 import '../SCSS/Elements/_login.scss'
 
 const Login = () => {
+  const successAlert = () => {
+    toast.success("Login exitoso. Bienvenido!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+
+    });
+  }
+
+  const errorAlert = () => {
+    toast.error("Los datos ingresados no corresponden a un usuario registrado. Vuelve a intentarlo.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+
+    });
+  }
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
+      toast.success("Login exitoso. Bienvenido!");
       navigate('/dashboard')
     }
   })
@@ -31,14 +59,20 @@ const Login = () => {
       localStorage.setItem("username", response.data.user.name);
       //console.log(response.data.user.name);
       //console.log(response.data.accessToken);
-      navigate('/dashboard');
-      alert("Login exitoso. Bienvenido!");
+      successAlert();
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 3600);
+      
+      //alert("Login exitoso. Bienvenido!");
 
     }, (error) => {
+      errorAlert();
       console.log(error);
-      alert("Los datos ingresados no corresponden a un usuario registrado. Vuelve a intentarlo.");
+      //alert("Los datos ingresados no corresponden a un usuario registrado. Vuelve a intentarlo.");
     });
   }
+
 
   /*
   const onSuccess = (res) => {
@@ -51,6 +85,7 @@ const Login = () => {
 
   return (
     <div id="login-page">
+      <ToastContainer />
       <div className="container">
         <div className="form-container login-container">
           <form>

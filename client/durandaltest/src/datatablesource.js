@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -9,7 +9,7 @@ export const ClientsTableAxios = () => {
     // Config de hooks
     const [clientData, setClientData] = useState ( [] )
 
-    const endpoint = 'http://localhost:3001/clients'
+    const endpoint = 'http://localhost:3001/listClients'
 
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
@@ -48,27 +48,12 @@ export const ClientsTableAxios = () => {
         },
         { 
             field: 'user_id', 
-            headerName: 'Usuario', 
+            headerName: 'ID Usuario', 
             width: 130 
         },
         { 
             field: 'business_name', 
             headerName: 'Cliente', 
-            width: 180 
-        },
-        { 
-            field: 'rfc', 
-            headerName: 'RFC', 
-            width: 180 
-        },
-        { 
-            field: 'tax_id', 
-            headerName: 'Tax ID', 
-            width: 180 
-        },
-        { 
-            field: 'parent_id', 
-            headerName: 'Parent ID', 
             width: 180 
         },
         { 
@@ -107,6 +92,7 @@ export const ClientsTableAxios = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
@@ -199,6 +185,7 @@ export const UserTableAxios = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
@@ -258,6 +245,7 @@ export const PermissionsTableAxios = () => {
                 pageSize={10}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
@@ -317,6 +305,7 @@ export const RolesTableAxios = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
+                components={{Toolbar: GridToolbar}}
         />
     )
 }
