@@ -137,7 +137,7 @@ authController.register = async (req, res) => {
     }
 }
 
-authController.createClients = async (req, res) => {
+authController.protect = async (req, res, next) => {
     const token = req.body.Authorization.split(' ')[1];
 
     const decodedToken = jwt.verify(token, "jwtsecret")
@@ -145,25 +145,40 @@ authController.createClients = async (req, res) => {
     const userRoleID = await User.getUserRoleID(userID);
     const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
-    if (userPermissions.includes(1)) {
+    req.userPermissions = userPermissions
+    req.userID = userID
+    next()
+}
+
+
+authController.createClients = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+
+        //Mandar posibles user_id donde rol = cliente
+        const availableClients = await Client.sendClients()
+        res.write(JSON.stringify(availableClients))
+
         const date = new Date()
+
         const { user_id, business_name, rfc, tax_id } = req.body
 
         const client = await Client.getClientByRFC(rfc)
 
         if (!client) {
-            await Client.insertClient(user_id, business_name, rfc, tax_id, userID, date)
-            res.status(200).send('Usuario creado.')
+            await Client.insertClient(user_id, business_name, rfc, tax_id, req.userID, date)
+            res.status(200).write('Usuario creado.')
         } else {
-            res.status(400).send('Cliente ya existe.')
+            res.status(400).write('Cliente ya existe.')
         }
 
     } else {
-        res.status(400).send('No tienes permiso.')
+        res.status(400).write('No tienes permiso.')
     }
+    res.end()
 }
 
-authController.login = async (req, res, res2) => {
+authController.login = async (req, res) => {
     const { email, password } = req.body;
 
     var user = await User.getUserByEmail(email);

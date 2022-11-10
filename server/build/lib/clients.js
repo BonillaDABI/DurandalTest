@@ -42,8 +42,20 @@ const getAllClients = () => {
     });
 };
 
+const sendClients = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('Select id FROM users WHERE roles_id = 10', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 module.exports = {
     getClientByRFC,
     insertClient,
-    getAllClients
+    getAllClients,
+    sendClients
 }
