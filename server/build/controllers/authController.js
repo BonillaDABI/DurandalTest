@@ -130,7 +130,7 @@ authController.register = async (req, res) => {
             )
             res.status(200).send('Usuario creado.')
         } else {
-            res.status(400).send('Combinacion de correo y contrasena equivocada.')
+            res.status(400).send('Usuario ya existe.')
         }
     } else {
         res.status(400).send('No tienes permiso.')
