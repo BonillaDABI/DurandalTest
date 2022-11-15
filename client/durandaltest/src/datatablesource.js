@@ -8,7 +8,7 @@ export const AgentsTableAxios = () => {
     // Config de hooks
     const [agentData, setAgentData] = useState ( [] )
 
-    const endpoint = 'http://localhost:3001/listAgents'
+    const endpoint = 'http://localhost:3001/listTechs'
 
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
@@ -46,13 +46,13 @@ export const AgentsTableAxios = () => {
             width: 100
         },
         { 
-            field: 'user_id', 
-            headerName: 'ID Usuario', 
+            field: 'name', 
+            headerName: 'Nombre', 
             width: 130 
         },
         { 
-            field: 'business_name', 
-            headerName: 'Cliente', 
+            field: 'email', 
+            headerName: 'E-mail', 
             width: 180 
         },
         { 
