@@ -8,14 +8,15 @@ import "../SCSS/Elements/_tables.scss"
 
 function Clients() {
   return (
-      <div className="list">
-        <Sidebar />
-        <div className="listContainer">
-          <Navbar />
-          <Datatable />
-        </div>
+    <div className="list">
+      <Sidebar />
+      <div className="listContainer">
+        <Navbar />
+        <Datatable />
       </div>
-    );
-  }
+    </div>
+  );
+}
 
 export default Clients;
+

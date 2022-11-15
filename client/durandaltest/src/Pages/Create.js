@@ -102,6 +102,7 @@ const Create = () => {
             />
           </div>
           <div className="cu-button-container">
+
             <button className="cu-button" type="submit" onClick={() => createUser()}>
               Create
             </button>
@@ -113,5 +114,5 @@ const Create = () => {
 }
 export default Create;
 
-
+// createUser function = call createClient in the backend
 

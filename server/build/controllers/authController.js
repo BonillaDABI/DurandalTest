@@ -16,6 +16,7 @@ const sendEmail = require('../lib/email')
 const moment = require('moment');
 const { ClientRequest } = require("http");
 const Client = require('../lib/clients')
+const Techs = require('../lib/technicals');
 
 const authController = {}
 
@@ -61,6 +62,26 @@ authController.listClients = async (req, res) => {
         res.status(400).send('Error al obtener usuarios')
     }
 
+}
+
+authController.listTechnicals = async (req, res) => {
+    var techs = await Techs.getAllTechnicals()
+
+    for (let i = 0; i < techs.length; i++) {
+        techs[i].created_at = moment(techs[i].created_at).format("MMMM Do YY")
+        if (techs[i].is_active === 1) {
+            techs[i].is_active = "Activo"
+        } else {
+            techs[i].is_active = "Inactivo"
+        }
+    }
+
+    if (techs) {
+        res.json(techs)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener tecnicos')
+    }
 }
 
 authController.update = async (req, res) => {
@@ -150,14 +171,17 @@ authController.protect = async (req, res, next) => {
     next()
 }
 
+authController.sendUserIDsClients = async (req, res) => {
+    //Mandar posibles user_id donde rol = cliente
+    const availableClients = await Client.sendClients()
+    res.json(availableClients)
 
-authController.createClients = async (req, res) => {
+}
+
+
+authController.createClient = async (req, res) => {
 
     if (req.userPermissions.includes(1)) {
-
-        //Mandar posibles user_id donde rol = cliente
-        const availableClients = await Client.sendClients()
-        res.write(JSON.stringify(availableClients))
 
         const date = new Date()
 
@@ -167,7 +191,7 @@ authController.createClients = async (req, res) => {
 
         if (!client) {
             await Client.insertClient(user_id, business_name, rfc, tax_id, req.userID, date)
-            res.status(200).write('Usuario creado.')
+            res.status(200).write('Cliente creado.')
         } else {
             res.status(400).write('Cliente ya existe.')
         }
@@ -184,7 +208,7 @@ authController.login = async (req, res) => {
     var user = await User.getUserByEmail(email);
 
     if (!user) {
-        res.status(400).json({ error: "User Doesn't Exist" });
+        res.status(400).json({ message: "error 400, i fucked it up", error: "User Doesn't Exist" });
     } else {
         const dbPassword = user.password;
         const role_id = user.roles_id

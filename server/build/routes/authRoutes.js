@@ -31,7 +31,12 @@ router.get("/permissions", authController.permissions)
 
 router.get("/permissions/:id", authController.modulesANDfunctions)
 
-router.post("/createClients", authController.protect, authController.createClients)
+
+router.get("/autofillClients", authController.sendUserIDsClients)
+
+router.post("/createClient", authController.protect, authController.createClient)
+
+router.get("/listTechs", authController.listTechnicals)
 
 router.get("/listClients", authController.listClients)
 
