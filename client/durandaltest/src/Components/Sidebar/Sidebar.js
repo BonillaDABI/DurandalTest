@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import "../../SCSS/Components/_sidebar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell, faBook, faBorderAll, faCalendarDays, faGear, faKey, faLocationDot, faRightFromBracket, faSquarePollVertical, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faBell, faBook, faBorderAll, faCalendarDays, faGear, faHelmetSafety, faKey, faLocationDot, faRightFromBracket, faSquarePollVertical, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { DarkModeContext } from "../../Context/darkModeContext";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -42,6 +42,19 @@ const Sidebar = () => {
                             <span>Clientes</span>
                         </li>
                     </Link>
+                    <Link to="/tecnicos" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faHelmetSafety} className="icon"/>
+                            <span>Técnicos</span>
+                        </li>
+                    </Link>
+                    <Link to="/ListAll" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faUsers} className="icon"/>
+                            <span>Usuarios</span>
+                        </li>
+                    </Link>
+                    <p className="title">FUNCIONES</p>
                     <Link to="#" style={{textDecoration: 'none'}} >
                         <li>
                             <FontAwesomeIcon icon={faCalendarDays} className="icon"/>
@@ -61,12 +74,6 @@ const Sidebar = () => {
                         </li>
                     </Link>
                     <p className="title">LISTAS</p>
-                    <Link to="/ListAll" style={{textDecoration: 'none'}} >
-                        <li>
-                            <FontAwesomeIcon icon={faUsers} className="icon"/>
-                            <span>Usuarios</span>
-                        </li>
-                    </Link>
                     <Link to="/ListAllR" style={{textDecoration: 'none'}} >
                         <li>
                             <FontAwesomeIcon icon={faUserGear} className="icon"/>

@@ -4,6 +4,98 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+export const AgentsTableAxios = () => {
+    // Config de hooks
+    const [agentData, setAgentData] = useState ( [] )
+
+    const endpoint = 'http://localhost:3001/listAgents'
+
+    const getData = async() => {
+        await axios.get(endpoint).then((response) => {
+            const agentData = response.data
+            //console.log(agentData)
+            setAgentData(agentData)
+        })
+    }
+
+    useEffect( () => {
+        getData()
+    }, [])
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: () => {
+                return (
+                    <div className="cellAction">
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const agentColumns = [
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 100
+        },
+        { 
+            field: 'user_id', 
+            headerName: 'ID Usuario', 
+            width: 130 
+        },
+        { 
+            field: 'business_name', 
+            headerName: 'Cliente', 
+            width: 180 
+        },
+        { 
+            field: 'is_active', 
+            headerName: 'Estatus', 
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo"){
+                    return (
+                        <div>
+                          <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }else{
+                    return (
+                        <div>
+                          <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }
+
+              },
+              valueGetter: (params) => params.row.is_active
+        },
+        { 
+            field: 'created_at', 
+            headerName: 'Fecha de alta', 
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+                rows={agentData}
+                columns={agentColumns.concat(actionColumn)}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                components={{Toolbar: GridToolbar}}
+        />
+    )
+}
+
 
 export const ClientsTableAxios = () => {
     // Config de hooks
