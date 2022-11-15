@@ -53,9 +53,21 @@ const sendClients = () => {
     })
 }
 
+const sendTaxes = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, name FROM taxes', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 module.exports = {
     getClientByRFC,
     insertClient,
     getAllClients,
-    sendClients
+    sendClients,
+    sendTaxes
 }

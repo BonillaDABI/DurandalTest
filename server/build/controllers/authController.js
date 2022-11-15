@@ -174,7 +174,8 @@ authController.protect = async (req, res, next) => {
 authController.sendUserIDsClients = async (req, res) => {
     //Mandar posibles user_id donde rol = cliente
     const availableClients = await Client.sendClients()
-    res.json(availableClients)
+    const activeTaxes = await Client.sendTaxes()
+    res.json({ availableClients, activeTaxes })
 
 }
 
