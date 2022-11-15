@@ -11,6 +11,24 @@
         font-size: larger;
     }
 
+    .add-button {
+        width: 100px;
+        height: 30px;
+        border: none;
+        color: white;
+        border-radius: 20px;
+        background-color: $gray-dabi;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        font-weight: 600;
+        vertical-align: middle;
+    }
+
+    .add-button:hover {
+        background-color: $red-dabi;
+        font-weight: 600;
+    }
+
     .MuiDataGrid-columnHeaders {
         background-color: $table-header;
     }

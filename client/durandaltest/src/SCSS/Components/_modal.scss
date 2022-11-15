@@ -1,0 +1,11 @@
+@import "../_variables.scss";
+
+.save-modal-button {
+    width: 100px;
+    height: 40px;
+    font-family: $general-font;
+    background-color: $red-dabi;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
