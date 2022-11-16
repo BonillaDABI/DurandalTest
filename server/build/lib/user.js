@@ -259,7 +259,7 @@ const getUserRoleID = (id) => {
 
 const getRoles = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, role_name FROM roles', (err, rows) => {
+        await connection.query('SELECT id FROM roles', (err, rows) => {
             if (err) {
                 reject(err)
             }
