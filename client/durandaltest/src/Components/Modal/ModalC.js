@@ -14,7 +14,7 @@ function ModalC(props) {
     })
     
     var parents = JSON.parse(localStorage.getItem("parents"));
-    console.log(parents)
+    //console.log(parents)
 
     axios.get("http://localhost:3001/autofillClients", {
     })
