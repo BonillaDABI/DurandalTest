@@ -235,12 +235,12 @@ authController.createClient = async (req, res) => {
 
         const date = new Date()
 
-        const { user_id, business_name, rfc, tax_id } = req.body
+        const { user_id, business_name, rfc, tax_id, parent_id } = req.body
 
         const client = await Client.getClientByRFC(rfc)
 
         if (!client) {
-            await Client.insertClient(user_id, business_name, rfc, tax_id, req.userID, date)
+            await Client.insertClient(user_id, business_name, rfc, tax_id, req.userID, date, parent_id)
             res.status(200).json('Cliente creado.')
         } else {
             res.status(400).json('Cliente ya existe.')
