@@ -41,7 +41,7 @@ const insertTech = (user_id, creator_id, date) => {
 
 const sendTechs = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('Select id FROM users WHERE roles_id = 4', (err, rows) => {
+        await connection.query('Select id FROM users WHERE roles_id = 2', (err, rows) => {
             if (err) {
                 reject(err)
             }
