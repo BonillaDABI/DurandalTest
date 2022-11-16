@@ -18,7 +18,6 @@ function ModalU(props) {
     var roles = JSON.parse(localStorage.getItem("roles"));
     //console.log(roles)
     
-
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [firstSurname, setFirstSurname] = useState("");
@@ -74,7 +73,7 @@ function ModalU(props) {
                 </div>
 
                 <div className='form-fields'>
-                    <div className='input-container left'>
+                    <div className='input-container'>
                         <span className="input-span">Nombre(s)</span>
                         <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
                     </div>
@@ -104,9 +103,10 @@ function ModalU(props) {
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Rol</span>
-                        <select className="input-field"  value={role} onChange={(e) => setRole(e.target.value)} required> 
+                        <select className="input-field"  value={role} onChange={(e) => setRole(e.target.value)} required>
+                        <option value="none" selected hidden className="options">Seleccionar...</option> 
                         {roles.map((item, i) => {
-                            return <option className="role-options" key={i} value={item.id}>{item.role_name}</option>
+                            return <option className="options" key={i} value={item.id}>{item.role_name}</option>
                         })};
                         </select>
                     </div>

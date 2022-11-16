@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import "../../SCSS/Components/_modal.scss"
 

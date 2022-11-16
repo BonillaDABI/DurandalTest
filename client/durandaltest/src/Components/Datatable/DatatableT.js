@@ -1,6 +1,5 @@
 import "../../SCSS/Components/_datatable.scss"
 import * as React from 'react';
-
 import { AgentsTableAxios } from "../../datatablesource";
 import ModalT from "../Modal/ModalT";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
