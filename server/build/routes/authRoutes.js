@@ -42,4 +42,8 @@ router.get("/listClients", authController.listClients)
 
 router.get("/listAll", authController.listAll);
 
+router.get("/autofillRoles", authController.sendRoles);
+
+router.get("/autofillParentsID", authController.sendParentID);
+
 module.exports = router;

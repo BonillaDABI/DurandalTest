@@ -179,6 +179,17 @@ authController.sendUserIDsClients = async (req, res) => {
 
 }
 
+authController.sendRoles = async (req, res) => {
+    //Mandar posibles roles_id
+    const activeRoles = await User.getRoles()
+    res.json(activeRoles)
+}
+
+authController.sendParentID = async (req, res) => {
+    //Mandar parents_id
+    const parentsID = await Client.sendParentsID()
+    res.json(parentsID);
+}
 
 authController.createClient = async (req, res) => {
 

@@ -64,10 +64,22 @@ const sendTaxes = () => {
     })
 }
 
+const sendParentsID = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id FROM clients', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 module.exports = {
     getClientByRFC,
     insertClient,
     getAllClients,
     sendClients,
-    sendTaxes
+    sendTaxes,
+    sendParentsID
 }
