@@ -267,7 +267,7 @@ authController.createTechnical = async (req, res) => {
         const tech = await Techs.getTechByUserID(user_id)
 
         if (!tech) {
-            await Client.insertTech(user_id, req.userID, date)
+            await Techs.insertTech(user_id, req.userID, date)
             res.status(200).json('Tecnico creado.')
         } else {
             res.status(400).json('Tecnico ya existe.')
