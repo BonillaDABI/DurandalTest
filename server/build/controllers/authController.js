@@ -169,7 +169,7 @@ authController.register = async (req, res) => {
         const password = await bcrypt.hash(req.body.password, 10)
         const date = new Date()
 
-        const { name, first_surname, second_surname, email } = req.body;
+        const { name, first_surname, second_surname, email, roles_id } = req.body;
 
         const user = await User.getUserByEmail(email);
 
@@ -180,6 +180,7 @@ authController.register = async (req, res) => {
                 second_surname,
                 email,
                 password,
+                roles_id,
                 is_active: 01,
                 created_by: userID,
                 created_at: date,
