@@ -223,6 +223,11 @@ authController.sendRoles = async (req, res) => {
     res.json(activeRoles)
 }
 
+authController.sendTechs = async (req, res) => {
+    const sendtechs = await Techs.sendTechs()
+    res.json(sendtechs)
+}
+
 authController.sendParentID = async (req, res) => {
     //Mandar parents_id
     const parentsID = await Client.sendParentsID()

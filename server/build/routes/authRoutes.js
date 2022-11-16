@@ -50,6 +50,8 @@ router.get("/autofillParentsID", authController.sendParentID);
 
 router.post("/createTech", authController.protect, authController.createTechnical);
 
+router.get("/autofillTechs", authController.sendTechs);
+
 router.patch("/updateClient", authController.updateClient)
 
 module.exports = router;
