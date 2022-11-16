@@ -94,7 +94,7 @@ authController.update = async (req, res) => {
     const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
     if (userPermissions.includes(2)) {
-        const date = new Date().toDateString()
+        const date = new Date()
         const { name } = req.body;
         const password = await bcrypt.hash(req.body.password, 10)
         const { first_surname, second_surname, email } = req.body;
@@ -119,6 +119,43 @@ authController.update = async (req, res) => {
         res.status(400).send('No tienes permiso.')
     }
 }
+
+authController.updateClient = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const date = new Date()
+        const { user_id } = req.body;
+        const { business_name, rfc, tax_id, parent_id } = req.body;
+
+        try {
+            await connection.query(
+                "UPDATE clients SET ? WHERE user_id = ?",
+                [{
+                    business_name,
+                    rfc,
+                    tax_id,
+                    parent_id,
+                    updated_by: userID,
+                    updated_at: date
+                }, user_id],
+            )
+            res.status(200).send('Cliente actualizado.')
+        } catch (error) {
+            res.status(400).send('Error al actualizar cliente.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
+
+
 
 authController.register = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
@@ -203,15 +240,36 @@ authController.createClient = async (req, res) => {
 
         if (!client) {
             await Client.insertClient(user_id, business_name, rfc, tax_id, req.userID, date)
-            res.status(200).write('Cliente creado.')
+            res.status(200).json('Cliente creado.')
         } else {
-            res.status(400).write('Cliente ya existe.')
+            res.status(400).json('Cliente ya existe.')
         }
 
     } else {
-        res.status(400).write('No tienes permiso.')
+        res.status(400).json('No tienes permiso.')
     }
-    res.end()
+}
+
+authController.createTechnical = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+
+        const date = new Date()
+
+        const { user_id } = req.body
+
+        const tech = await Techs.getTechByUserID(user_id)
+
+        if (!tech) {
+            await Client.insertTech(user_id, req.userID, date)
+            res.status(200).json('Tecnico creado.')
+        } else {
+            res.status(400).json('Tecnico ya existe.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
 }
 
 authController.login = async (req, res) => {
@@ -333,6 +391,17 @@ authController.delete = async (req, res) => {
         res.status(400).send('Error al borrar usuario')
     }
 
+}
+
+authController.deleteClient = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Client.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Cliente borrado.')
+    } else {
+        res.status(400).send('Error al borrar cliente')
+    }
 }
 
 authController.dashboard = (req, res) => {

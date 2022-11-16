@@ -14,7 +14,9 @@ router.post("/login", authController.login);
 router.patch("/update", authController.update)
 
 
-router.get("/delete/:name", authController.delete);
+router.delete("/delete/:name", authController.delete);
+
+router.delete("/deleteClient/:id", authController.deleteClient);
 
 router.post("/addPerms", authController.rudPermissions)
 
@@ -45,5 +47,9 @@ router.get("/listAll", authController.listAll);
 router.get("/autofillRoles", authController.sendRoles);
 
 router.get("/autofillParentsID", authController.sendParentID);
+
+router.post("/createTech", authController.protect, authController.createTechnical);
+
+router.patch("/updateClient", authController.updateClient)
 
 module.exports = router;

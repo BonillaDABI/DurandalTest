@@ -13,6 +13,15 @@ const getClientByRFC = (rfc) => {
     })
 }
 
+const getClientByUserID = (user_id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM clients WHERE user_id = ?', [user_id], (err, rows) => {
+            if (err) { reject(err) }
+            resolve(rows[0])
+        })
+    })
+}
+
 const insertClient = (user_id, business_name, rfc, tax_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('INSERT INTO clients SET ?', [{
@@ -75,11 +84,31 @@ const sendParentsID = () => {
     })
 }
 
+const deleteById = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connection.query(
+                ' DELETE FROM `clients` WHERE `id` = ?  ', id,
+                function (err, rows) {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(true);
+                }
+            );
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
 module.exports = {
     getClientByRFC,
     insertClient,
     getAllClients,
     sendClients,
     sendTaxes,
-    sendParentsID
+    sendParentsID,
+    getClientByUserID,
+    deleteById
 }
