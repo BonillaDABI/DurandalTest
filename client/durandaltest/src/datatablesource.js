@@ -1,10 +1,13 @@
 import axios from "axios";
-import React, { useState, useEffect, useMemo } from "react";
-import MaterialReactTable from "material-react-table";
+import React, { useState, useEffect } from "react";
+//import MaterialReactTable from "material-react-table";
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
+import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
+import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
 
 export const AgentsTableAxios = () => {
     // Config de hooks
@@ -24,6 +27,8 @@ export const AgentsTableAxios = () => {
         getData()
     }, [])
 
+    const [modalTDeleteShow, setModalTDeleteShow] = useState(false);
+
     const actionColumn = [
         {
             field: "action",
@@ -32,8 +37,13 @@ export const AgentsTableAxios = () => {
             renderCell: () => {
                 return (
                     <div className="cellAction">
+                        <ModalTDelete
+                            show={modalTDeleteShow}
+                            onHide={() => setModalTDeleteShow(false)}
+
+                        />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalTDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )
             }
@@ -117,6 +127,8 @@ export const ClientsTableAxios = () => {
         getData()
     }, [])
 
+    const [modalCDeleteShow, setModalCDeleteShow] = useState(false);
+
     const actionColumn = [
         {
             field: "action",
@@ -125,8 +137,13 @@ export const ClientsTableAxios = () => {
             renderCell: () => {
                 return (
                     <div className="cellAction">
+                        <ModalCDelete
+                            show={modalCDeleteShow}
+                            onHide={() => setModalCDeleteShow(false)}
+
+                        />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalCDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )
             }
@@ -193,6 +210,7 @@ export const ClientsTableAxios = () => {
 
 
 export const UserTableAxios = () => {
+    
     // Config de hooks
     const [userData, setUserData] = useState ( [] )
 
@@ -201,7 +219,7 @@ export const UserTableAxios = () => {
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
             const userData = response.data
-            //console.log(userData)
+            console.log(userData)
             setUserData(userData)
         })
     }
@@ -210,16 +228,24 @@ export const UserTableAxios = () => {
         getData()
     }, [])
 
+    const [modalUDeleteShow, setModalUDeleteShow] = useState(false);
+
     const actionColumn = [
         {
             field: "action",
             headerName: "Detalle",
             width: 120,
-            renderCell: () => {
+            renderCell: () => {                
                 return (
+                
                     <div className="cellAction">
+                        <ModalUDelete
+                            show={modalUDeleteShow}
+                            onHide={() => setModalUDeleteShow(false)}
+
+                        />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalUDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )
             }
