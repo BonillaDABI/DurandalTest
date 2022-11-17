@@ -115,6 +115,7 @@ function ModalC(props) {
                         <span className="input-span">Parent ID</span>
                         <select className="input-field"  value={parentId} onChange={(e) => setParentId(e.target.value)} required> 
                         <option value="none" selected hidden className="options">Seleccionar...</option>
+                        <option value="" className="options">Ninguna</option>
                         {parents.map((item, i) => {
                             return <option className="options" key={i} value={item.id}>{item.id}</option>
                         })};
