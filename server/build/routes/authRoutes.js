@@ -46,7 +46,7 @@ router.get("/listAll", authController.listAll);
 
 router.get("/autofillRoles", authController.sendRoles);
 
-router.get("/autofillParentsID", authController.sendParentID);
+// router.get("/autofillParentsID", authController.sendParentID);
 
 router.post("/createTech", authController.protect, authController.createTechnical);
 

@@ -211,9 +211,9 @@ authController.protect = async (req, res, next) => {
 
 authController.sendUserIDsClients = async (req, res) => {
     //Mandar posibles user_id donde rol = cliente
-    const availableClients = await Client.sendClients()
+    const parentsID = await Client.sendParentsID()
     const activeTaxes = await Client.sendTaxes()
-    res.json({ availableClients, activeTaxes })
+    res.json({ parentsID, activeTaxes })
 
 }
 
@@ -228,11 +228,11 @@ authController.sendTechs = async (req, res) => {
     res.json(sendtechs)
 }
 
-authController.sendParentID = async (req, res) => {
-    //Mandar parents_id
-    const parentsID = await Client.sendParentsID()
-    res.json(parentsID);
-}
+// authController.sendParentID = async (req, res) => {
+//     //Mandar parents_id
+//     const parentsID = await Client.sendParentsID()
+//     res.json(parentsID);
+// }
 
 authController.createClient = async (req, res) => {
 
@@ -240,7 +240,7 @@ authController.createClient = async (req, res) => {
         const password = await bcrypt.hash(req.body.password, 10)
         const date = new Date()
 
-        const { name, first_surname, second_surname, email, roles_id, business_name, rfc, tax_id } = req.body;
+        const { name, first_surname, second_surname, email, business_name, rfc, tax_id } = req.body;
 
         const user = await User.getUserByEmail(email);
 
@@ -251,7 +251,7 @@ authController.createClient = async (req, res) => {
                 second_surname,
                 email,
                 password,
-                roles_id,
+                roles_id: 10,
                 is_active: 01,
                 created_by: req.userID,
                 created_at: date,
@@ -294,7 +294,7 @@ authController.createTechnical = async (req, res) => {
         const password = await bcrypt.hash(req.body.password, 10)
         const date = new Date()
 
-        const { name, first_surname, second_surname, email, roles_id } = req.body;
+        const { name, first_surname, second_surname, email } = req.body;
 
         const user = await User.getUserByEmail(email);
 
@@ -305,7 +305,7 @@ authController.createTechnical = async (req, res) => {
                 second_surname,
                 email,
                 password,
-                roles_id,
+                roles_id: 2,
                 is_active: 01,
                 created_by: req.userID,
                 created_at: date,

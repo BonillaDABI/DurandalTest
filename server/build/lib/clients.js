@@ -76,7 +76,7 @@ const sendTaxes = () => {
 
 const sendParentsID = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id FROM clients', (err, rows) => {
+        await connection.query('SELECT id, business_name FROM clients', (err, rows) => {
             if (err) {
                 reject(err)
             }
