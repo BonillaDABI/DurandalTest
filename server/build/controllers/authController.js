@@ -237,22 +237,49 @@ authController.sendParentID = async (req, res) => {
 authController.createClient = async (req, res) => {
 
     if (req.userPermissions.includes(1)) {
-
+        const password = await bcrypt.hash(req.body.password, 10)
         const date = new Date()
 
-        var { user_id, business_name, rfc, tax_id, parent_id } = req.body
+        const { name, first_surname, second_surname, email, roles_id, business_name, rfc, tax_id } = req.body;
 
-        if (parent_id === '') {
-            parent_id = null;
-        }
+        const user = await User.getUserByEmail(email);
 
-        const client = await Client.getClientByRFC(rfc)
+        if (!user) {
+            connection.query("INSERT INTO `users` SET ?", [{
+                name,
+                first_surname,
+                second_surname,
+                email,
+                password,
+                roles_id,
+                is_active: 01,
+                created_by: req.userID,
+                created_at: date,
+                updated_at: date
+            }], async (err, result) => {
+                if (err) {
+                    res.status(500).json('Error al crear usuario.')
+                }
+                const userID = result.insertId;
 
-        if (!client) {
-            await Client.insertClient(user_id, business_name, rfc, tax_id, req.userID, date, parent_id)
-            res.status(200).json('Cliente creado.')
+                var { parent_id } = req.body
+
+                if (parent_id === '') {
+                    parent_id = null;
+                }
+
+                const client = await Client.getClientByRFC(rfc)
+
+                if (!client) {
+                    await Client.insertClient(userID, business_name, rfc, tax_id, req.userID, date, parent_id)
+                    res.status(200).json('Cliente creado.')
+                } else {
+                    res.status(400).json('Cliente ya existe.')
+                }
+
+            })
         } else {
-            res.status(400).json('Cliente ya existe.')
+            res.status(400).send('Usuario ya existe.')
         }
 
     } else {
@@ -264,21 +291,43 @@ authController.createTechnical = async (req, res) => {
 
     if (req.userPermissions.includes(1)) {
 
+        const password = await bcrypt.hash(req.body.password, 10)
         const date = new Date()
 
-        const { user_id } = req.body
+        const { name, first_surname, second_surname, email, roles_id } = req.body;
 
-        const tech = await Techs.getTechByUserID(user_id)
+        const user = await User.getUserByEmail(email);
 
-        if (!tech) {
-            await Techs.insertTech(user_id, req.userID, date)
-            res.status(200).json('Tecnico creado.')
+        if (!user) {
+            connection.query("INSERT INTO `users` SET ?", [{
+                name,
+                first_surname,
+                second_surname,
+                email,
+                password,
+                roles_id,
+                is_active: 01,
+                created_by: req.userID,
+                created_at: date,
+                updated_at: date
+            }], async (err, result) => {
+                if (err) {
+                    res.status(500).json('Error al crear usuario.')
+                }
+                const userID = result.insertId;
+                const tech = await Techs.getTechByUserID(userID)
+
+                if (!tech) {
+                    await Techs.insertTech(userID, req.userID, date)
+                    res.status(200).json('Tecnico creado.')
+                } else {
+                    res.status(400).json('Tecnico ya existe.')
+                }
+            })
+
         } else {
-            res.status(400).json('Tecnico ya existe.')
+            res.status(400).json('No tienes permiso.')
         }
-
-    } else {
-        res.status(400).json('No tienes permiso.')
     }
 }
 
