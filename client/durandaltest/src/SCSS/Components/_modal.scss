@@ -1,5 +1,10 @@
 @import "../_variables.scss";
 
+.MuiAutocomplete-root {
+    border-radius: 5px;
+    border: 2px solid $gray-dabi;
+}
+
 .save-modal-button {
     width: 100px;
     height: 40px;
@@ -8,6 +13,17 @@
     color: white;
     border: none;
     border-radius: 5px;
+}
+
+#large-form-field {
+    width: 100%;
+    .input-container {
+        width: 1050px;
+        .input-field{
+            width: 100%;
+        }
+    }
+    
 }
 
 form .form-fields {
@@ -53,46 +69,3 @@ form .form-fields {
     }
 }
 
-form .form-fields-client {
-    display: flex;
-    float: left;
-    justify-content: center;
-    box-sizing: border-box;
-    width: 100%;
-
-    .input-container {
-        float: left;
-        box-sizing: border-box;
-        width: 100%;
-        margin-bottom: 10px;
-        margin-right: 30px;
-        justify-content: space-between;    
-        font-family: $general-font;
-
-        .input-field {
-            height: 48px;
-            width: 80%;
-            outline: none;
-            border-radius: 5px;
-            border: 2px solid $gray-dabi;
-            text-indent: 10px;
-
-            &::placeholder {
-                font-size: 16px;
-            }
-
-            .options {
-                font-size: 16px;
-                background-color: $background;
-            }
-        }
-
-        .input-span {
-            color: $gray-dabi;
-            display: block;
-            font-weight: 700;
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-    }
-}

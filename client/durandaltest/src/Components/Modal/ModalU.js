@@ -6,6 +6,7 @@ import "../../SCSS/Components/_modal.scss"
 function ModalU(props) {
     // axios.get("http://localhost:3001/autofillRoles")
     
+    
     axios.get("http://localhost:3001/autofillRoles", {
     })
     .then((response) => {
@@ -104,7 +105,7 @@ function ModalU(props) {
                     <div className='input-container'>
                         <span className="input-span">Rol</span>
                         <select className="input-field"  value={role} onChange={(e) => setRole(e.target.value)} required>
-                        <option value="none" selected hidden className="options">Seleccionar...</option> 
+                        <option value="" selected disabled hidden className="options">Seleccionar...</option> 
                         {roles.map((item, i) => {
                             return <option className="options" key={i} value={item.id}>{item.role_name}</option>
                         })};

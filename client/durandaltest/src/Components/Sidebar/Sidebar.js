@@ -86,7 +86,7 @@ const Sidebar = () => {
                             <span>Permisos</span>                        
                         </li>
                     </Link>
-                    <p className="title">EXTRAS</p>
+                    <p className="title">EXTRAS / USUARIO</p>
                     <li>
                         <FontAwesomeIcon icon={faBell} className="icon"/>
                         <span>Notificaciones</span>
@@ -95,11 +95,10 @@ const Sidebar = () => {
                         <FontAwesomeIcon icon={faGear} className="icon"/>
                         <span>Ajustes</span>
                     </li>
-                    <p className="title">USUARIO</p>
                     <li onClick={() => logoutUser()}>
                         <FontAwesomeIcon icon={faRightFromBracket} className="icon"/>
                         <span>Logout</span>
-                    </li>
+                    </li>                    
                 </ul>
             </div>
             <div className="bottom">

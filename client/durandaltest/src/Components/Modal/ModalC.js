@@ -1,36 +1,36 @@
 import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+//import { Autocomplete, TextField } from '@mui/material';
+
 import "../../SCSS/Components/_modal.scss"
 
-function ModalC(props) {
-    axios.get("http://localhost:3001/autofillParentsID", {
-    })
-    .then((response) => {
-        const parentInfo = JSON.stringify(response.data);
-        //console.log(parentInfo);
-        localStorage.setItem("parents", parentInfo)
-        //console.log(localStorage.getItem("parents"));
-    })
-    
-    var parents = JSON.parse(localStorage.getItem("parents"));
-    //console.log(parents)
+/*const options = [
+    { label: 'The Godfather', id: 1 },
+    { label: 'Pulp Fiction', id: 2 },
+];*/
 
+function ModalC(props) {
     axios.get("http://localhost:3001/autofillClients", {
     })
     .then((response) => {
-        const userInfo = JSON.stringify(response.data);
-        //console.log(userInfo);
-        localStorage.setItem("users", userInfo)
-        //console.log(localStorage.getItem("users"));
+        const clientInfo = JSON.stringify(response.data);
+        //console.log(clientInfo);
+        localStorage.setItem("clients", clientInfo)
+        //console.log(localStorage.getItem("clients"));
     })
     
-    var users = JSON.parse(localStorage.getItem("users"));
-    //console.log(users)
-    //console.log(users.availableClients)
+    var clients = JSON.parse(localStorage.getItem("clients"));
+    //console.log(clients)
+    //console.log(clients.availableClients)
     
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [firstSurname, setFirstSurname] = useState("");
+    const [secondSurname, setSecondSurname] = useState("");
+    const [password, setPW] = useState("");
+
     const [business, setBusiness] = useState("");
-    const [userId, setUserId] = useState("");
     const [rfc, setRFC] = useState("");
     const [taxId, setTaxId] = useState("");
     const [parentId, setParentId] = useState("");
@@ -38,8 +38,12 @@ function ModalC(props) {
     function createClient () {
         axios.post('http://localhost:3001/createClient', {
             'Authorization': "bearer " + localStorage.getItem('token'),
+            name: name,
+            first_surname: firstSurname,
+            second_surname: secondSurname,
+            email: email,
+            password: password,
             business_name: business,
-            user_id: userId,
             rfc: rfc,
             tax_id: taxId,
             parent_id: parentId
@@ -61,7 +65,7 @@ function ModalC(props) {
     return (
         <Modal 
             {...props}
-            size="lg"
+            size="xl"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -71,53 +75,74 @@ function ModalC(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form>
-                <div className='form-fields-client'>
+            <form className='client-form'>
+            <div className='form-fields' id="large-form-field">
+                    <div className='input-container'>
+                        <span className="input-span">Correo electrónico</span>
+                        <input className="input-field" type="email" placeholder="Ingresar..." value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Nombre(s)</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Apellido paterno</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={firstSurname} onChange={(e) => setFirstSurname(e.target.value)} required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Apellido materno</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={secondSurname} onChange={(e) => setSecondSurname(e.target.value)} required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Contraseña</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={password} onChange={(e) => setPW(e.target.value)} required />
+                    </div>
+                </div>
+                <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Nombre del negocio</span>
                         <input className="input-field" type="text" placeholder="Ingresar..." value={business} onChange={(e) => setBusiness(e.target.value)} required />
                     </div>
                 </div>
 
-                <div className='form-fields-client'>
-                    <div className='input-container'>
-                        <span className="input-span">User ID</span>
-                        <select className="input-field"  value={userId} onChange={(e) => setUserId(e.target.value)} required>
-                        <option value="none" selected hidden className="options">Seleccionar...</option> 
-                        {users.availableClients.map((item, i) => {
-                            return <option className="options" key={i} value={item.id}>{item.id}</option>
-                        })};
-                        </select>
-                    </div>
-                </div>
-
-                <div className='form-fields-client'>
+                <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">RFC</span>
                         <input className="input-field" type="text" placeholder="Ingresar..." value={rfc} onChange={(e) => setRFC(e.target.value)} required />
                     </div>
                 </div>
 
-                <div className='form-fields-client'>
+                <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Tax ID</span>
                         <select className="input-field"  value={taxId} onChange={(e) => setTaxId(e.target.value)} required>
-                        <option value="none" selected hidden className="options">Seleccionar...</option> 
-                        {users.activeTaxes.map((item, i) => {
+                        <option value="" disabled hidden className="options">Seleccionar...</option> 
+                        {clients.activeTaxes.map((item, i) => {
                             return <option className="options" key={i} value={item.id}>{item.name}</option>
                         })};
                         </select>
                     </div>
                 </div>
 
-                <div className='form-fields-client'>
+                <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Parent ID</span>
-                        <select className="input-field"  value={parentId} onChange={(e) => setParentId(e.target.value)} required> 
-                        <option value="none" selected hidden className="options">Seleccionar...</option>
-                        <option value="" className="options">Ninguna</option>
-                        {parents.map((item, i) => {
-                            return <option className="options" key={i} value={item.id}>{item.id}</option>
+                        <select className="input-field"  value={parentId} onChange={(e) => setParentId(e.target.value)} required > 
+                        <option value="" className="options">Ninguna</option> 
+                        {clients.parentsID.map((item, i) => {
+                            return <option className="options" key={i} value={item.id}>{item.business_name}</option>
                         })};
                         </select>
                     </div>
@@ -132,3 +157,14 @@ function ModalC(props) {
 };
 
 export default ModalC;
+
+/*
+
+<div className='form-fields'>
+    <div className='input-container'>
+        <span className="input-span">Parent ID</span>
+        <Autocomplete options={options} renderInput={(params) => <TextField {...params} placeholder="Buscar..." />}/>
+    </div>
+</div>
+
+*/
