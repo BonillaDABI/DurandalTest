@@ -240,7 +240,11 @@ authController.createClient = async (req, res) => {
 
         const date = new Date()
 
-        const { user_id, business_name, rfc, tax_id, parent_id } = req.body
+        var { user_id, business_name, rfc, tax_id, parent_id } = req.body
+
+        if (parent_id === '') {
+            parent_id = null;
+        }
 
         const client = await Client.getClientByRFC(rfc)
 
