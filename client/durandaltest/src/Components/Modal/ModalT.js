@@ -91,7 +91,7 @@ function ModalT(props) {
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Contraseña</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={password} onChange={(e) => setPW(e.target.value)} required />
+                        <input className="input-field" type="password" placeholder="Ingresar..." value={password} onChange={(e) => setPW(e.target.value)} required />
                     </div>
                 </div>
             </form>
