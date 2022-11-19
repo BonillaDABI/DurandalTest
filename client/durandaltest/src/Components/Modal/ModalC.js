@@ -139,12 +139,13 @@ function ModalC(props) {
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Parent ID</span>
-                        <select className="input-field"  value={parentId} onChange={(e) => setParentId(e.target.value)} required > 
+                        <input list='parents' name='parent' id='parent' className="input-field"/>
+                        <datalist id="parents"   value={parentId} onChange={(e) => setParentId(e.target.value)} required > 
                         <option value="" className="options">Ninguna</option> 
                         {clients.parentsID.map((item, i) => {
                             return <option className="options" key={i} value={item.id}>{item.business_name}</option>
                         })};
-                        </select>
+                        </datalist>
                     </div>
                 </div>
             </form> 
