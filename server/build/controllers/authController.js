@@ -17,6 +17,7 @@ const moment = require('moment');
 const { ClientRequest } = require("http");
 const Client = require('../lib/clients')
 const Techs = require('../lib/technicals');
+const Contact = require('../lib/contact')
 
 const authController = {}
 
@@ -62,6 +63,29 @@ authController.listClients = async (req, res) => {
         res.status(400).send('Error al obtener usuarios')
     }
 
+}
+
+authController.listContacts = async (req, res) => {
+
+    var contacts = await Contact.getAllContacts()
+
+
+    if (contacts) {
+
+        for (let i = 0; i < contacts.length; i++) {
+            contacts[i].created_at = moment(contacts[i].created_at).format("MMMM Do YY")
+            if (contacts[i].is_active === 1) {
+                contacts[i].is_active = "Activo"
+            } else {
+                contacts[i].is_active = "Inactivo"
+            }
+        }
+
+        res.json(contacts)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener usuarios')
+    }
 }
 
 authController.listTechnicals = async (req, res) => {
@@ -262,17 +286,15 @@ authController.createClient = async (req, res) => {
                 }
                 const userID = result.insertId;
 
-                var { parent_id } = req.body
-
-                if (parent_id === '') {
-                    parent_id = null;
-                }
 
                 const client = await Client.getClientByRFC(rfc)
 
                 if (!client) {
-                    await Client.insertClient(userID, business_name, rfc, tax_id, req.userID, date, parent_id)
-                    res.status(200).json('Cliente creado.')
+                    const cClient = await Client.insertClient(userID, business_name, rfc, tax_id, req.userID, date)
+
+                    await Contact.insertContact(userID, cClient.insertId, req.userID, date)
+
+                    res.status(200).json('Cliente y contacto creado.')
                 } else {
                     res.status(400).json('Cliente ya existe.')
                 }

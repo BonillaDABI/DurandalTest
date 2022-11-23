@@ -27,6 +27,7 @@ router.post("/createRoles", authController.createRoles)
 router.patch("/updateRoles", authController.updateRoles)
 
 router.post("/forgotPassword", authController.forgotPassword)
+
 router.patch("/resetPassword/:resetToken", authController.resetPassword)
 
 router.get("/permissions", authController.permissions)
@@ -41,6 +42,8 @@ router.post("/createClient", authController.protect, authController.createClient
 router.get("/listTechs", authController.listTechnicals)
 
 router.get("/listClients", authController.listClients)
+
+router.get("/listContacts", authController.listContacts)
 
 router.get("/listAll", authController.listAll);
 

@@ -22,7 +22,7 @@ const getClientByUserID = (user_id) => {
     })
 }
 
-const insertClient = (user_id, business_name, rfc, tax_id, creator_id, date, parent_id) => {
+const insertClient = (user_id, business_name, rfc, tax_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('INSERT INTO clients SET ?', [{
             user_id,
@@ -32,8 +32,7 @@ const insertClient = (user_id, business_name, rfc, tax_id, creator_id, date, par
             is_active: 01,
             created_by: creator_id,
             created_at: date,
-            updated_at: date,
-            parent_id
+            updated_at: date
         }], (err, rows) => {
             if (err) {
                 reject(err)
@@ -45,7 +44,7 @@ const insertClient = (user_id, business_name, rfc, tax_id, creator_id, date, par
 
 const getAllClients = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('Select id, user_id, business_name, is_active, created_at FROM clients ', (err, rows) => {
+        await connection.query('Select c.id, u.name, business_name, c.is_active, c.created_at FROM clients c, users u WHERE c.user_id = u.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
