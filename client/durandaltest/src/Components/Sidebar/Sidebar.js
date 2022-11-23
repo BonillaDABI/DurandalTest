@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import "../../SCSS/Components/_sidebar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell, faBook, faBorderAll, faCalendarDays, faGear, faHelmetSafety, faKey, faLocationDot, faRightFromBracket, faSquarePollVertical, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook, faBell, faBook, faBorderAll, faCalendarDays, faGear, faHelmetSafety, faKey, faLocationDot, faRightFromBracket, faSquarePollVertical, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { DarkModeContext } from "../../Context/darkModeContext";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -40,6 +40,12 @@ const Sidebar = () => {
                         <li>
                             <FontAwesomeIcon icon={faBook} className="icon"/>
                             <span>Clientes</span>
+                        </li>
+                    </Link>
+                    <Link to="/contacts" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faAddressBook} className="icon"/>
+                            <span>Contactos</span>
                         </li>
                     </Link>
                     <Link to="/tecnicos" style={{textDecoration: 'none'}} >

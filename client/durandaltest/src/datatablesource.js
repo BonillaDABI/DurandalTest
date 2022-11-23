@@ -7,7 +7,117 @@ import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
+import ModalCCDelete from "./Components/Modal/Delete/ModalCCDelete";
 import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
+
+export const ContactsTableAxios = () => {
+    // Config de hooks
+    const [contactData, setContactData] = useState ( [] )
+
+    const endpoint = 'http://localhost:3001/listContacts'
+
+    const getData = async() => {
+        await axios.get(endpoint).then((response) => {
+            const contactData = response.data
+            //console.log(contactData)
+            setContactData(contactData)
+        })
+    }
+
+    useEffect( () => {
+        getData()
+    }, [])
+
+    const [modalCCDeleteShow, setModalCCDeleteShow] = useState(false);
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: () => {
+                return (
+                    <div className="cellAction">
+                        <ModalCCDelete
+                            show={modalCCDeleteShow}
+                            onHide={() => setModalCCDeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalCCDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const contactColumns = [
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 100
+        },
+        { 
+            field: 'name', 
+            headerName: 'Nombre de contacto', 
+            width: 200 
+        },
+        { 
+            field: 'email', 
+            headerName: 'E-mail', 
+            width: 180 
+        },
+        { 
+            field: 'business_name', 
+            headerName: 'Cliente', 
+            width: 180 
+        },
+        { 
+            field: 'is_active', 
+            headerName: 'Estatus', 
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo"){
+                    return (
+                        <div>
+                          <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }else{
+                    return (
+                        <div>
+                          <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }
+
+              },
+              valueGetter: (params) => params.row.is_active
+        },
+        { 
+            field: 'created_at', 
+            headerName: 'Fecha de alta', 
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
+                rows={contactData}
+                columns={contactColumns.concat(actionColumn)}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                components={{Toolbar: GridToolbar}}
+        />
+    )
+}
 
 export const AgentsTableAxios = () => {
     // Config de hooks
@@ -98,6 +208,11 @@ export const AgentsTableAxios = () => {
 
     return (
         <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
                 rows={agentData}
                 columns={agentColumns.concat(actionColumn)}
                 pageSize={5}
@@ -158,9 +273,9 @@ export const ClientsTableAxios = () => {
             width: 100
         },
         { 
-            field: 'user_id', 
-            headerName: 'ID Usuario', 
-            width: 130 
+            field: 'name', 
+            headerName: 'Nombre de contacto', 
+            width: 200 
         },
         { 
             field: 'business_name', 
@@ -198,6 +313,11 @@ export const ClientsTableAxios = () => {
 
     return (
         <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
                 rows={clientData}
                 columns={clientColumns.concat(actionColumn)}
                 pageSize={5}
@@ -300,6 +420,11 @@ export const UserTableAxios = () => {
 
     return (
         <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
                 rows={userData}
                 columns={userColumns.concat(actionColumn)}
                 pageSize={5}
@@ -360,6 +485,11 @@ export const PermissionsTableAxios = () => {
 
     return (
         <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
                 rows={permissionData}
                 columns={permissionColumns.concat(actionColumn)}
                 pageSize={10}
@@ -420,6 +550,11 @@ export const RolesTableAxios = () => {
 
     return (
         <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
                 rows={rolesData}
                 columns={rolesColumns.concat(actionColumn)}
                 pageSize={5}

@@ -45,8 +45,7 @@ function ModalC(props) {
             password: password,
             business_name: business,
             rfc: rfc,
-            tax_id: taxId,
-            parent_id: parentId
+            tax_id: taxId
         })
         .then((response) => {
             console.log(response);
@@ -76,7 +75,7 @@ function ModalC(props) {
             </Modal.Header>
             <Modal.Body>
             <form className='client-form'>
-            <div className='form-fields' id="large-form-field">
+            <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Correo electrónico</span>
                         <input className="input-field" type="email" placeholder="Ingresar..." value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -136,18 +135,7 @@ function ModalC(props) {
                     </div>
                 </div>
 
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Parent ID</span>
-                        <input list='parents' name='parent' id='parent' className="input-field"/>
-                        <datalist id="parents"   value={parentId} onChange={(e) => setParentId(e.target.value)} required > 
-                        <option value="" className="options">Ninguna</option> 
-                        {clients.parentsID.map((item, i) => {
-                            return <option className="options" key={i} value={item.id}>{item.business_name}</option>
-                        })};
-                        </datalist>
-                    </div>
-                </div>
+                
             </form> 
             </Modal.Body>
             <Modal.Footer>
@@ -165,6 +153,22 @@ export default ModalC;
     <div className='input-container'>
         <span className="input-span">Parent ID</span>
         <Autocomplete options={options} renderInput={(params) => <TextField {...params} placeholder="Buscar..." />}/>
+    </div>
+</div>
+
+*/
+
+/*
+<div className='form-fields'>
+    <div className='input-container'>
+        <span className="input-span">Parent ID</span>
+        <input list='parents' name='parent' id='parent' className="input-field"/>
+        <datalist id="parents"   value={parentId} onChange={(e) => setParentId(e.target.value)} required > 
+            <option value="" className="options">Ninguna</option> 
+            {clients.parentsID.map((item, i) => {
+                return <option className="options" key={i} value={item.id}>{item.business_name}</option>
+            })};
+        </datalist>
     </div>
 </div>
 
