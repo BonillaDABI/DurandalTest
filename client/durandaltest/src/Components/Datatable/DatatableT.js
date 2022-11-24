@@ -8,17 +8,17 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Datatable = () => {
-    const [modalShow, setModalShow] = React.useState(false);
+    const [modalTShow, setModalTShow] = React.useState(false);
 
     return (
         <div className="datatable">
             <ToastContainer />
             <span className="dabiWebText">DABI WEB / Técnicos </span>
-            <button className="add-button" onClick={() => setModalShow(true)}>Agregar <FontAwesomeIcon icon={faAdd}/></button>
+            <button className="add-button" onClick={() => setModalTShow(true)}>Agregar <FontAwesomeIcon icon={faAdd}/></button>
 
             <ModalT
-                show={modalShow}
-                onHide={() => setModalShow(false)}
+                show={modalTShow}
+                onHide={() => setModalTShow(false)}
             />
 
             <AgentsTableAxios />

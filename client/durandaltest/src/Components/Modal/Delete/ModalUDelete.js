@@ -24,7 +24,7 @@ function ModalUDelete(props) {
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
-            backdropClassName
+            backdropClassName="modal-backdrop"
             centered
         >
             <Modal.Header closeButton>

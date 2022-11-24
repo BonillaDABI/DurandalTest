@@ -98,6 +98,7 @@ function ModalC(props) {
             {...props}
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
+            backdropClassName="modal-backdrop"
             centered
         >
             <Modal.Header closeButton>
@@ -151,14 +152,14 @@ function ModalC(props) {
 
                 <div className='form-fields'>
                     <div className='input-container'>
-                        <span className="input-span">Apellido paterno</span>
+                        <span className="input-span">Primer apellido</span>
                         <input className="input-field" type="text" placeholder="Ingresar..." value={firstSurname} onChange={(e) => setFirstSurname(e.target.value)} required />
                     </div>
                 </div>
 
                 <div className='form-fields'>
                     <div className='input-container'>
-                        <span className="input-span">Apellido materno</span>
+                        <span className="input-span">Segundo apellido</span>
                         <input className="input-field" type="text" placeholder="Ingresar..." value={secondSurname} onChange={(e) => setSecondSurname(e.target.value)} required />
                     </div>
                 </div>

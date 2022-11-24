@@ -57,6 +57,7 @@ function ModalCC(props) {
             {...props}
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
+            backdropClassName="modal-backdrop"
             centered
         >
             <Modal.Header closeButton>
