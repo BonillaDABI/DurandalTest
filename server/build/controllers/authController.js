@@ -463,8 +463,8 @@ authController.resetPassword = async (req, res) => {
 }
 
 authController.delete = async (req, res) => {
-    const name = req.params.name
-    const deleted = await User.deleteByName(name);
+    const id = req.params.id
+    const deleted = await User.deleteById(id);
 
     if (deleted) {
         res.status(200).send('Usuario borrado.')

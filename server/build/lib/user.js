@@ -44,11 +44,11 @@ let findUserById = (name) => {
     });
 };
 
-const deleteByName = (name) => {
+const deleteById = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connection.query(
-                ' DELETE FROM `users` WHERE `name` = ?  ', name,
+                ' DELETE FROM `users` WHERE `id` = ?  ', id,
                 function (err, rows) {
                     if (err) {
                         reject(err)
@@ -328,7 +328,7 @@ module.exports = {
     comparePassword,
     findUserById,
     handleLogin,
-    deleteByName,
+    deleteById,
     getUserRoleID,
     getAllPermissions,
     getExtraPermissions,

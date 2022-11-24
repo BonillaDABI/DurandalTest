@@ -6,10 +6,14 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalUDelete(props) {
-    const deleteUser = async(name) => {
-        const response = axios.delete("http://localhost:3001/delete/" + name);
+    var deleteUserName = localStorage.getItem("userNameToDelete");
+    var deleteUserEmail = localStorage.getItem("userEmailToDelete");
+    var deleteUserCreatedDate = localStorage.getItem("userCreatedDateToDelete");
 
-        return response.data;
+    const deleteUser = () => {
+        var deleteUserId = localStorage.getItem("userIdToDelete");
+        //const response = axios.delete(`http://localhost:3001/delete/${deleteUserId}`);
+        console.log(deleteUserId);
     } 
     
     function hideS(){
@@ -34,6 +38,11 @@ function ModalUDelete(props) {
                     ¿Quieres borrar este usuario?
                 </Modal.Title>
             </Modal.Header>
+            <Modal.Body>
+                <span className='delete-info'><strong>Nombre:</strong> {deleteUserName}</span><br />
+                <span className='delete-info'><strong>Email:</strong> {deleteUserEmail}</span><br />
+                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteUserCreatedDate}</span>
+            </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteUser(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>
                 <button className='modal-button no' onClick={() => {hideN()}}><FontAwesomeIcon icon={faCircleChevronLeft}/> No, regrésame a la tabla.</button>

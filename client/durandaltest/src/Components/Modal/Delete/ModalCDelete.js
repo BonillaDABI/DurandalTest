@@ -6,8 +6,13 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalCDelete(props) {
-    const deleteClient = (name) => {
+    var deleteClientBusiness = localStorage.getItem("clientBusinessToDelete");
+    var deleteClientCreatedDate = localStorage.getItem("clientCreatedDateToDelete");
 
+    const deleteClient = () => {
+        var deleteId = localStorage.getItem("clientIdToDelete");
+        const response = axios.delete(`http://localhost:3001/deleteClient/${deleteId}`);
+        console.log(deleteId);
     } 
     
     function hideS(){
@@ -32,6 +37,10 @@ function ModalCDelete(props) {
                     ¿Quieres borrar este cliente?
                 </Modal.Title>
             </Modal.Header>
+            <Modal.Body>
+                <span className='delete-info'><strong>Cliente:</strong> {deleteClientBusiness}</span><br />
+                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteClientCreatedDate}</span>
+            </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteClient(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>
                 <button className='modal-button no' onClick={() => {hideN()}}><FontAwesomeIcon icon={faCircleChevronLeft}/> No, regrésame a la tabla.</button>

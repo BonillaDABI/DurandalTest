@@ -243,9 +243,17 @@ export const ClientsTableAxios = () => {
     }, [])
 
     const [modalCDeleteShow, setModalCDeleteShow] = useState(false);
-    function delete2(id){
-        console.log(id);
-        setModalCDeleteShow(true);
+
+    function manageClientDelete(clientInfo){
+        console.log(clientInfo);
+        console.log(clientInfo.id);
+        var clientId = clientInfo.id;
+        localStorage.setItem("clientIdToDelete", clientId);
+
+        var clientBusiness = clientInfo.business_name;
+        var clientCreatedDate = clientInfo.created_at;
+        localStorage.setItem("clientBusinessToDelete", clientBusiness);
+        localStorage.setItem("clientCreatedDateToDelete", clientCreatedDate);
     }
 
     const actionColumn = [
@@ -262,8 +270,8 @@ export const ClientsTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button onClick={delete2(params.row.id)} style={{background: "none", border: "none", padding: 0, marginTop: "5px"}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}}><FontAwesomeIcon icon={faUserPlus} className="detail-add-icon" id="addcontact-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalCDeleteShow(true); manageClientDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} ><FontAwesomeIcon icon={faUserPlus} className="detail-add-icon" id="addcontact-icon"/></button>
                     </div>
                 )
             }
@@ -355,12 +363,26 @@ export const UserTableAxios = () => {
 
     const [modalUDeleteShow, setModalUDeleteShow] = useState(false);
 
+    function manageUserDelete(userInfo){
+        console.log(userInfo);
+        console.log(userInfo.id);
+        var userId = userInfo.id;
+        localStorage.setItem("userIdToDelete", userId);
+
+        var userName = userInfo.name;
+        var userEmail = userInfo.email;
+        var userCreatedDate = userInfo.created_at;
+        localStorage.setItem("userNameToDelete", userName);
+        localStorage.setItem("userEmailToDelete", userEmail);
+        localStorage.setItem("userCreatedDateToDelete", userCreatedDate);
+    }
+
     const actionColumn = [
         {
             field: "action",
             headerName: "Detalle",
             width: 120,
-            renderCell: () => {                
+            renderCell: (params) => {                
                 return (
                 
                     <div className="cellAction">
@@ -370,7 +392,7 @@ export const UserTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalUDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalUDeleteShow(true); manageUserDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )
             }
