@@ -85,7 +85,7 @@ const Login = () => {
 
   return (
     <div id="login-page">
-      <ToastContainer />
+        
       <div className="container">
         <div className="form-container login-container">
           <form>

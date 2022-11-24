@@ -44,12 +44,22 @@
             height: 18px;          
         }
 
+        .detail-add-icon {
+            cursor: pointer;
+            width: 20px;      
+            height: 20px;   
+        }
+
         #update-icon {
             color: $gray-dabi;
         }
 
         #delete-icon {
             color: $red-dabi;
+        }
+
+        #addcontact-icon {
+            color: $gray-dabi;
         }
 
         /*.vieweditButton {

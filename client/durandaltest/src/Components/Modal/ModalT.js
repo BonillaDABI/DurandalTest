@@ -1,10 +1,37 @@
 import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import "../../SCSS/Components/_modal.scss"
 
 function ModalT(props) {
-
+    const successAlert = () => {
+        toast.success("Técnico creado exitosamente en la base de datos.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+    
+        });
+      }
+    
+      const errorAlert = () => {
+        toast.error("Error al crear técnico. Vuelve a intentarlo.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+    
+        });
+      }
     /*axios.get("http://localhost:3001/autofillTechs", {
     })
     .then((response) => {
@@ -36,14 +63,18 @@ function ModalT(props) {
             console.log(response);
         }, (error) => {
             console.log(error);
-            alert("Error al crear técnico. Vuelve a intentarlo.");
+            errorAlert();
+            //alert("Error al crear técnico. Vuelve a intentarlo.");
         });
     }
 
     function hide(){
         props.onHide();
-        alert("Técnico creado exitosamente en la base de datos.");
-        window.location.reload();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Técnico creado exitosamente en la base de datos.");
     }
 
     return (

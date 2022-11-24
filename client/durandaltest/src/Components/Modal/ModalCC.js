@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 //import { Autocomplete, TextField } from '@mui/material';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "../../SCSS/Components/_modal.scss"
 
@@ -11,7 +13,31 @@ import "../../SCSS/Components/_modal.scss"
 ];*/
 
 function ModalCC(props) {
+    const successAlert = () => {
+        toast.success("Contacto creado exitosamente en la base de datos.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
     
+        });
+      }
+    
+      const errorAlert = () => {
+        toast.error("Error al crear contacto. Vuelve a intentarlo.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+    
+        });
+      }
 
     function createContact () {
         
@@ -19,8 +45,11 @@ function ModalCC(props) {
 
     function hide(){
         props.onHide();
-        alert("Contacto creado exitosamente en la base de datos.");
-        window.location.reload();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Contacto creado exitosamente en la base de datos.");
     }
 
     return (

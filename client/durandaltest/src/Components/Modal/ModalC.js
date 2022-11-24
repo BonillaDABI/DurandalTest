@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 //import { Autocomplete, TextField } from '@mui/material';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "../../SCSS/Components/_modal.scss"
 
@@ -11,6 +13,32 @@ import "../../SCSS/Components/_modal.scss"
 ];*/
 
 function ModalC(props) {
+    const successAlert = () => {
+        toast.success("Cliente creado exitosamente en la base de datos.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+    
+        });
+      }
+    
+      const errorAlert = () => {
+        toast.error("Error al crear cliente. Vuelve a intentarlo.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+    
+        });
+      }
+
     axios.get("http://localhost:3001/autofillClients", {
     })
     .then((response) => {
@@ -51,14 +79,18 @@ function ModalC(props) {
             console.log(response);
         }, (error) => {
             console.log(error);
-            alert("Error al crear cliente. Vuelve a intentarlo.");
+            errorAlert();
+            //alert("Error al crear cliente. Vuelve a intentarlo.");
         });
     }
 
     function hide(){
         props.onHide();
-        alert("Cliente creado exitosamente en la base de datos.");
-        window.location.reload();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Cliente creado exitosamente en la base de datos.");
     }
 
     return (
@@ -75,7 +107,35 @@ function ModalC(props) {
             </Modal.Header>
             <Modal.Body>
             <form className='client-form'>
-            <div className='form-fields'>
+                <div className='form-fields' id="large-form-field">
+                    <div className='input-container'>
+                        <span className="input-span">Nombre del negocio</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={business} onChange={(e) => setBusiness(e.target.value)} required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">RFC</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={rfc} onChange={(e) => setRFC(e.target.value)} required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Tax ID</span>
+                        <select className="input-field"  value={taxId} onChange={(e) => setTaxId(e.target.value)} required>
+                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            {clients.activeTaxes.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.name}</option>
+                            })};
+                        </select>
+                    </div>
+                </div>
+                
+                <div className='form-divider'></div>
+                
+                <div className='form-fields' id="large-form-field">
                     <div className='input-container'>
                         <span className="input-span">Correo electrónico</span>
                         <input className="input-field" type="email" placeholder="Ingresar..." value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -108,34 +168,7 @@ function ModalC(props) {
                         <span className="input-span">Contraseña</span>
                         <input className="input-field" type="password" placeholder="Ingresar..." value={password} onChange={(e) => setPW(e.target.value)} required />
                     </div>
-                </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Nombre del negocio</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={business} onChange={(e) => setBusiness(e.target.value)} required />
-                    </div>
-                </div>
-
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">RFC</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={rfc} onChange={(e) => setRFC(e.target.value)} required />
-                    </div>
-                </div>
-
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Tax ID</span>
-                        <select className="input-field"  value={taxId} onChange={(e) => setTaxId(e.target.value)} required>
-                        <option value="" disabled hidden className="options">Seleccionar...</option> 
-                        {clients.activeTaxes.map((item, i) => {
-                            return <option className="options" key={i} value={item.id}>{item.name}</option>
-                        })};
-                        </select>
-                    </div>
-                </div>
-
-                
+                </div>                
             </form> 
             </Modal.Body>
             <Modal.Footer>

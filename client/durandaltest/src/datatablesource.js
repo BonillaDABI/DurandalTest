@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 //import MaterialReactTable from "material-react-table";
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faTrashCan, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
@@ -248,7 +248,7 @@ export const ClientsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 140,
             renderCell: () => {
                 return (
                     <div className="cellAction">
@@ -259,6 +259,7 @@ export const ClientsTableAxios = () => {
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
                         <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalCDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} ><FontAwesomeIcon icon={faUserPlus} className="detail-add-icon" id="addcontact-icon"/></button>
                     </div>
                 )
             }

@@ -1,11 +1,38 @@
 import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import "../../SCSS/Components/_modal.scss"
 
 function ModalU(props) {
     // axios.get("http://localhost:3001/autofillRoles")
+    const successAlert = () => {
+        toast.success("Usuario creado exitosamente en la base de datos.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
     
+        });
+      }
+    
+      const errorAlert = () => {
+        toast.error("Error al crear usuario. Vuelve a intentarlo.", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+    
+        });
+      }
     
     axios.get("http://localhost:3001/autofillRoles", {
     })
@@ -42,20 +69,24 @@ function ModalU(props) {
             console.log(response);
         }, (error) => {
             console.log(error);
-            alert("Error al crear usuario. Vuelve a intentarlo.");
+            errorAlert();
+            //alert("Error al crear usuario. Vuelve a intentarlo.");
         });
     } 
     
     function hide(){
         props.onHide();
-        alert("Usuario creado exitosamente en la base de datos.");
-        window.location.reload();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Usuario creado exitosamente en la base de datos.");
     }
   
     return (
         <Modal 
             {...props}
-            size="xl"
+            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >

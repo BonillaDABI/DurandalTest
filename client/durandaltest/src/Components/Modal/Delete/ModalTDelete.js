@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalTDelete(props) {
@@ -20,7 +22,7 @@ function ModalTDelete(props) {
     return (
         <Modal 
             {...props}
-            size="ls"
+            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             backdropClassName
             centered
@@ -31,8 +33,8 @@ function ModalTDelete(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {deleteTech(); hideS()}}>Si</button>
-                <button className='save-modal-button' onClick={() => {hideN()}}>No</button>
+                <button className='modal-button' onClick={() => {deleteTech(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>
+                <button className='modal-button no' onClick={() => {hideN()}}><FontAwesomeIcon icon={faCircleChevronLeft}/> No, regrésame a la tabla.</button>
             </Modal.Footer>
         </Modal>
     );
