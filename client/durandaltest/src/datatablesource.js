@@ -243,13 +243,17 @@ export const ClientsTableAxios = () => {
     }, [])
 
     const [modalCDeleteShow, setModalCDeleteShow] = useState(false);
+    function delete2(id){
+        console.log(id);
+        setModalCDeleteShow(true);
+    }
 
     const actionColumn = [
         {
             field: "action",
             headerName: "Detalle",
             width: 140,
-            renderCell: () => {
+            renderCell: (params) => {
                 return (
                     <div className="cellAction">
                         <ModalCDelete
@@ -258,8 +262,8 @@ export const ClientsTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalCDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} ><FontAwesomeIcon icon={faUserPlus} className="detail-add-icon" id="addcontact-icon"/></button>
+                        <button onClick={delete2(params.row.id)} style={{background: "none", border: "none", padding: 0, marginTop: "5px"}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}}><FontAwesomeIcon icon={faUserPlus} className="detail-add-icon" id="addcontact-icon"/></button>
                     </div>
                 )
             }

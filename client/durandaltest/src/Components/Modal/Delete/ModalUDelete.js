@@ -6,8 +6,10 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalUDelete(props) {
-    const deleteUser = (name) => {
-        //axios.delete("http://localhost:3001/delete/${name}");
+    const deleteUser = async(name) => {
+        const response = axios.delete("http://localhost:3001/delete/" + name);
+
+        return response.data;
     } 
     
     function hideS(){
