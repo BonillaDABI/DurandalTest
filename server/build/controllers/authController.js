@@ -485,6 +485,28 @@ authController.deleteClient = async (req, res) => {
     }
 }
 
+authController.deleteCont = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Contact.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Contacto borrado.')
+    } else {
+        res.status(400).send('Error al borrar contacto')
+    }
+}
+
+authController.deleteTech = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Techs.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Tecnico borrado.')
+    } else {
+        res.status(400).send('Error al borrar tecnico')
+    }
+}
+
 authController.dashboard = (req, res) => {
 
 }

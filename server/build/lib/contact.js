@@ -9,7 +9,8 @@ const insertContact = (user_id, client_id, creator_id, date) => {
             is_active: 01,
             created_by: creator_id,
             created_at: date,
-            updated_at: date
+            updated_at: date,
+            contact_type_id: 1
         }], (err, rows) => {
             if (err) {
                 reject(err)
@@ -27,8 +28,26 @@ const getAllContacts = () => {
         });
     });
 };
+const deleteById = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connection.query(
+                ' DELETE FROM `contacts` WHERE `id` = ?  ', id,
+                function (err, rows) {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(true);
+                }
+            );
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
 
 module.exports = {
     insertContact,
-    getAllContacts
+    getAllContacts,
+    deleteById
 }

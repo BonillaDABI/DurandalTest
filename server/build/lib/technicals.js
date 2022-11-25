@@ -50,10 +50,29 @@ const sendTechs = () => {
     })
 }
 
+const deleteById = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connection.query(
+                ' DELETE FROM `technicals` WHERE `id` = ?  ', id,
+                function (err, rows) {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(true);
+                }
+            );
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
 module.exports = {
     getAllTechnicals,
     getTechByUserID,
     insertTech,
-    sendTechs
+    sendTechs,
+    deleteById
 
 }

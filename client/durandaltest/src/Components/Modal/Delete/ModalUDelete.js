@@ -12,21 +12,21 @@ function ModalUDelete(props) {
 
     const deleteUser = () => {
         var deleteUserId = localStorage.getItem("userIdToDelete");
-        //const response = axios.delete(`http://localhost:3001/delete/${deleteUserId}`);
+        const response = axios.delete(`http://localhost:3001/delete/${deleteUserId}`);
         console.log(deleteUserId);
-    } 
-    
-    function hideS(){
+    }
+
+    function hideS() {
         props.onHide();
         window.location.reload();
     }
 
-    function hideN(){
+    function hideN() {
         props.onHide();
     }
-  
+
     return (
-        <Modal 
+        <Modal
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
@@ -44,8 +44,8 @@ function ModalUDelete(props) {
                 <span className='delete-info'><strong>Fecha de alta:</strong> {deleteUserCreatedDate}</span>
             </Modal.Body>
             <Modal.Footer>
-                <button className='modal-button' onClick={() => {deleteUser(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>
-                <button className='modal-button no' onClick={() => {hideN()}}><FontAwesomeIcon icon={faCircleChevronLeft}/> No, regrésame a la tabla.</button>
+                <button className='modal-button' onClick={() => { deleteUser(); hideS() }}><FontAwesomeIcon icon={faWarning} /> Si, quiero eliminar esto.</button>
+                <button className='modal-button no' onClick={() => { hideN() }}><FontAwesomeIcon icon={faCircleChevronLeft} /> No, regrésame a la tabla.</button>
             </Modal.Footer>
         </Modal>
     );

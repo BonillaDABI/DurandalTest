@@ -18,6 +18,10 @@ router.delete("/delete/:id", authController.delete);
 
 router.delete("/deleteClient/:id", authController.deleteClient);
 
+router.delete("/deleteCont/:id", authController.deleteCont);
+
+router.delete("/deleteTech/:id", authController.deleteTech);
+
 router.post("/addPerms", authController.rudPermissions)
 
 router.get("/roles", authController.getAllRoles)

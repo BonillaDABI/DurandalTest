@@ -62,6 +62,7 @@ const deleteById = (id) => {
     });
 };
 
+
 const getAll = () => {
     return new Promise(async (resolve, reject) => {
         await connection.query('Select id, name, email, is_active, created_at FROM users ', (err, rows) => {
