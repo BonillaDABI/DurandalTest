@@ -15,7 +15,7 @@ const getAllTechnicals = () => {
 
 const getTechByUserID = (userID) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM clients WHERE user_id = ?', [userID], (err, rows) => {
+        connection.query('SELECT * FROM technicals WHERE user_id = ?', [userID], (err, rows) => {
             if (err) { reject(err) }
             resolve(rows[0])
         })

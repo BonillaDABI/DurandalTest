@@ -30,12 +30,28 @@ export const ContactsTableAxios = () => {
 
     const [modalCCDeleteShow, setModalCCDeleteShow] = useState(false);
 
+    function manageContactDelete(contactInfo){
+        console.log(contactInfo);
+        console.log(contactInfo.id);
+        var contactId = contactInfo.id;
+        localStorage.setItem("contactIdToDelete", contactId);
+
+        var contactName = contactInfo.name;
+        var contactEmail = contactInfo.email;
+        var contactBusiness = contactInfo.business_name;
+        var contactCreatedDate = contactInfo.created_at;
+        localStorage.setItem("contactNameToDelete", contactName);
+        localStorage.setItem("contactEmailToDelete", contactEmail);
+        localStorage.setItem("contactCreatedDateToDelete", contactCreatedDate);
+        localStorage.setItem("contactBusinessToDelete", contactBusiness);
+    }
+
     const actionColumn = [
         {
             field: "action",
             headerName: "Detalle",
             width: 120,
-            renderCell: () => {
+            renderCell: (params) => {
                 return (
                     <div className="cellAction">
                         <ModalCCDelete
@@ -44,7 +60,7 @@ export const ContactsTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalCCDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalCCDeleteShow(true); manageContactDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )
             }
@@ -139,12 +155,26 @@ export const AgentsTableAxios = () => {
 
     const [modalTDeleteShow, setModalTDeleteShow] = useState(false);
 
+    function manageTechDelete(techInfo){
+        console.log(techInfo);
+        console.log(techInfo.id);
+        var techId = techInfo.id;
+        localStorage.setItem("techIdToDelete", techId);
+
+        var techName = techInfo.name;
+        var techEmail = techInfo.email;
+        var techCreatedDate = techInfo.created_at;
+        localStorage.setItem("techNameToDelete", techName);
+        localStorage.setItem("techEmailToDelete", techEmail);
+        localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
+    }
+
     const actionColumn = [
         {
             field: "action",
             headerName: "Detalle",
             width: 120,
-            renderCell: () => {
+            renderCell: (params) => {
                 return (
                     <div className="cellAction">
                         <ModalTDelete
@@ -153,7 +183,7 @@ export const AgentsTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => setModalTDeleteShow(true)}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalTDeleteShow(true); manageTechDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )
             }

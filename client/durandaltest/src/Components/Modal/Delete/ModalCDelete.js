@@ -10,9 +10,9 @@ function ModalCDelete(props) {
     var deleteClientCreatedDate = localStorage.getItem("clientCreatedDateToDelete");
 
     const deleteClient = () => {
-        var deleteId = localStorage.getItem("clientIdToDelete");
-        const response = axios.delete(`http://localhost:3001/deleteClient/${deleteId}`);
-        console.log(deleteId);
+        var deleteClientId = localStorage.getItem("clientIdToDelete");
+        const response = axios.delete(`http://localhost:3001/deleteClient/${deleteClientId}`);
+        console.log(deleteClientId);
     } 
     
     function hideS(){

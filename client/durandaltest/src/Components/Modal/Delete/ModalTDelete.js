@@ -6,8 +6,14 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalTDelete(props) {
-    const deleteTech = (name) => {
-        
+    var deleteTechName = localStorage.getItem("techNameToDelete");
+    var deleteTechEmail = localStorage.getItem("techEmailToDelete");
+    var deleteTechCreatedDate = localStorage.getItem("techCreatedDateToDelete");
+
+    const deleteTech = () => {
+        var deleteTechId = localStorage.getItem("techIdToDelete");
+        const response = axios.delete(`http://localhost:3001/deleteTech/${deleteTechId}`);
+        console.log(deleteTechId);
     } 
     
     function hideS(){
@@ -32,6 +38,11 @@ function ModalTDelete(props) {
                     ¿Quieres borrar este técnico?
                 </Modal.Title>
             </Modal.Header>
+            <Modal.Body>
+                <span className='delete-info'><strong>Nombre:</strong> {deleteTechName}</span><br />
+                <span className='delete-info'><strong>Email:</strong> {deleteTechEmail}</span><br />
+                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteTechCreatedDate}</span>
+            </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteTech(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>
                 <button className='modal-button no' onClick={() => {hideN()}}><FontAwesomeIcon icon={faCircleChevronLeft}/> No, regrésame a la tabla.</button>
