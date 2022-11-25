@@ -43,6 +43,8 @@ router.get("/autofillClients", authController.sendUserIDsClients)
 
 router.post("/createClient", authController.protect, authController.createClient)
 
+router.post("/extraContact/:id", authController.protect, authController.extraContact)
+
 router.get("/listTechs", authController.listTechnicals)
 
 router.get("/listClients", authController.listClients)

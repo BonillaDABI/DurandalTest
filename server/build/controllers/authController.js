@@ -309,6 +309,57 @@ authController.createClient = async (req, res) => {
     }
 }
 
+authController.extraContact = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const password = await bcrypt.hash(req.body.password, 10)
+        const date = new Date()
+        const client_id = req.params.id
+
+        const { name, first_surname, second_surname, email } = req.body;
+
+        const user = await User.getUserByEmail(email);
+
+        if (!user) {
+            connection.query("INSERT INTO `users` SET ?", [{
+                name,
+                first_surname,
+                second_surname,
+                email,
+                password,
+                roles_id: 10,
+                is_active: 01,
+                created_by: req.userID,
+                created_at: date,
+                updated_at: date
+            }], async (err, result) => {
+                if (err) {
+                    res.status(500).json('Error al crear usuario.')
+                }
+                const userID = result.insertId;
+
+                await Contact.updateContacts(client_id)
+
+                const cont = await Contact.insertContact(userID, client_id, req.userID, date)
+
+                if (cont) {
+                    res.status(200).json('Contacto creado.')
+                } else {
+                    res.status(400).json('Error al crear contacto')
+                }
+
+            })
+        } else {
+            res.status(400).send('Usuario ya existe.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+
+
 authController.createTechnical = async (req, res) => {
 
     if (req.userPermissions.includes(1)) {

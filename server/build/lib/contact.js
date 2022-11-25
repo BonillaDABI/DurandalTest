@@ -46,8 +46,18 @@ const deleteById = (id) => {
     });
 }
 
+const updateContacts = (client_id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('UPDATE contacts SET contact_type_id = 2 WHERE client_id = ?', [client_id], (err, rows) => {
+            if (err) reject(err)
+            resolve(true)
+        })
+    })
+}
+
 module.exports = {
     insertContact,
     getAllContacts,
-    deleteById
+    deleteById,
+    updateContacts
 }
