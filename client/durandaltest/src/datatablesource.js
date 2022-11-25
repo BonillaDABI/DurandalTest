@@ -89,6 +89,11 @@ export const ContactsTableAxios = () => {
             headerName: 'Cliente', 
             width: 180 
         },
+        {
+            field: 'type',
+            headerName: 'Tipo',
+            width: 180
+        },
         { 
             field: 'is_active', 
             headerName: 'Estatus', 
