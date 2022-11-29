@@ -53,6 +53,8 @@ router.get("/listContacts", authController.listContacts)
 
 router.get("/listAll", authController.listAll);
 
+router.get("/listClientsContacts/:id", authController.listClientAndContacts);
+
 router.get("/autofillRoles", authController.sendRoles);
 
 // router.get("/autofillParentsID", authController.sendParentID);

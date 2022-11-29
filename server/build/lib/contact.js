@@ -28,6 +28,16 @@ const getAllContacts = () => {
         });
     });
 };
+
+const getAllContactsByID = (client_id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT co.id, u.name, u.email, cl.business_name, co.is_active, co.created_at, ct.type FROM contacts co, clients cl, users u, contact_type ct WHERE co.user_id = u.id AND co.client_id = cl.id AND co.contact_type_id = ct.id AND co.client_id = ?', [client_id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        });
+    });
+};
+
 const deleteById = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -59,5 +69,6 @@ module.exports = {
     insertContact,
     getAllContacts,
     deleteById,
-    updateContacts
+    updateContacts,
+    getAllContactsByID
 }

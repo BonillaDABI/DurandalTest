@@ -50,6 +50,15 @@ const getAllClients = () => {
     });
 };
 
+const getAllClientsByID = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT c.id, u.name, c.business_name, c.is_active, c.created_at FROM clients c, contacts co, users u WHERE c.id = co.client_id AND co.user_id = u.id AND c.id = ?', [id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        });
+    });
+};
+
 const sendClients = () => {
     return new Promise(async (resolve, reject) => {
         await connection.query('Select id FROM users WHERE roles_id = 10', (err, rows) => {
@@ -109,5 +118,6 @@ module.exports = {
     sendTaxes,
     sendParentsID,
     getClientByUserID,
-    deleteById
+    deleteById,
+    getAllClientsByID
 }

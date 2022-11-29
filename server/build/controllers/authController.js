@@ -19,14 +19,15 @@ const Client = require('../lib/clients')
 const Techs = require('../lib/technicals');
 const Contact = require('../lib/contact')
 
+
 const authController = {}
 
 authController.listAll = async (req, res) => {
 
     var users = await User.getAll()
-
+    moment.locale('es-mx')
     for (let i = 0; i < users.length; i++) {
-        users[i].created_at = moment(users[i].created_at).format("MMMM Do YY")
+        users[i].created_at = moment(users[i].created_at).format("LL")
         if (users[i].is_active === 1) {
             users[i].is_active = "Activo"
         } else {
@@ -46,9 +47,9 @@ authController.listAll = async (req, res) => {
 authController.listClients = async (req, res) => {
 
     var clients = await Client.getAllClients()
-
+    moment.locale('es-mx')
     for (let i = 0; i < clients.length; i++) {
-        clients[i].created_at = moment(clients[i].created_at).format("MMMM Do YY")
+        clients[i].created_at = moment(clients[i].created_at).format("LL")
         if (clients[i].is_active === 1) {
             clients[i].is_active = "Activo"
         } else {
@@ -68,12 +69,11 @@ authController.listClients = async (req, res) => {
 authController.listContacts = async (req, res) => {
 
     var contacts = await Contact.getAllContacts()
-
-
+    moment.locale('es-mx')
     if (contacts) {
 
         for (let i = 0; i < contacts.length; i++) {
-            contacts[i].created_at = moment(contacts[i].created_at).format("MMMM Do YY")
+            contacts[i].created_at = moment(contacts[i].created_at).format("LL")
             if (contacts[i].is_active === 1) {
                 contacts[i].is_active = "Activo"
             } else {
@@ -90,9 +90,9 @@ authController.listContacts = async (req, res) => {
 
 authController.listTechnicals = async (req, res) => {
     var techs = await Techs.getAllTechnicals()
-
+    moment.locale('es-mx')
     for (let i = 0; i < techs.length; i++) {
-        techs[i].created_at = moment(techs[i].created_at).format("MMMM Do YY")
+        techs[i].created_at = moment(techs[i].created_at).format("LL")
         if (techs[i].is_active === 1) {
             techs[i].is_active = "Activo"
         } else {
@@ -106,6 +106,40 @@ authController.listTechnicals = async (req, res) => {
     } else {
         res.status(400).send('Error al obtener tecnicos')
     }
+}
+
+authController.listClientAndContacts = async (req, res) => {
+    const id = req.params.id
+    var clientDetails = await Client.getAllClientsByID(id)
+    var clientContacts = await Contact.getAllContactsByID(id)
+    moment.locale('es-mx')
+
+    if (clientDetails && clientContacts) {
+
+        for (let i = 0; i < clientDetails.length; i++) {
+            clientDetails[i].created_at = moment(clientDetails[i].created_at).format("LL")
+            if (clientDetails[i].is_active === 1) {
+                clientDetails[i].is_active = "Activo"
+            } else {
+                clientDetails[i].is_active = "Inactivo"
+            }
+        }
+
+        for (let i = 0; i < clientContacts.length; i++) {
+            clientContacts[i].created_at = moment(clientContacts[i].created_at).format("LL")
+            if (clientContacts[i].is_active === 1) {
+                clientContacts[i].is_active = "Activo"
+            } else {
+                clientContacts[i].is_active = "Inactivo"
+            }
+        }
+
+        res.json({ clientDetails, clientContacts })
+
+    } else {
+        res.status(400).send('Error al obtener Cliente')
+    }
+
 }
 
 authController.update = async (req, res) => {
