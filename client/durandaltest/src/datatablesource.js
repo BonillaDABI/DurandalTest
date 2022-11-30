@@ -9,7 +9,257 @@ import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
 import ModalCCDelete from "./Components/Modal/Delete/ModalCCDelete";
 import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
+import ModalSDelete from "./Components/Modal/Delete/ModalSDelete";
 import { useNavigate } from "react-router-dom";
+
+export const SitesTableAxios = () => {
+    // Config de hooks
+    const [sitesData, setSitesData] = useState ( [] )
+
+    var clientId = localStorage.getItem("client_id");
+    console.log(clientId);
+
+    const endpoint = `http://localhost:3001//${clientId}`;
+
+    const getData = async() => {
+        await axios.get(endpoint).then((response) => {
+            const sitesData = response.data
+            //console.log(sitesData)
+            setSitesData(sitesData)
+        })
+    }
+
+    useEffect( () => {
+        getData()
+    }, [])
+
+    const [modalSDeleteShow, setModalSDeleteShow] = useState(false);
+
+    function manageSiteDelete(siteInfo){
+        console.log(siteInfo);
+        
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalSDelete
+                            show={modalSDeleteShow}
+                            onHide={() => setModalSDeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalSDeleteShow(true); manageSiteDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const sitesColumns = [
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 100
+        },
+        { 
+            field: 'name', 
+            headerName: 'Nombre de contacto', 
+            width: 200 
+        },
+        { 
+            field: 'email', 
+            headerName: 'E-mail', 
+            width: 180 
+        },
+        {
+            field: 'type',
+            headerName: 'Tipo',
+            width: 180
+        },
+        { 
+            field: 'is_active', 
+            headerName: 'Estatus', 
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo"){
+                    return (
+                        <div>
+                          <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }else{
+                    return (
+                        <div>
+                          <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }
+
+              },
+              valueGetter: (params) => params.row.is_active
+        },
+        { 
+            field: 'created_at', 
+            headerName: 'Fecha de alta', 
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
+                rows={sitesData}
+                columns={sitesColumns.concat(actionColumn)}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                components={{Toolbar: GridToolbar}}
+        />
+    )
+}
+
+// CONTACTS PER CLIENT
+
+export const ClientContactsTableAxios = () => {
+    // Config de hooks
+    const [clientContactData, setClientContactData] = useState ( [] )
+
+    var clientId = localStorage.getItem("client_id");
+    console.log(clientId);
+
+    const endpoint = `http://localhost:3001/listClientsContacts/${clientId}`;
+
+    const getData = async() => {
+        await axios.get(endpoint).then((response) => {
+            const clientContactData = response.data.clientContacts
+            //console.log(clientContactData)
+            setClientContactData(clientContactData)
+        })
+    }
+
+    useEffect( () => {
+        getData()
+    }, [])
+
+    const [modalCCDeleteShow, setModalCCDeleteShow] = useState(false);
+
+    function manageContactDelete(contactInfo){
+        console.log(contactInfo);
+        console.log(contactInfo.id);
+        var contactId = contactInfo.id;
+        localStorage.setItem("contactIdToDelete", contactId);
+
+        var contactName = contactInfo.name;
+        var contactEmail = contactInfo.email;
+        var contactBusiness = contactInfo.business_name;
+        var contactCreatedDate = contactInfo.created_at;
+        localStorage.setItem("contactNameToDelete", contactName);
+        localStorage.setItem("contactEmailToDelete", contactEmail);
+        localStorage.setItem("contactCreatedDateToDelete", contactCreatedDate);
+        localStorage.setItem("contactBusinessToDelete", contactBusiness);
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalCCDelete
+                            show={modalCCDeleteShow}
+                            onHide={() => setModalCCDeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalCCDeleteShow(true); manageContactDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const clientContactColumns = [
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 100
+        },
+        { 
+            field: 'name', 
+            headerName: 'Nombre de contacto', 
+            width: 200 
+        },
+        { 
+            field: 'email', 
+            headerName: 'E-mail', 
+            width: 180 
+        },
+        {
+            field: 'type',
+            headerName: 'Tipo',
+            width: 180
+        },
+        { 
+            field: 'is_active', 
+            headerName: 'Estatus', 
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo"){
+                    return (
+                        <div>
+                          <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }else{
+                    return (
+                        <div>
+                          <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }
+
+              },
+              valueGetter: (params) => params.row.is_active
+        },
+        { 
+            field: 'created_at', 
+            headerName: 'Fecha de alta', 
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc'}],
+                },
+            }}
+                rows={clientContactData}
+                columns={clientContactColumns.concat(actionColumn)}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                components={{Toolbar: GridToolbar}}
+        />
+    )
+}
+
+// CONTACTS GENERAL
 
 export const ContactsTableAxios = () => {
     // Config de hooks

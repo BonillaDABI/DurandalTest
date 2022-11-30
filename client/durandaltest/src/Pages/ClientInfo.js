@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
+import DatatableC from "../Components/Datatable/DatatableClientC";
+import DatatableS from "../Components/Datatable/DatatableS";
+
 
 import "../SCSS/Elements/_tables.scss"
 import { Box, Tab, Tabs } from '@mui/material';
@@ -34,12 +37,12 @@ function ClientInfo() {
           <Box sx={{ padding: 2 }}>
           {tabIndex === 0 && (
             <Box>
-              The first tab
+              <DatatableC />
             </Box>
           )}
           {tabIndex === 1 && (
             <Box>
-              The second tab
+              <DatatableS />
             </Box>
           )}
           </Box>
