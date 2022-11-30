@@ -67,8 +67,8 @@ authController.listClients = async (req, res) => {
 }
 
 authController.listContacts = async (req, res) => {
-
-    var contacts = await Contact.getAllContacts()
+    const client_id = req.params.id
+    var contacts = await Contact.getAllContactsByID(client_id)
     moment.locale('es-mx')
     if (contacts) {
 
