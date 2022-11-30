@@ -42,12 +42,6 @@ const Sidebar = () => {
                             <span>Clientes</span>
                         </li>
                     </Link>
-                    <Link to="/contacts" style={{textDecoration: 'none'}} >
-                        <li>
-                            <FontAwesomeIcon icon={faAddressBook} className="icon"/>
-                            <span>Contactos</span>
-                        </li>
-                    </Link>
                     <Link to="/tecnicos" style={{textDecoration: 'none'}} >
                         <li>
                             <FontAwesomeIcon icon={faHelmetSafety} className="icon"/>

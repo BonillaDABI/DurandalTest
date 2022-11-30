@@ -9,6 +9,7 @@ import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
 import ModalCCDelete from "./Components/Modal/Delete/ModalCCDelete";
 import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
+import { Navigate } from "react-router-dom";
 
 export const ContactsTableAxios = () => {
     // Config de hooks
@@ -268,7 +269,7 @@ export const ClientsTableAxios = () => {
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
             const clientData = response.data
-            //console.log(clientData)
+            console.log(clientData)
             setClientData(clientData)
         })
     }
@@ -278,6 +279,10 @@ export const ClientsTableAxios = () => {
     }, [])
 
     const [modalCDeleteShow, setModalCDeleteShow] = useState(false);
+
+    function manageClientInfo(clientInfo){
+        Navigate("/clientInfo")
+    }
 
     function manageClientDelete(clientInfo){
         console.log(clientInfo);
@@ -304,9 +309,9 @@ export const ClientsTableAxios = () => {
                             onHide={() => setModalCDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageClientInfo(params.row)}}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/></button>
                         <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalCDeleteShow(true); manageClientDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} ><FontAwesomeIcon icon={faUserPlus} className="detail-add-icon" id="addcontact-icon"/></button>
                     </div>
                 )
             }
@@ -351,11 +356,6 @@ export const ClientsTableAxios = () => {
 
               },
               valueGetter: (params) => params.row.is_active
-        },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
-            width: 200
         }
     ];
 
@@ -626,3 +626,9 @@ export const RolesTableAxios = () => {
         />
     )
 }
+
+/*
+
+<button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} ><FontAwesomeIcon icon={faUserPlus} className="detail-add-icon" id="addcontact-icon"/></button>
+
+*/

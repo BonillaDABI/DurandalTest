@@ -16,7 +16,7 @@ import ListRoles from "./Pages/ListRoles";
 import ListPermissions from "./Pages/ListPermissions";
 import Recovery from "./Pages/Recovery";
 import Clients from "./Pages/Clients";
-import Contacts from "./Pages/Contacts";
+import ClientInfo from "./Pages/ClientInfo";
 import Tecnicos from "./Pages/Tecnicos";
 
 
@@ -34,12 +34,10 @@ function App() {
           <Route exact path="/recovery" element={<Recovery />} /> 
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
           <Route exact path="/clients" element={<Clients />} />
-          <Route exact path="/contacts" element={<Contacts />} />
+          <Route exact path="/clientInfo" element={<ClientInfo />} />
           <Route exact path="/tecnicos" element={<Tecnicos />} />
           <Route exact path="/create" element={<Create />} />
-          <Route exact path="/createR" element={<CreateR />} /> {/* PENDING */}
           <Route exact path="/update" element={<Update />} /> 
-          <Route exact path="/updateR" element={<UpdateR />} /> {/* PENDING */}
           <Route exact path="/listAll" element={<ListUsers />} /> 
           <Route exact path="/listAllR" element={<ListRoles />} /> 
           <Route exact path="/listAllP" element={<ListPermissions />} /> 
@@ -50,3 +48,9 @@ function App() {
 }
 
 export default App;
+
+/*
+<Route exact path="/createR" element={<CreateR />} /> 
+<Route exact path="/updateR" element={<UpdateR />} />
+<Route exact path="/contacts" element={<Contacts />} />
+*/
