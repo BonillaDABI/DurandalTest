@@ -41,6 +41,8 @@ router.get("/permissions/:id", authController.modulesANDfunctions)
 
 router.get("/autofillClients", authController.sendUserIDsClients)
 
+router.get("/autofillContacts", authController.sendContactTypes)
+
 router.post("/createClient", authController.protect, authController.createClient)
 
 router.post("/extraContact/:id", authController.protect, authController.extraContact)
@@ -63,6 +65,6 @@ router.post("/createTech", authController.protect, authController.createTechnica
 
 router.get("/autofillTechs", authController.sendTechs);
 
-router.patch("/updateClient", authController.updateClient)
+router.patch("/updateClient/:id", authController.updateClient)
 
 module.exports = router;

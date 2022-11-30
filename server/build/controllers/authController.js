@@ -180,6 +180,7 @@ authController.update = async (req, res) => {
 
 authController.updateClient = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
+    const id = req.params.id
 
     const decodedToken = jwt.verify(token, "jwtsecret")
     const userID = decodedToken.id
@@ -189,20 +190,18 @@ authController.updateClient = async (req, res) => {
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { user_id } = req.body;
-        const { business_name, rfc, tax_id, parent_id } = req.body;
+        const { business_name, rfc, tax_id } = req.body;
 
         try {
             await connection.query(
-                "UPDATE clients SET ? WHERE user_id = ?",
+                "UPDATE clients SET ? WHERE id = ?",
                 [{
                     business_name,
                     rfc,
                     tax_id,
-                    parent_id,
                     updated_by: userID,
                     updated_at: date
-                }, user_id],
+                }, id],
             )
             res.status(200).send('Cliente actualizado.')
         } catch (error) {
@@ -273,6 +272,12 @@ authController.sendUserIDsClients = async (req, res) => {
     const activeTaxes = await Client.sendTaxes()
     res.json({ parentsID, activeTaxes })
 
+}
+
+authController.sendContactTypes = async (req, res) => {
+    //Mandar tipos de contactos
+    const activeTypes = await Contact.sendContactTypes()
+    res.json(activeTypes)
 }
 
 authController.sendRoles = async (req, res) => {
@@ -350,7 +355,7 @@ authController.extraContact = async (req, res) => {
         const date = new Date()
         const client_id = req.params.id
 
-        const { name, first_surname, second_surname, email } = req.body;
+        const { name, first_surname, second_surname, email, contact_type_id } = req.body;
 
         const user = await User.getUserByEmail(email);
 
@@ -372,9 +377,12 @@ authController.extraContact = async (req, res) => {
                 }
                 const userID = result.insertId;
 
-                await Contact.updateContacts(client_id)
 
-                const cont = await Contact.insertContact(userID, client_id, req.userID, date)
+                if (contact_type_id === '1') {
+                    await Contact.updateContacts(client_id)
+                }
+
+                const cont = await Contact.insertExtraContact(userID, client_id, req.userID, date, contact_type_id)
 
                 if (cont) {
                     res.status(200).json('Contacto creado.')

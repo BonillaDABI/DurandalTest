@@ -20,6 +20,36 @@ const insertContact = (user_id, client_id, creator_id, date) => {
     })
 }
 
+const insertExtraContact = (user_id, client_id, creator_id, date, contact_type_id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('INSERT INTO contacts SET ?', [{
+            user_id,
+            client_id,
+            is_active: 01,
+            created_by: creator_id,
+            created_at: date,
+            updated_at: date,
+            contact_type_id
+        }], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(rows)
+        })
+    })
+}
+
+const sendContactTypes = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, type FROM contact_type', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 const getAllContacts = () => {
     return new Promise(async (resolve, reject) => {
         await connection.query('SELECT co.id, u.name, u.email, cl.business_name, co.is_active, co.created_at, ct.type FROM contacts co, clients cl, users u, contact_type ct WHERE co.user_id = u.id AND co.client_id = cl.id AND co.contact_type_id = ct.id', (err, rows) => {
@@ -70,5 +100,7 @@ module.exports = {
     getAllContacts,
     deleteById,
     updateContacts,
-    getAllContactsByID
+    getAllContactsByID,
+    sendContactTypes,
+    insertExtraContact
 }
