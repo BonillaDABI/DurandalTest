@@ -9,7 +9,7 @@ import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
 import ModalCCDelete from "./Components/Modal/Delete/ModalCCDelete";
 import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const ContactsTableAxios = () => {
     // Config de hooks
@@ -279,9 +279,14 @@ export const ClientsTableAxios = () => {
     }, [])
 
     const [modalCDeleteShow, setModalCDeleteShow] = useState(false);
+    const navigate = useNavigate();
 
     function manageClientInfo(clientInfo){
-        Navigate("/clientInfo")
+        navigate("/clientInfo")
+        var business_name = clientInfo.business_name;
+        var client_id = clientInfo.id;
+        localStorage.setItem("business_name", business_name);
+        localStorage.setItem("client_id", client_id);
     }
 
     function manageClientDelete(clientInfo){
