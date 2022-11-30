@@ -51,6 +51,8 @@ router.get("/listTechs", authController.listTechnicals)
 
 router.get("/listClients", authController.listClients)
 
+router.get("/listClient/:id", authController.listClientByID)
+
 router.get("/listContacts", authController.listContacts)
 
 router.get("/listAll", authController.listAll);

@@ -66,8 +66,29 @@ authController.listClients = async (req, res) => {
 
 }
 
+authController.listClientByID = async (req, res) => {
+    const id = req.params.id
+    var clients = await Client.listClientByID(id)
+    moment.locale('es-mx')
+    // for (let i = 0; i < clients.length; i++) {
+    //     clients[i].created_at = moment(clients[i].created_at).format("LL")
+    //     if (clients[i].is_active === 1) {
+    //         clients[i].is_active = "Activo"
+    //     } else {
+    //         clients[i].is_active = "Inactivo"
+    //     }
+    // }
+
+    if (clients) {
+        res.json(clients)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener usuarios')
+    }
+
+}
+
 authController.listContacts = async (req, res) => {
-    const client_id = req.params.id
     var contacts = await Contact.getAllContactsByID(client_id)
     moment.locale('es-mx')
     if (contacts) {
@@ -110,20 +131,20 @@ authController.listTechnicals = async (req, res) => {
 
 authController.listClientAndContacts = async (req, res) => {
     const id = req.params.id
-    var clientDetails = await Client.getAllClientsByID(id)
+    var clientDetails = await Client.listClientByID(id)
     var clientContacts = await Contact.getAllContactsByID(id)
     moment.locale('es-mx')
 
     if (clientDetails && clientContacts) {
 
-        for (let i = 0; i < clientDetails.length; i++) {
-            clientDetails[i].created_at = moment(clientDetails[i].created_at).format("LL")
-            if (clientDetails[i].is_active === 1) {
-                clientDetails[i].is_active = "Activo"
-            } else {
-                clientDetails[i].is_active = "Inactivo"
-            }
-        }
+        // for (let i = 0; i < clientDetails.length; i++) {
+        //     clientDetails[i].created_at = moment(clientDetails[i].created_at).format("LL")
+        //     if (clientDetails[i].is_active === 1) {
+        //         clientDetails[i].is_active = "Activo"
+        //     } else {
+        //         clientDetails[i].is_active = "Inactivo"
+        //     }
+        // }
 
         for (let i = 0; i < clientContacts.length; i++) {
             clientContacts[i].created_at = moment(clientContacts[i].created_at).format("LL")
