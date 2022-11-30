@@ -14,6 +14,9 @@ import { Box, Tab, Tabs } from '@mui/material';
 function ClientInfo() {
   var business_name = localStorage.getItem("business_name");
   var client_id = localStorage.getItem("client_id");
+  var client_rfc = localStorage.getItem("client_rfc");
+  var client_tax = localStorage.getItem("client_tax");
+
 
   const [tabIndex, setTabIndex] = useState(0);
  
@@ -26,7 +29,9 @@ function ClientInfo() {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
-        <h1>{business_name}</h1>
+        <span><strong>{business_name}</strong></span><br />
+        <span>{client_rfc}</span><br />
+        <span>{client_tax}</span>
         <Box>
           <Box>
             <Tabs value={tabIndex} onChange={handleTabChange}>
