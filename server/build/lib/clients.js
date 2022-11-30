@@ -54,7 +54,7 @@ const listClientByID = (id) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('SELECT business_name, rfc, tax_id FROM `clients` WHERE id = ?', [id], (err, rows) => {
             if (err) reject(err)
-            resolve(JSON.parse(JSON.stringify(rows)))
+            resolve(JSON.parse(JSON.stringify(rows[0])))
         });
     });
 };
