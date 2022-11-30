@@ -133,6 +133,7 @@ authController.listClientAndContacts = async (req, res) => {
     const id = req.params.id
     var clientDetails = await Client.listClientByID(id)
     var clientContacts = await Contact.getAllContactsByID(id)
+    const activeTaxes = await Client.sendTaxes()
     moment.locale('es-mx')
 
     if (clientDetails && clientContacts) {
@@ -155,7 +156,7 @@ authController.listClientAndContacts = async (req, res) => {
             }
         }
 
-        res.json({ clientDetails, clientContacts })
+        res.json({ clientDetails, clientContacts, activeTaxes })
 
     } else {
         res.status(400).send('Error al obtener Cliente')
