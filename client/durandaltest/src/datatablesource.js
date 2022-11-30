@@ -11,6 +11,7 @@ import ModalCCDelete from "./Components/Modal/Delete/ModalCCDelete";
 import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
 import ModalSDelete from "./Components/Modal/Delete/ModalSDelete";
 import { useNavigate } from "react-router-dom";
+import { param } from "express-validator";
 
 export const SitesTableAxios = () => {
     // Config de hooks
@@ -142,8 +143,17 @@ export const ClientContactsTableAxios = () => {
 
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
+            const clientFullData = response.data.clientDetails;
             const clientContactData = response.data.clientContacts
-            //console.log(clientContactData)
+            console.log(clientContactData);
+            console.log(clientFullData);
+            var client_rfc = clientFullData.rfc;
+            console.log(client_rfc);
+            var client_tax = clientFullData.tax_id;
+            console.log(client_tax);
+            localStorage.setItem("client_rfc", client_rfc);
+            localStorage.setItem("client_tax", client_tax);
+            //console.log(clientFullData)
             setClientContactData(clientContactData)
         })
     }
@@ -198,10 +208,18 @@ export const ClientContactsTableAxios = () => {
             headerName: 'ID', 
             width: 100
         },
-        { 
-            field: 'name', 
-            headerName: 'Nombre de contacto', 
-            width: 200 
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                      <span>{full_name}</span>
+                    </div>
+                  );
+            }
         },
         { 
             field: 'email', 
@@ -580,10 +598,18 @@ export const ClientsTableAxios = () => {
             headerName: 'ID', 
             width: 100
         },
-        { 
-            field: 'name', 
-            headerName: 'Nombre de contacto', 
-            width: 200 
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                      <span>{full_name}</span>
+                    </div>
+                  );
+            }
         },
         { 
             field: 'business_name', 

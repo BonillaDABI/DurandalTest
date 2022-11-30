@@ -39,8 +39,32 @@ function ModalCC(props) {
         });
       }
 
+      const [email, setEmail] = useState("");
+      const [name, setName] = useState("");
+      const [firstSurname, setFirstSurname] = useState("");
+      const [secondSurname, setSecondSurname] = useState("");
+      const [password, setPW] = useState("");
+      const [contactTypeId, setContactTypeId] = useState("");
+
     function createContact () {
-        
+        var client_id = localStorage.getItem("client_id");
+
+        axios.post(`http://localhost:3001/extraContact/${client_id}`, {
+            'Authorization': "bearer " + localStorage.getItem('token'),
+            name: name,
+            first_surname: firstSurname,
+            second_surname: secondSurname,
+            email: email,
+            password: password,
+            contact_type_id: contactTypeId
+        })
+        .then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+            errorAlert();
+            //alert("Error al crear cliente. Vuelve a intentarlo.");
+        });
     }
 
     function hide(){
@@ -51,8 +75,10 @@ function ModalCC(props) {
         }, 3600);
         //alert("Contacto creado exitosamente en la base de datos.");
     }
-
+    var business_name = localStorage.getItem("business_name");
+    console.log(business_name);
     return (
+        
         <Modal 
             {...props}
             size="xl"
@@ -67,6 +93,57 @@ function ModalCC(props) {
             </Modal.Header>
             <Modal.Body>
             <form className='contact-form'>
+                <div className='form-fields' id="large-form-field">
+                    <div className='input-container'>
+                        <span className="input-span">Cliente</span>
+                        <input className="input-field" type="text" placeholder={business_name} disabled />
+                    </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Correo electrónico</span>
+                        <input className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Ingresar..." required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Nombre(s)</span>
+                        <input className="input-field" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ingresar..." required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Primer apellido</span>
+                        <input className="input-field" type="text" value={firstSurname} onChange={(e) => setFirstSurname(e.target.value)} placeholder="Ingresar..." required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Segundo apellido</span>
+                        <input className="input-field" type="text" value={secondSurname} onChange={(e) => setSecondSurname(e.target.value)} placeholder="Ingresar..." required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Contraseña</span>
+                        <input className="input-field" type="password" value={password} onChange={(e) => setPW(e.target.value)} placeholder="Ingresar..." required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Tipo de Contacto</span>
+                        <select className="input-field" value={contactTypeId} onChange={(e) => setContactTypeId(e.target.value)} required>
+                            <option value="" selected disabled className="options">Seleccionar...</option> 
+                            <option value="1" className="options">Principal</option>
+                            <option value="2" className="options">Secundario</option>
+                        </select>
+                    </div>
+                </div>
 
             </form> 
             </Modal.Body>
