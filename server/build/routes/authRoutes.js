@@ -22,6 +22,8 @@ router.delete("/deleteCont/:id", authController.deleteCont);
 
 router.delete("/deleteTech/:id", authController.deleteTech);
 
+router.delete("/deleteSite/:id", authController.deleteSite);
+
 router.post("/addPerms", authController.rudPermissions)
 
 router.get("/roles", authController.getAllRoles)
@@ -51,6 +53,12 @@ router.get("/listTechs", authController.listTechnicals)
 
 router.get("/listClients", authController.listClients)
 
+router.get("/listSites", authController.listSites)
+
+router.get("/listClientSites/:id", authController.listSitesByClientID)
+
+router.get("/listSitesByID/:id", authController.listSitesByID)
+
 router.get("/listClient/:id", authController.listClientByID)
 
 router.get("/listContacts", authController.listContacts)
@@ -65,8 +73,12 @@ router.get("/autofillRoles", authController.sendRoles);
 
 router.post("/createTech", authController.protect, authController.createTechnical);
 
+router.post("/createSite/:id", authController.protect, authController.createSite);
+
 router.get("/autofillTechs", authController.sendTechs);
 
 router.patch("/updateClient/:id", authController.updateClient)
+
+router.patch("/updateSite/:id", authController.updateSite)
 
 module.exports = router;

@@ -18,6 +18,7 @@ const { ClientRequest } = require("http");
 const Client = require('../lib/clients')
 const Techs = require('../lib/technicals');
 const Contact = require('../lib/contact')
+const Site = require('../lib/sites')
 
 
 const authController = {}
@@ -106,6 +107,68 @@ authController.listContacts = async (req, res) => {
         // res.status(200).send('Usuarios creados')
     } else {
         res.status(400).send('Error al obtener usuarios')
+    }
+}
+
+authController.listSites = async (req, res) => {
+    var sites = await Site.getAllSites()
+    moment.locale('es-mx')
+    if (sites) {
+
+        for (let i = 0; i < sites.length; i++) {
+            sites[i].created_at = moment(sites[i].created_at).format("LL")
+            if (sites[i].is_active === 1) {
+                sites[i].is_active = "Activo"
+            } else {
+                sites[i].is_active = "Inactivo"
+            }
+        }
+
+        res.json(sites)
+    } else {
+        res.status(400).send('Error al obtener sitios')
+    }
+}
+
+authController.listSitesByClientID = async (req, res) => {
+    const client_id = req.params.id
+    var sites = await Site.getSitesByClientID(client_id)
+    moment.locale('es-mx')
+    if (sites) {
+
+        for (let i = 0; i < sites.length; i++) {
+            sites[i].created_at = moment(sites[i].created_at).format("LL")
+            if (sites[i].is_active === 1) {
+                sites[i].is_active = "Activo"
+            } else {
+                sites[i].is_active = "Inactivo"
+            }
+        }
+
+        res.json(sites)
+    } else {
+        res.status(400).send('Error al obtener sitios')
+    }
+}
+
+authController.listSitesByID = async (req, res) => {
+    const id = req.params.id
+    var sites = await Site.getSitesByID(id)
+    moment.locale('es-mx')
+    if (sites) {
+
+        for (let i = 0; i < sites.length; i++) {
+            sites[i].created_at = moment(sites[i].created_at).format("LL")
+            if (sites[i].is_active === 1) {
+                sites[i].is_active = "Activo"
+            } else {
+                sites[i].is_active = "Inactivo"
+            }
+        }
+
+        res.json(sites)
+    } else {
+        res.status(400).send('Error al obtener sitios')
     }
 }
 
@@ -234,7 +297,34 @@ authController.updateClient = async (req, res) => {
     }
 }
 
+authController.updateSite = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+    const id = req.params.id
 
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const date = new Date()
+        const { name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code } = req.body;
+
+        try {
+            const updateSite = await Site.updateSiteByID(id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, userID, date)
+
+            if (updateSite) {
+                res.status(200).send('Sitio actualizado.')
+            }
+
+        } catch (error) {
+            res.status(400).send('Error al actualizar sitio.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
 
 authController.register = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
@@ -363,6 +453,27 @@ authController.createClient = async (req, res) => {
             })
         } else {
             res.status(400).send('Usuario ya existe.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+authController.createSite = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+        const client_id = req.params.id
+
+        const { name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code } = req.body;
+
+        const createdSite = await Site.insertSite(client_id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, req.userID, date)
+
+        if (createdSite) {
+            res.status(200).json('Sitio creado.')
+        } else {
+            res.status(400).json('Error al crear sitio')
         }
 
     } else {
@@ -619,6 +730,17 @@ authController.deleteTech = async (req, res) => {
         res.status(200).send('Tecnico borrado.')
     } else {
         res.status(400).send('Error al borrar tecnico')
+    }
+}
+
+authController.deleteSite = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Site.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Site borrado.')
+    } else {
+        res.status(400).send('Error al borrar site')
     }
 }
 
