@@ -137,22 +137,15 @@ export const ClientContactsTableAxios = () => {
     const [clientContactData, setClientContactData] = useState ( [] )
 
     var clientId = localStorage.getItem("client_id");
-    console.log(clientId);
+    //console.log(clientId);
 
     const endpoint = `http://localhost:3001/listClientsContacts/${clientId}`;
 
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
-            const clientFullData = response.data.clientDetails;
-            const clientContactData = response.data.clientContacts
-            console.log(clientContactData);
-            console.log(clientFullData);
-            var client_rfc = clientFullData.rfc;
-            console.log(client_rfc);
-            var client_tax = clientFullData.tax_id;
-            console.log(client_tax);
-            localStorage.setItem("client_rfc", client_rfc);
-            localStorage.setItem("client_tax", client_tax);
+            //console.log(response.data);
+            const clientContactData = response.data.clientContacts;
+         
             //console.log(clientFullData)
             setClientContactData(clientContactData)
         })
@@ -165,8 +158,8 @@ export const ClientContactsTableAxios = () => {
     const [modalCCDeleteShow, setModalCCDeleteShow] = useState(false);
 
     function manageContactDelete(contactInfo){
-        console.log(contactInfo);
-        console.log(contactInfo.id);
+        //console.log(contactInfo);
+        //console.log(contactInfo.id);
         var contactId = contactInfo.id;
         localStorage.setItem("contactIdToDelete", contactId);
 
@@ -224,7 +217,7 @@ export const ClientContactsTableAxios = () => {
         { 
             field: 'email', 
             headerName: 'E-mail', 
-            width: 180 
+            width: 200 
         },
         {
             field: 'type',
@@ -300,8 +293,8 @@ export const ContactsTableAxios = () => {
     const [modalCCDeleteShow, setModalCCDeleteShow] = useState(false);
 
     function manageContactDelete(contactInfo){
-        console.log(contactInfo);
-        console.log(contactInfo.id);
+        //console.log(contactInfo);
+        //console.log(contactInfo.id);
         var contactId = contactInfo.id;
         localStorage.setItem("contactIdToDelete", contactId);
 
@@ -537,7 +530,7 @@ export const ClientsTableAxios = () => {
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
             const clientData = response.data
-            console.log(clientData)
+            //console.log(clientData)
             setClientData(clientData)
         })
     }
@@ -553,13 +546,17 @@ export const ClientsTableAxios = () => {
         navigate("/clientInfo")
         var business_name = clientInfo.business_name;
         var client_id = clientInfo.id;
+        var client_rfc = clientInfo.rfc;
+        var client_tax_id = clientInfo.tax_id;
         localStorage.setItem("business_name", business_name);
         localStorage.setItem("client_id", client_id);
+        localStorage.setItem("client_rfc", client_rfc);
+        localStorage.setItem("client_tax_id", client_tax_id);
     }
 
     function manageClientDelete(clientInfo){
-        console.log(clientInfo);
-        console.log(clientInfo.id);
+        //console.log(clientInfo);
+        //console.log(clientInfo.id);
         var clientId = clientInfo.id;
         localStorage.setItem("clientIdToDelete", clientId);
 

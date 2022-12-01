@@ -76,7 +76,7 @@ function ModalCC(props) {
         //alert("Contacto creado exitosamente en la base de datos.");
     }
     var business_name = localStorage.getItem("business_name");
-    console.log(business_name);
+    //console.log(business_name);
     return (
         
         <Modal 

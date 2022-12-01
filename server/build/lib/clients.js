@@ -43,7 +43,7 @@ const insertClient = (user_id, business_name, rfc, tax_id, creator_id, date) => 
 
 const getAllClients = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT c.id, u.name, u.first_surname, u.second_surname,c.business_name, c.is_active, c.created_at FROM clients c, contacts co, users u WHERE c.id = co.client_id AND co.user_id = u.id', (err, rows) => {
+        await connection.query('SELECT c.id, u.name, u.first_surname, u.second_surname,c.business_name, c.rfc, c.tax_id, c.is_active, c.created_at FROM clients c, contacts co, users u WHERE c.id = co.client_id AND co.user_id = u.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
