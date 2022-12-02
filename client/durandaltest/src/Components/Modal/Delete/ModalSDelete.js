@@ -6,8 +6,17 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalSDelete(props) {
+    var deleteSiteName = localStorage.getItem("siteNameToDelete");
+    var deleteSiteAddressStreet = localStorage.getItem("siteAddressStreetToDelete");
+    var deleteSiteAddressNum = localStorage.getItem("siteAddressNumToDelete");
+    var deleteSiteAddressPC = localStorage.getItem("siteAddressPCToDelete");
+    var deleteSiteBusiness = localStorage.getItem("siteBusinessToDelete");
+    var deleteSiteCreatedDate = localStorage.getItem("siteCreatedDateToDelete");
+
     const deleteSite = () => {
-        
+        var deleteSiteId = localStorage.getItem("siteIdToDelete");
+        const response = axios.delete(`http://localhost:3001/deleteSite/${deleteSiteId}`);
+        console.log(deleteSiteId);
     } 
     
     function hideS(){
@@ -33,7 +42,12 @@ function ModalSDelete(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                
+                <span className='delete-info'><strong>Nombre:</strong> {deleteSiteName}</span><br />
+                <span className='delete-info'><strong>Cliente:</strong> {deleteSiteBusiness}</span><br />
+                <span className='delete-info'><strong>Nombre de la calle:</strong> {deleteSiteAddressStreet}</span><br />
+                <span className='delete-info'><strong>Número de dirección:</strong> {deleteSiteAddressNum}</span><br />
+                <span className='delete-info'><strong>Código postal:</strong> {deleteSiteAddressPC}</span><br />
+                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteSiteCreatedDate}</span>
             </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteSite(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>

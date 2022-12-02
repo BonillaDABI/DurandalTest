@@ -8,9 +8,9 @@ import "./Style/dark.scss"
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import Create from "./Pages/Create";
-import CreateR from "./Pages/CreateR";
+//import CreateR from "./Pages/CreateR";
 import Update from "./Pages/Update";
-import UpdateR from "./Pages/UpdateR";
+//import UpdateR from "./Pages/UpdateR";
 import ListUsers from "./Pages/ListUsers";
 import ListRoles from "./Pages/ListRoles";
 import ListPermissions from "./Pages/ListPermissions";

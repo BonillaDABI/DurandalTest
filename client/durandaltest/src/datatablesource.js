@@ -20,7 +20,7 @@ export const SitesTableAxios = () => {
     var clientId = localStorage.getItem("client_id");
     console.log(clientId);
 
-    const endpoint = `http://localhost:3001//${clientId}`;
+    const endpoint = `http://localhost:3001/listClientSites/${clientId}`;
 
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
@@ -37,8 +37,24 @@ export const SitesTableAxios = () => {
     const [modalSDeleteShow, setModalSDeleteShow] = useState(false);
 
     function manageSiteDelete(siteInfo){
-        console.log(siteInfo);
-        
+        //console.log(siteInfo);
+        var siteId = siteInfo.id;
+        localStorage.setItem("siteIdToDelete", siteId);
+
+        var siteName = siteInfo.name;
+        var siteAddressStreet = siteInfo.address_street;
+        var siteAddressNumber = siteInfo.address_number;
+        var siteAddressPostalCode = siteInfo.address_postal_code;
+        var siteBusinessName = siteInfo.business_name;
+        var siteCreatedDate = siteInfo.created_at;
+
+        localStorage.setItem("siteNameToDelete", siteName);
+        localStorage.setItem("siteAddressStreetToDelete", siteAddressStreet);
+        localStorage.setItem("siteAddressNumToDelete", siteAddressNumber);
+        localStorage.setItem("siteAddressPCToDelete", siteAddressPostalCode);
+        localStorage.setItem("siteBusinessToDelete", siteBusinessName);
+        localStorage.setItem("siteCreatedDateToDelete", siteCreatedDate);
+
     }
 
     const actionColumn = [
@@ -67,27 +83,32 @@ export const SitesTableAxios = () => {
         { 
             field: 'id', 
             headerName: 'ID', 
-            width: 100
+            width: 70
         },
         { 
             field: 'name', 
-            headerName: 'Nombre de contacto', 
-            width: 200 
+            headerName: 'Nombre de sitio', 
+            width: 150 
         },
         { 
-            field: 'email', 
-            headerName: 'E-mail', 
-            width: 180 
+            field: 'address_street', 
+            headerName: 'Nombre de la calle', 
+            width: 150 
         },
         {
-            field: 'type',
-            headerName: 'Tipo',
-            width: 180
+            field: 'address_number',
+            headerName: 'Número de dirección',
+            width: 150
+        },
+        { 
+            field: 'address_postal_code', 
+            headerName: 'Código postal', 
+            width: 120 
         },
         { 
             field: 'is_active', 
             headerName: 'Estatus', 
-            width: 150,
+            width: 110,
             renderCell: (params) => {
                 if (params.row.is_active === "Activo"){
                     return (
@@ -109,7 +130,7 @@ export const SitesTableAxios = () => {
         { 
             field: 'created_at', 
             headerName: 'Fecha de alta', 
-            width: 200
+            width: 150
         }
     ];
 
