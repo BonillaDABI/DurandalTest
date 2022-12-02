@@ -496,6 +496,16 @@ export const AgentsTableAxios = () => {
             width: 180 
         },
         { 
+            field: 'telefono', 
+            headerName: 'Teléfono', 
+            width: 130 
+        },
+        { 
+            field: 'fechaNacimiento', 
+            headerName: 'Fecha de Nacimiento', 
+            width: 200 
+        },
+        { 
             field: 'is_active', 
             headerName: 'Estatus', 
             width: 150,
