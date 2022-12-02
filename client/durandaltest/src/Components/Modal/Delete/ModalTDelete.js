@@ -9,6 +9,7 @@ function ModalTDelete(props) {
     var deleteTechName = localStorage.getItem("techNameToDelete");
     var deleteTechEmail = localStorage.getItem("techEmailToDelete");
     var deleteTechCreatedDate = localStorage.getItem("techCreatedDateToDelete");
+    var deleteTechPhone = localStorage.getItem("techPhoneToDelete");
 
     const deleteTech = () => {
         var deleteTechId = localStorage.getItem("techIdToDelete");
@@ -41,6 +42,7 @@ function ModalTDelete(props) {
             <Modal.Body>
                 <span className='delete-info'><strong>Nombre:</strong> {deleteTechName}</span><br />
                 <span className='delete-info'><strong>Email:</strong> {deleteTechEmail}</span><br />
+                <span className='delete-info'><strong>Teléfono:</strong> {deleteTechPhone}</span><br />
                 <span className='delete-info'><strong>Fecha de alta:</strong> {deleteTechCreatedDate}</span>
             </Modal.Body>
             <Modal.Footer>

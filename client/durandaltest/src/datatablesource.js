@@ -452,9 +452,13 @@ export const AgentsTableAxios = () => {
         var techName = techInfo.name;
         var techEmail = techInfo.email;
         var techCreatedDate = techInfo.created_at;
+        var techPhone = techInfo.telefono;
+        //var techNacimiento = techInfo.fechaNacimiento;
         localStorage.setItem("techNameToDelete", techName);
         localStorage.setItem("techEmailToDelete", techEmail);
         localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
+        localStorage.setItem("techPhoneToDelete", techPhone);
+        //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
     }
 
     const actionColumn = [

@@ -49,6 +49,9 @@ function ModalT(props) {
     const [firstSurname, setFirstSurname] = useState("");
     const [secondSurname, setSecondSurname] = useState("");
     const [password, setPW] = useState("");
+    const [phone, setPhone] = useState("");
+    const [nacimiento, setNacimiento] = useState("");
+
 
     function createTech () {
         axios.post('http://localhost:3001/createTech', { // url to POST
@@ -57,7 +60,9 @@ function ModalT(props) {
             first_surname: firstSurname,
             second_surname: secondSurname,
             email: email,
-            password: password
+            password: password,
+            telefono: phone,
+            fechaNacimiento: nacimiento
         })
         .then((response) => {
             console.log(response);
@@ -124,6 +129,18 @@ function ModalT(props) {
                     <div className='input-container'>
                         <span className="input-span">Contraseña</span>
                         <input className="input-field" type="password" placeholder="Ingresar..." value={password} onChange={(e) => setPW(e.target.value)} required />
+                    </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Teléfono</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={phone} onChange={(e) => setPhone(e.target.value)} required />
+                    </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Fecha de nacimiento</span>
+                        <input className="input-field" type="date" placeholder="Seleccionar..." value={nacimiento} onChange={(e) => setNacimiento(e.target.value)} required />
                     </div>
                 </div>
             </form>
