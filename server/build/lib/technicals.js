@@ -13,6 +13,15 @@ const getAllTechnicals = () => {
     });
 };
 
+const getTechnicalByID = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT t.id, t.is_active, t.created_at, u.name, u.first_surname, u.second_surname, t.telefono, t.fechaNacimiento, u.email FROM technicals t, users u WHERE t.user_id = u.id AND t.id = ?', [id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        });
+    });
+}
+
 const getTechByUserID = (userID) => {
     return new Promise((resolve, reject) => {
         connection.query('SELECT * FROM technicals WHERE user_id = ?', [userID], (err, rows) => {
@@ -22,10 +31,12 @@ const getTechByUserID = (userID) => {
     })
 }
 
-const insertTech = (user_id, creator_id, date) => {
+const insertTech = (user_id, telefono, fechaNacimiento, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('INSERT INTO technicals SET ?', [{
             user_id,
+            telefono,
+            fechaNacimiento,
             is_active: 01,
             created_by: creator_id,
             created_at: date,
@@ -68,11 +79,22 @@ const deleteById = (id) => {
     });
 }
 
+const getLogs = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT tm.mov_name, tl.telefono, tl.fechaNacimiento, tl.is_active, tl.updated_reason, u.email, u.name, u.first_surname, u.second_surname, tl.created_at, tl.updated_at FROM technical_logs tl, technical_movements tm, users u WHERE tl.technical_id = ? AND tl.user_id = u.id AND tm.id = tl.technical_movement_id', [id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 module.exports = {
     getAllTechnicals,
     getTechByUserID,
     insertTech,
     sendTechs,
-    deleteById
+    deleteById,
+    getTechnicalByID,
+    getLogs
 
 }

@@ -28,7 +28,7 @@ authController.listAll = async (req, res) => {
     var users = await User.getAll()
     moment.locale('es-mx')
     for (let i = 0; i < users.length; i++) {
-        users[i].created_at = moment(users[i].created_at).format("LL")
+        users[i].created_at = moment(users[i].created_at).format("ll")
         if (users[i].is_active === 1) {
             users[i].is_active = "Activo"
         } else {
@@ -50,7 +50,7 @@ authController.listClients = async (req, res) => {
     var clients = await Client.getAllClients()
     moment.locale('es-mx')
     for (let i = 0; i < clients.length; i++) {
-        clients[i].created_at = moment(clients[i].created_at).format("LL")
+        clients[i].created_at = moment(clients[i].created_at).format("ll")
         if (clients[i].is_active === 1) {
             clients[i].is_active = "Activo"
         } else {
@@ -95,7 +95,7 @@ authController.listContacts = async (req, res) => {
     if (contacts) {
 
         for (let i = 0; i < contacts.length; i++) {
-            contacts[i].created_at = moment(contacts[i].created_at).format("LL")
+            contacts[i].created_at = moment(contacts[i].created_at).format("ll")
             if (contacts[i].is_active === 1) {
                 contacts[i].is_active = "Activo"
             } else {
@@ -116,7 +116,7 @@ authController.listSites = async (req, res) => {
     if (sites) {
 
         for (let i = 0; i < sites.length; i++) {
-            sites[i].created_at = moment(sites[i].created_at).format("LL")
+            sites[i].created_at = moment(sites[i].created_at).format("ll")
             if (sites[i].is_active === 1) {
                 sites[i].is_active = "Activo"
             } else {
@@ -137,7 +137,7 @@ authController.listSitesByClientID = async (req, res) => {
     if (sites) {
 
         for (let i = 0; i < sites.length; i++) {
-            sites[i].created_at = moment(sites[i].created_at).format("LL")
+            sites[i].created_at = moment(sites[i].created_at).format("ll")
             if (sites[i].is_active === 1) {
                 sites[i].is_active = "Activo"
             } else {
@@ -158,7 +158,7 @@ authController.listSitesByID = async (req, res) => {
     if (sites) {
 
         for (let i = 0; i < sites.length; i++) {
-            sites[i].created_at = moment(sites[i].created_at).format("LL")
+            sites[i].created_at = moment(sites[i].created_at).format("ll")
             if (sites[i].is_active === 1) {
                 sites[i].is_active = "Activo"
             } else {
@@ -176,7 +176,7 @@ authController.listTechnicals = async (req, res) => {
     var techs = await Techs.getAllTechnicals()
     moment.locale('es-mx')
     for (let i = 0; i < techs.length; i++) {
-        techs[i].created_at = moment(techs[i].created_at).format("LL")
+        techs[i].created_at = moment(techs[i].created_at).format("ll")
         if (techs[i].is_active === 1) {
             techs[i].is_active = "Activo"
         } else {
@@ -186,6 +186,63 @@ authController.listTechnicals = async (req, res) => {
 
     if (techs) {
         res.json(techs)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener tecnicos')
+    }
+}
+
+authController.listTechnicalByID = async (req, res) => {
+    const id = req.params.id
+    var techs = await Techs.getTechnicalByID(id)
+    var techLogs = await Techs.getLogs(id)
+    moment.locale('es-mx')
+    for (let i = 0; i < techs.length; i++) {
+        techs[i].created_at = moment(techs[i].created_at).format("ll")
+        techs[i].fechaNacimiento = moment(techs[i].fechaNacimiento).format("ll")
+        if (techs[i].is_active === 1) {
+            techs[i].is_active = "Activo"
+        } else {
+            techs[i].is_active = "Inactivo"
+        }
+    }
+
+    for (let i = 0; i < techLogs.length; i++) {
+        techLogs[i].created_at = moment(techLogs[i].created_at).format("ll")
+        techLogs[i].fechaNacimiento = moment(techLogs[i].fechaNacimiento).format("ll")
+        techLogs[i].updated_at = moment(techLogs[i].updated_at).format("ll")
+        if (techLogs[i].is_active === 1) {
+            techLogs[i].is_active = "Activo"
+        } else {
+            techLogs[i].is_active = "Inactivo"
+        }
+    }
+
+    if (techs) {
+        res.json({ techs, techLogs })
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener tecnicos')
+    }
+}
+
+authController.listSitesLogsByID = async (req, res) => {
+    const id = req.params.id
+    var siteLogs = await Site.getLogs(id)
+    moment.locale('es-mx')
+
+    for (let i = 0; i < siteLogs.length; i++) {
+        siteLogs[i].created_at = moment(siteLogs[i].created_at).format("ll")
+        siteLogs[i].updated_at = moment(siteLogs[i].updated_at).format("ll")
+        if (siteLogs[i].is_active === 1) {
+            siteLogs[i].is_active = "Activo"
+        } else {
+            siteLogs[i].is_active = "Inactivo"
+        }
+    }
+
+    if (siteLogs) {
+        res.json(siteLogs)
         // res.status(200).send('Usuarios creados')
     } else {
         res.status(400).send('Error al obtener tecnicos')
@@ -326,6 +383,35 @@ authController.updateSite = async (req, res) => {
     }
 }
 
+authController.updateContact = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+    const id = req.params.id
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const date = new Date()
+        const { name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code } = req.body;
+
+        try {
+            const updateSite = await Site.updateSiteByID(id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, userID, date)
+
+            if (updateSite) {
+                res.status(200).send('Sitio actualizado.')
+            }
+
+        } catch (error) {
+            res.status(400).send('Error al actualizar sitio.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
+
 authController.register = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
 
@@ -401,6 +487,14 @@ authController.sendRoles = async (req, res) => {
 authController.sendTechs = async (req, res) => {
     const sendtechs = await Techs.sendTechs()
     res.json(sendtechs)
+}
+
+authController.sendCountryDetails = async (req, res) => {
+    const countries = await Site.sendCountryDetails()
+    const states = await Site.sendStateDetails()
+    const cities = await Site.sendCityDetails()
+    const colonies = await Site.sendColonyDetails()
+    res.json({ countries, states, cities, colonies })
 }
 
 // authController.sendParentID = async (req, res) => {
@@ -542,7 +636,7 @@ authController.createTechnical = async (req, res) => {
         const password = await bcrypt.hash(req.body.password, 10)
         const date = new Date()
 
-        const { name, first_surname, second_surname, email } = req.body;
+        const { name, first_surname, second_surname, email, telefono, fechaNacimiento } = req.body;
 
         const user = await User.getUserByEmail(email);
 
@@ -566,7 +660,7 @@ authController.createTechnical = async (req, res) => {
                 const tech = await Techs.getTechByUserID(userID)
 
                 if (!tech) {
-                    await Techs.insertTech(userID, req.userID, date)
+                    await Techs.insertTech(userID, telefono, fechaNacimiento, req.userID, date)
                     res.status(200).json('Tecnico creado.')
                 } else {
                     res.status(400).json('Tecnico ya existe.')

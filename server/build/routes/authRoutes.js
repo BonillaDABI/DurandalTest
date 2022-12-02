@@ -45,11 +45,17 @@ router.get("/autofillClients", authController.sendUserIDsClients)
 
 router.get("/autofillContacts", authController.sendContactTypes)
 
+router.get("/autofillCountryDetails", authController.sendCountryDetails)
+
 router.post("/createClient", authController.protect, authController.createClient)
 
 router.post("/extraContact/:id", authController.protect, authController.extraContact)
 
 router.get("/listTechs", authController.listTechnicals)
+
+router.get("/listTech/:id", authController.listTechnicalByID)
+
+router.get("/listSiteLogs/:id", authController.listSitesLogsByID)
 
 router.get("/listClients", authController.listClients)
 
@@ -80,5 +86,6 @@ router.get("/autofillTechs", authController.sendTechs);
 router.patch("/updateClient/:id", authController.updateClient)
 
 router.patch("/updateSite/:id", authController.updateSite)
+
 
 module.exports = router;

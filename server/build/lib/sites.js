@@ -93,11 +93,69 @@ const deleteById = (id) => {
     });
 };
 
+const getLogs = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT sm.mov_name, st.name, st.address_street, st.address_number, col.name, c.name, s.name, cou.name, st.address_postal_code, st.is_active, st.created_at, st.updated_at, st.updated_reason, cl.business_name, cl.rfc, u.name, u.email FROM sites_logs st, sites_movements sm, clients cl, contacts co, users u, city c, state s, colony col, country cou WHERE st.site_movement_id = sm.id AND st.client_id = cl.id AND st.contact_id = co.id AND co.user_id = u.id AND st.address_colony_id = col.id AND st.address_city_id = c.id AND st.address_state_id = s.id AND st.address_country_id = cou.id AND st.site_id = ?', [id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
+const sendCountryDetails = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, name FROM country', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
+const sendStateDetails = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, name, country_id FROM state', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
+const sendCityDetails = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, name, state_id FROM city', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
+const sendColonyDetails = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, name, city_id FROM colony', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 module.exports = {
     getAllSites,
     insertSite,
     getSitesByClientID,
     getSitesByID,
     updateSiteByID,
-    deleteById
+    deleteById,
+    getLogs,
+    sendCountryDetails,
+    sendStateDetails,
+    sendCityDetails,
+    sendColonyDetails
 }
