@@ -101,13 +101,6 @@ function ModalCC(props) {
                 </div>
                 <div className='form-fields'>
                     <div className='input-container'>
-                        <span className="input-span">Correo electrónico</span>
-                        <input className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Ingresar..." required />
-                    </div>
-                </div>
-
-                <div className='form-fields'>
-                    <div className='input-container'>
                         <span className="input-span">Nombre(s)</span>
                         <input className="input-field" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ingresar..." required />
                     </div>
@@ -124,6 +117,13 @@ function ModalCC(props) {
                     <div className='input-container'>
                         <span className="input-span">Segundo apellido</span>
                         <input className="input-field" type="text" value={secondSurname} onChange={(e) => setSecondSurname(e.target.value)} placeholder="Ingresar..." required />
+                    </div>
+                </div>
+
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Correo electrónico</span>
+                        <input className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Ingresar..." required />
                     </div>
                 </div>
 

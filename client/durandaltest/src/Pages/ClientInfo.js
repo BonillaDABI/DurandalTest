@@ -56,28 +56,24 @@ function ClientInfo() {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
-        <div className="clientinfo-container">
-          <span><strong>{businessName}</strong></span><br />
-          <span>{clientRFC}</span>
-        </div>
-        <form>
+        <form className="update-client-form">
           <div className='form-fields' id="large-form-field">
             <div className='mini-input-container'>
               <span className="input-span">Nombre del negocio</span>
-              <input className="input-field" type="text" placeholder="Ingresar..." value={business} onChange={(e) => setBusiness(e.target.value)} required />
+              <input className="input-field" type="text" placeholder={businessName} value={business} onChange={(e) => setBusiness(e.target.value)} required />
             </div>
           </div>
           <div className='form-fields'>
             <div className='mini-input-container'>
               <span className="input-span">RFC</span>
-              <input className="input-field" type="text" placeholder="Ingresar..." value={rfc} onChange={(e) => setRFC(e.target.value)} required />
+              <input className="input-field" type="text" placeholder={clientRFC} value={rfc} onChange={(e) => setRFC(e.target.value)} required />
             </div>
           </div>
           <div className='form-fields'>
             <div className='mini-input-container'>
               <span className="input-span">Tax ID</span>
               <select className="input-field"  value={taxId} onChange={(e) => setTaxId(e.target.value)} required>
-                <option value="" disabled hidden className="options">Seleccionar...</option> 
+                <option value="" disabled hidden className="options">{clientTax}</option> 
                 {clients.activeTaxes.map((item, i) => {
                   return <option className="options" key={i} value={item.id}>{item.name}</option>
                 })};
@@ -85,7 +81,8 @@ function ClientInfo() {
             </div>
           </div>        
         </form>
-        <div className="button-container">
+        <br />
+        <div className="ci-button-container">
           <button className='save-button' onClick={() => {updateClient();}}>Guardar cambios</button>
         </div>
         <div className='divider'></div>

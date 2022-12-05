@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 //import MaterialReactTable from "material-react-table";
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { faPenToSquare, faTrashCan, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faFileLines, faPenToSquare, faTrashCan, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
@@ -184,10 +184,11 @@ export const ClientContactsTableAxios = () => {
         var contactId = contactInfo.id;
         localStorage.setItem("contactIdToDelete", contactId);
 
-        var contactName = contactInfo.name;
+        //var contactName = contactInfo.name;
         var contactEmail = contactInfo.email;
         var contactBusiness = contactInfo.business_name;
         var contactCreatedDate = contactInfo.created_at;
+        var contactName = contactInfo.name + " " + contactInfo.first_surname + " " + contactInfo.second_surname;
         localStorage.setItem("contactNameToDelete", contactName);
         localStorage.setItem("contactEmailToDelete", contactEmail);
         localStorage.setItem("contactCreatedDateToDelete", contactCreatedDate);
@@ -449,16 +450,21 @@ export const AgentsTableAxios = () => {
         var techId = techInfo.id;
         localStorage.setItem("techIdToDelete", techId);
 
-        var techName = techInfo.name;
+        //var techName = techInfo.name;
         var techEmail = techInfo.email;
         var techCreatedDate = techInfo.created_at;
         var techPhone = techInfo.telefono;
+        var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
         //var techNacimiento = techInfo.fechaNacimiento;
         localStorage.setItem("techNameToDelete", techName);
         localStorage.setItem("techEmailToDelete", techEmail);
         localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
         localStorage.setItem("techPhoneToDelete", techPhone);
         //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+    }
+
+    function manageTechLogs(){
+        
     }
 
     const actionColumn = [
@@ -475,6 +481,7 @@ export const AgentsTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageTechLogs()}}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon"/></button>
                         <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalTDeleteShow(true); manageTechDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )
@@ -514,7 +521,7 @@ export const AgentsTableAxios = () => {
         },
         { 
             field: 'fechaNacimiento', 
-            headerName: 'Fecha de Nacimiento', 
+            headerName: 'Fecha de nacimiento', 
             width: 200 
         },
         { 
@@ -728,6 +735,8 @@ export const UserTableAxios = () => {
         var userName = userInfo.name;
         var userEmail = userInfo.email;
         var userCreatedDate = userInfo.created_at;
+
+        
         localStorage.setItem("userNameToDelete", userName);
         localStorage.setItem("userEmailToDelete", userEmail);
         localStorage.setItem("userCreatedDateToDelete", userCreatedDate);
