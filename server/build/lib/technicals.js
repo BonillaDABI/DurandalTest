@@ -6,7 +6,7 @@ const moment = require('moment')
 
 const getAllTechnicals = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT t.id, t.is_active, t.created_at, t.telefono, t.fechaNacimiento, u.name, u.email FROM technicals t, users u WHERE t.user_id = u.id AND u.roles_id = 2 ', (err, rows) => {
+        await connection.query('SELECT t.id, t.is_active, t.created_at, t.telefono, t.fechaNacimiento, u.name, u.email, u.first_surname, u.second_surname FROM technicals t, users u WHERE t.user_id = u.id AND u.roles_id = 2 ', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
