@@ -177,6 +177,7 @@ authController.listTechnicals = async (req, res) => {
     moment.locale('es-mx')
     for (let i = 0; i < techs.length; i++) {
         techs[i].created_at = moment(techs[i].created_at).format("ll")
+        techs[i].fechaNacimiento = moment(techs[i].fechaNacimiento).format("ll")
         if (techs[i].is_active === 1) {
             techs[i].is_active = "Activo"
         } else {

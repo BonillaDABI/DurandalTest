@@ -489,10 +489,18 @@ export const AgentsTableAxios = () => {
             headerName: 'ID', 
             width: 100
         },
-        { 
-            field: 'name', 
-            headerName: 'Nombre', 
-            width: 130 
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                      <span>{full_name}</span>
+                    </div>
+                  );
+            }
         },
         { 
             field: 'email', 
