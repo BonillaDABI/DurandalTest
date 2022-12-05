@@ -73,7 +73,7 @@ function ClientInfo() {
             <div className='mini-input-container'>
               <span className="input-span">Tax ID</span>
               <select className="input-field"  value={taxId} onChange={(e) => setTaxId(e.target.value)} required>
-                <option value="" disabled hidden className="options">{clientTax}</option> 
+                <option value={clientTax} disabled hidden className="options">{clientTax}</option> 
                 {clients.activeTaxes.map((item, i) => {
                   return <option className="options" key={i} value={item.id}>{item.name}</option>
                 })};
