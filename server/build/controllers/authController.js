@@ -364,13 +364,14 @@ authController.updateSite = async (req, res) => {
     // const userID = validateToken()
     const userRoleID = await User.getUserRoleID(userID);
     const userPermissions = await User.getPermissionByRoleId(userRoleID)
+    const client_id = await Site.getClientIdFromSite(id);
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code } = req.body;
+        const { name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, is_active, updated_reason } = req.body;
 
         try {
-            const updateSite = await Site.updateSiteByID(id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, userID, date)
+            const updateSite = await Site.updateSiteByID(id, client_id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, userID, date, is_active, updated_reason)
 
             if (updateSite) {
                 res.status(200).send('Sitio actualizado.')

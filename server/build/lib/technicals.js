@@ -41,11 +41,13 @@ const insertTech = (user_id, telefono, fechaNacimiento, creator_id, date) => {
             created_by: creator_id,
             created_at: date,
             updated_at: date
-        }], (err, rows) => {
+        }], async (err, rows) => {
             if (err) {
                 reject(err)
             }
             resolve(rows)
+
+            await connection.query('CALL log_createTecnico(?, ?, ?, ?, ?, ?, ?, ?)', [rows.insertId, user_id, 2, telefono, fechaNacimiento, 1, creator_id, date])
         })
     })
 }

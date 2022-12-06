@@ -53,7 +53,16 @@ const getSitesByID = (id) => {
     });
 };
 
-const updateSiteByID = (id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, creator_id, date) => {
+const getClientIdFromSite = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT client_id FROM sites WHERE id = ?', [id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows[0].client_id)))
+        })
+    })
+}
+
+const updateSiteByID = (id, client_id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, creator_id, date, is_active, updated_reason) => {
     return new Promise(async (resolve, reject) => {
         await connection.query(
             "UPDATE sites SET ? WHERE id = ?",
@@ -67,10 +76,19 @@ const updateSiteByID = (id, name, address_street, address_number, address_colony
                 address_country_id,
                 address_postal_code,
                 updated_by: creator_id,
-                updated_at: date
-            }, id], (err, rows) => {
+                updated_at: date,
+                is_active,
+                updated_reason
+            }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)
+
+                if (is_active === 1) {
+                    await connection.query('CALL log_actualizarSitio(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, client_id, 3, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, 1, creator_id, date, updated_reason])
+                } else {
+                    await connection.query('CALL log_actualizarSitio(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, client_id, 1, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, is_active, creator_id, date, updated_reason])
+                }
+
             })
     })
 }
@@ -157,5 +175,6 @@ module.exports = {
     sendCountryDetails,
     sendStateDetails,
     sendCityDetails,
-    sendColonyDetails
+    sendColonyDetails,
+    getClientIdFromSite
 }
