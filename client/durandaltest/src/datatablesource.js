@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 //import MaterialReactTable from "material-react-table";
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -12,13 +12,139 @@ import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
 import ModalSDelete from "./Components/Modal/Delete/ModalSDelete";
 import { useNavigate } from "react-router-dom";
 import { param } from "express-validator";
+import { Grid, Typography } from "@mui/material";
+import TechDisplayLogComponent from "./Components/LogsDisplay/TechDisplayLogComponent";
+
+// Site Logs
+
+
+// Tech Logs
+
+export const TechLogsTableAxios = () => {
+    const [techLogData, setTechLogData] = useState ( [] )
+
+    var logTechId = localStorage.getItem("techIdForLog")
+    console.log(logTechId)
+
+    const endpoint = `http://localhost:3001/listTech/${logTechId}`;
+
+    const getData = async() => {
+        await axios.get(endpoint).then((response) => {
+            //console.log(response.data);
+            const techLogData = response.data
+            setTechLogData(techLogData)
+        })
+    }
+
+    useEffect( () => {
+        getData()
+    }, [])
+
+    const [selected, setSelected] = useState ( [] )
+    const [rows, setRows] = useState ( [] )
+
+    const handleSelectionChange = useCallback(
+        (selected = []) => {
+            setSelected(rows.filter(({id}) => selected.includes(id)));
+        }, [rows]
+    );
+
+    // Columnas
+    const techLogsColumns = [
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 70
+        },
+        { 
+            field: 'technical_movement_id', 
+            headerName: 'Tipo de Movimiento', 
+            width: 180 
+        },
+        { 
+            field: 'updated_reason', 
+            headerName: 'Razon', 
+            width: 180 
+        },
+        { 
+            field: 'is_active', 
+            headerName: 'Estatus', 
+            width: 110,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo"){
+                    return (
+                        <div>
+                          <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }else{
+                    return (
+                        <div>
+                          <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }
+
+              },
+              valueGetter: (params) => params.row.is_active
+        },
+        { 
+            field: 'created_at', 
+            headerName: 'Fecha de alta', 
+            width: 150
+        }
+    ];
+
+    return (
+        <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <div
+                    style={{
+                        height: 500,
+                        width: "100%",
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    }}
+                >
+                    <DataGrid
+                    initialState={{
+                        sorting: {
+                            sortModel: [{ field: 'id', sort: 'desc'}],
+                        },
+                    }}
+                        onSelectionModelChange={handleSelectionChange}
+                        checkboxSelection
+                        {...rows}
+                        rows={techLogData}
+                        columns={techLogsColumns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        components={{Toolbar: GridToolbar}}
+                        getRowId={({id}) => id}
+                        
+                    />
+                </div>
+            </Grid>
+            <Grid item xs={6}>
+                <Typography>Log(s) seleccionado(s)</Typography>
+                {selected.map((item) => (
+                    <TechDisplayLogComponent {...item}/>
+                ))}
+            </Grid>
+        </Grid>
+    );
+}
+
+
+// Sites
 
 export const SitesTableAxios = () => {
     // Config de hooks
     const [sitesData, setSitesData] = useState ( [] )
 
-    var clientId = localStorage.getItem("client_id");
-    console.log(clientId);
+    var clientId = localStorage.getItem("client_id")
+    console.log(clientId)
 
     const endpoint = `http://localhost:3001/listClientSites/${clientId}`;
 
@@ -443,6 +569,7 @@ export const AgentsTableAxios = () => {
     }, [])
 
     const [modalTDeleteShow, setModalTDeleteShow] = useState(false);
+    const navigate = useNavigate();
 
     function manageTechDelete(techInfo){
         console.log(techInfo);
@@ -463,8 +590,10 @@ export const AgentsTableAxios = () => {
         //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
     }
 
-    function manageTechLogs(){
-        
+    function manageTechLogs(techInfo){
+        var techId = techInfo.id;
+        localStorage.setItem("techIdForLog", techId);
+        navigate("/tecnicosLogs")
     }
 
     const actionColumn = [
@@ -481,7 +610,7 @@ export const AgentsTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageTechLogs()}}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon"/></button>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageTechLogs(params.row)}}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon"/></button>
                         <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalTDeleteShow(true); manageTechDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )

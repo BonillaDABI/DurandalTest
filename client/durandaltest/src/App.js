@@ -18,9 +18,10 @@ import Recovery from "./Pages/Recovery";
 import Clients from "./Pages/Clients";
 import ClientInfo from "./Pages/ClientInfo";
 import Tecnicos from "./Pages/Tecnicos";
-
+import TechLogs from "./Pages/TechLogs";
 
 import { DarkModeContext } from "./Context/darkModeContext";
+
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/clients" element={<Clients />} />
           <Route exact path="/clientInfo" element={<ClientInfo />} />
           <Route exact path="/tecnicos" element={<Tecnicos />} />
+          <Route exact path="/tecnicosLogs" element={<TechLogs />} />
           <Route exact path="/create" element={<Create />} />
           <Route exact path="/update" element={<Update />} /> 
           <Route exact path="/listAll" element={<ListUsers />} /> 
