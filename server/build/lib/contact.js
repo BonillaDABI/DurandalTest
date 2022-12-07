@@ -95,22 +95,16 @@ const updateContacts = (client_id) => {
     })
 }
 
-const updateSiteByID = (id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, creator_id, date) => {
+const updateContact = (id, telefono, creator_id, is_active, date, updated_reason) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query(
-            "UPDATE sites SET ? WHERE id = ?",
+        await connection.query('UPDATE contact SET ? WHERE id = ?',
             [{
-                name,
-                address_street,
-                address_number,
-                address_colony_id,
-                address_city_id,
-                address_state_id,
-                address_country_id,
-                address_postal_code,
+                telefono,
+                is_active,
                 updated_by: creator_id,
-                updated_at: date
-            }, id], (err, rows) => {
+                updated_at: date,
+                updated_reason,
+            }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)
             })
@@ -124,5 +118,6 @@ module.exports = {
     updateContacts,
     getAllContactsByID,
     sendContactTypes,
-    insertExtraContact
+    insertExtraContact,
+    updateContact
 }

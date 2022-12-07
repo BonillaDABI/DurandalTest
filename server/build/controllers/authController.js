@@ -385,6 +385,53 @@ authController.updateSite = async (req, res) => {
     }
 }
 
+authController.updateTechnical = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+    const id = req.params.id
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const user_id = await Techs.getUserIDFromTech(id)
+        const date = new Date()
+        const { name } = req.body;
+        const password = await bcrypt.hash(req.body.password, 10)
+        const { first_surname, second_surname, email, telefono, fechaNacimiento, is_active, updated_reason } = req.body;
+
+        try {
+            await connection.query(
+                "UPDATE users SET ? WHERE id = ?",
+                [{
+                    name,
+                    first_surname,
+                    second_surname,
+                    email,
+                    password,
+                    is_active,
+                    updated_by: userID,
+                    updated_at: date,
+                    updated_reason
+                }, user_id],
+            )
+
+            const updatedTech = await Techs.updateTech(id, telefono, fechaNacimiento, user_id, userID, is_active, date, updated_reason)
+
+            if (updatedTech) {
+                res.status(200).send('Tecnico actualizado.')
+            }
+
+        } catch (error) {
+            res.status(400).send('Error al actualizar tecnico.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
+
 authController.updateContact = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
     const id = req.params.id
@@ -396,18 +443,36 @@ authController.updateContact = async (req, res) => {
     const userPermissions = await User.getPermissionByRoleId(userRoleID)
 
     if (userPermissions.includes(2)) {
+        const user_id = Techs.getUserIDFromTech(id)
         const date = new Date()
-        const { name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code } = req.body;
+        const { name } = req.body;
+        const password = await bcrypt.hash(req.body.password, 10)
+        const { first_surname, second_surname, email, is_active, updated_reason, telefono } = req.body;
 
         try {
-            const updateSite = await Site.updateSiteByID(id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, userID, date)
+            await connection.query(
+                "UPDATE users SET ? WHERE id = ?",
+                [{
+                    name,
+                    first_surname,
+                    second_surname,
+                    email,
+                    password,
+                    is_active,
+                    updated_by: userID,
+                    updated_at: date,
+                    updated_reason
+                }, user_id],
+            )
 
-            if (updateSite) {
-                res.status(200).send('Sitio actualizado.')
+            const updatedContact = await Contact.updateContact(id, telefono, userID, is_active, date, updated_reason)
+
+            if (updatedContact) {
+                res.status(200).send('Contacto actualizado.')
             }
 
         } catch (error) {
-            res.status(400).send('Error al actualizar sitio.')
+            res.status(400).send('Error al actualizar contacto.')
         }
     } else {
         res.status(400).send('No tienes permiso.')

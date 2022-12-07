@@ -87,5 +87,9 @@ router.patch("/updateClient/:id", authController.updateClient)
 
 router.patch("/updateSite/:id", authController.updateSite)
 
+router.patch("/updateTech/:id", authController.updateTechnical)
+
+router.patch("/updateContact/:id", authController.updateContact)
+
 
 module.exports = router;

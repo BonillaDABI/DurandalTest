@@ -52,6 +52,29 @@ const insertTech = (user_id, telefono, fechaNacimiento, creator_id, date) => {
     })
 }
 
+const updateTech = (id, telefono, fechaNacimiento, user_id, creator_id, is_active, date, updated_reason) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('UPDATE technicals SET ? WHERE id = ?',
+            [{
+                telefono,
+                fechaNacimiento,
+                is_active,
+                updated_by: creator_id,
+                updated_at: date,
+                updated_reason,
+            }, id], async (err, rows) => {
+                if (err) reject(err)
+                resolve(true)
+
+                if (is_active === '1') {
+                    await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 3, telefono, fechaNacimiento, 1, creator_id, date, updated_reason])
+                } else {
+                    await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 1, telefono, fechaNacimiento, is_active, creator_id, date, updated_reason])
+                }
+            })
+    })
+}
+
 const sendTechs = () => {
     return new Promise(async (resolve, reject) => {
         await connection.query('Select id FROM users WHERE roles_id = 2', (err, rows) => {
@@ -90,6 +113,15 @@ const getLogs = (id) => {
     })
 }
 
+const getUserIDFromTech = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT user_id FROM technicals WHERE id = ?', [id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows[0].user_id)))
+        })
+    })
+}
+
 module.exports = {
     getAllTechnicals,
     getTechByUserID,
@@ -97,6 +129,8 @@ module.exports = {
     sendTechs,
     deleteById,
     getTechnicalByID,
-    getLogs
+    getLogs,
+    updateTech,
+    getUserIDFromTech
 
 }

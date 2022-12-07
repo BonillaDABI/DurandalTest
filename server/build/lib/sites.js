@@ -26,11 +26,12 @@ const insertSite = (client_id, name, address_street, address_number, address_col
             created_by: creator_id,
             created_at: date,
             updated_at: date
-        }], (err, rows) => {
+        }], async (err, rows) => {
             if (err) {
                 reject(err)
             }
             resolve(rows)
+            await connection.query('CALL log_crearSitio(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [rows.insertId, client_id, 2, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, 1, creator_id, date])
         })
     })
 }
