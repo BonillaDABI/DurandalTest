@@ -106,7 +106,7 @@ const deleteById = (id) => {
 
 const getLogs = (id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT tm.mov_name, tl.telefono, tl.fechaNacimiento, tl.is_active, tl.updated_reason, u.email, u.name, u.first_surname, u.second_surname, tl.created_at, tl.updated_at FROM technical_logs tl, technical_movements tm, users u WHERE tl.technical_id = ? AND tl.user_id = u.id AND tm.id = tl.technical_movement_id', [id], (err, rows) => {
+        await connection.query('SELECT tl.id, tm.mov_name, tl.telefono, tl.fechaNacimiento, tl.is_active, tl.updated_reason, u.email, u.name, u.first_surname, u.second_surname, tl.created_at, tl.updated_at FROM technical_logs tl, technical_movements tm, users u WHERE tl.technical_id = ? AND tl.user_id = u.id AND tm.id = tl.technical_movement_id', [id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         })
