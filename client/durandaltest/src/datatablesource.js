@@ -17,22 +17,19 @@ import TechDisplayLogComponent from "./Components/LogsDisplay/TechDisplayLogComp
 
 // Site Logs
 
+export const SiteLogsTableAxios = () => {
+    const [siteLogData, setSiteLogData] = useState ( [] )
 
-// Tech Logs
+    var logSiteId = localStorage.getItem("siteIdForLog")
+    console.log(logSiteId)
 
-export const TechLogsTableAxios = () => {
-    const [techLogData, setTechLogData] = useState ( [] )
-
-    var logTechId = localStorage.getItem("techIdForLog")
-    console.log(logTechId)
-
-    const endpoint = `http://localhost:3001/listTech/${logTechId}`;
+    const endpoint = `http://localhost:3001/listSiteLogs/${logSiteId}`;
 
     const getData = async() => {
         await axios.get(endpoint).then((response) => {
-            //console.log(response.data);
-            const techLogData = response.data
-            setTechLogData(techLogData)
+            console.log(response.data);
+            const siteLogData = response.data;
+            setSiteLogData(siteLogData);
         })
     }
 
@@ -40,31 +37,17 @@ export const TechLogsTableAxios = () => {
         getData()
     }, [])
 
-    const [selected, setSelected] = useState ( [] )
-    const [rows, setRows] = useState ( [] )
-
-    const handleSelectionChange = useCallback(
-        (selected = []) => {
-            setSelected(rows.filter(({id}) => selected.includes(id)));
-        }, [rows]
-    );
-
     // Columnas
-    const techLogsColumns = [
+    const siteLogsColumns = [
         { 
             field: 'id', 
             headerName: 'ID', 
             width: 70
         },
         { 
-            field: 'technical_movement_id', 
+            field: 'mov_name', 
             headerName: 'Tipo de Movimiento', 
-            width: 180 
-        },
-        { 
-            field: 'updated_reason', 
-            headerName: 'Razon', 
-            width: 180 
+            width: 280 
         },
         { 
             field: 'is_active', 
@@ -95,12 +78,13 @@ export const TechLogsTableAxios = () => {
         }
     ];
 
+    const [selected, setSelected] = useState ( [] )
     return (
         <Grid container spacing={2}>
             <Grid item xs={6}>
                 <div
                     style={{
-                        height: 500,
+                        height: "700%",
                         width: "100%",
                         display: "block",
                         marginLeft: "auto",
@@ -113,29 +97,143 @@ export const TechLogsTableAxios = () => {
                             sortModel: [{ field: 'id', sort: 'desc'}],
                         },
                     }}
-                        onSelectionModelChange={handleSelectionChange}
                         checkboxSelection
-                        {...rows}
-                        rows={techLogData}
-                        columns={techLogsColumns}
+                        rows={siteLogData}
+                        columns={siteLogsColumns}
+                        components={{Toolbar: GridToolbar}}
+                        onSelectionModelChange={(ids) => {
+                            const selectedIDs = new Set(ids);
+                            const selected = siteLogData.filter((row) =>
+                              selectedIDs.has(row.id)
+                            );
+                            console.log(selected);
+                          }}
+                    
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        components={{Toolbar: GridToolbar}}
-                        getRowId={({id}) => id}
+                        
+                        //getRowId={({id}) => id}
                         
                     />
                 </div>
             </Grid>
             <Grid item xs={6}>
                 <Typography>Log(s) seleccionado(s)</Typography>
-                {selected.map((item) => (
-                    <TechDisplayLogComponent {...item}/>
-                ))}
+                
             </Grid>
         </Grid>
     );
 }
 
+// Tech Logs
+
+export const TechLogsTableAxios = () => {
+    const [techLogData, setTechLogData] = useState ( [] )
+
+    var logTechId = localStorage.getItem("techIdForLog")
+    console.log(logTechId)
+
+    const endpoint = `http://localhost:3001/listTech/${logTechId}`;
+
+    const getData = async() => {
+        await axios.get(endpoint).then((response) => {
+            console.log(response.data);
+            const techLogData = response.data.techLogs;
+            setTechLogData(techLogData);
+        })
+    }
+
+    useEffect( () => {
+        getData()
+    }, [])
+
+    // Columnas
+    const techLogsColumns = [
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 70
+        },
+        { 
+            field: 'mov_name', 
+            headerName: 'Tipo de Movimiento', 
+            width: 280 
+        },
+        { 
+            field: 'is_active', 
+            headerName: 'Estatus', 
+            width: 110,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo"){
+                    return (
+                        <div>
+                          <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }else{
+                    return (
+                        <div>
+                          <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                      );
+                }
+
+              },
+              valueGetter: (params) => params.row.is_active
+        },
+        { 
+            field: 'created_at', 
+            headerName: 'Fecha de alta', 
+            width: 150
+        }
+    ];
+
+    const [selected, setSelected] = useState ( [] )
+    return (
+        <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <div
+                    style={{
+                        height: "700%",
+                        width: "100%",
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    }}
+                >
+                    <DataGrid
+                    initialState={{
+                        sorting: {
+                            sortModel: [{ field: 'id', sort: 'desc'}],
+                        },
+                    }}
+                        checkboxSelection
+                        rows={techLogData}
+                        columns={techLogsColumns}
+                        components={{Toolbar: GridToolbar}}
+                        onSelectionModelChange={(ids) => {
+                            const selectedIDs = new Set(ids);
+                            const selected = techLogData.filter((row) =>
+                              selectedIDs.has(row.id)
+                            );
+                            console.log(selected);
+                          }}
+                    
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        
+                        //getRowId={({id}) => id}
+                        
+                    />
+                </div>
+            </Grid>
+            <Grid item xs={6}>
+                <Typography>Log(s) seleccionado(s)</Typography>
+                
+            </Grid>
+        </Grid>
+    );
+}
 
 // Sites
 
@@ -161,6 +259,7 @@ export const SitesTableAxios = () => {
     }, [])
 
     const [modalSDeleteShow, setModalSDeleteShow] = useState(false);
+    const navigate = useNavigate();
 
     function manageSiteDelete(siteInfo){
         //console.log(siteInfo);
@@ -183,6 +282,12 @@ export const SitesTableAxios = () => {
 
     }
 
+    function manageSiteLogs(siteInfo){
+        var siteId = siteInfo.id;
+        localStorage.setItem("siteIdForLog", siteId);
+        navigate("/siteLogs")
+    }
+
     const actionColumn = [
         {
             field: "action",
@@ -197,6 +302,7 @@ export const SitesTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
+                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageSiteLogs(params.row)}}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon"/></button>
                         <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalSDeleteShow(true); manageSiteDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
                     </div>
                 )

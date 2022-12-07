@@ -21,6 +21,7 @@ import Tecnicos from "./Pages/Tecnicos";
 import TechLogs from "./Pages/TechLogs";
 
 import { DarkModeContext } from "./Context/darkModeContext";
+import SiteLogs from "./Pages/SiteLogs";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route exact path="/clientInfo" element={<ClientInfo />} />
           <Route exact path="/tecnicos" element={<Tecnicos />} />
           <Route exact path="/tecnicosLogs" element={<TechLogs />} />
+          <Route exact path="/siteLogs" element={<SiteLogs />} />
           <Route exact path="/create" element={<Create />} />
           <Route exact path="/update" element={<Update />} /> 
           <Route exact path="/listAll" element={<ListUsers />} /> 

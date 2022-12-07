@@ -73,19 +73,7 @@ const Sidebar = () => {
                             <span>Tracking</span>
                         </li>
                     </Link>
-                    <p className="title">LISTAS</p>
-                    <Link to="/ListAllR" style={{textDecoration: 'none'}} >
-                        <li>
-                            <FontAwesomeIcon icon={faUserGear} className="icon"/>
-                            <span>Roles</span>
-                        </li>
-                    </Link>
-                    <Link to="/ListAllP" style={{textDecoration: 'none'}} >
-                        <li>
-                            <FontAwesomeIcon icon={faKey} className="icon"/>
-                            <span>Permisos</span>                        
-                        </li>
-                    </Link>
+                    
                     <p className="title">EXTRAS / USUARIO</p>
                     <li>
                         <FontAwesomeIcon icon={faBell} className="icon"/>
@@ -116,3 +104,21 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+
+/*
+
+<p className="title">LISTAS</p>
+                    <Link to="/ListAllR" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faUserGear} className="icon"/>
+                            <span>Roles</span>
+                        </li>
+                    </Link>
+                    <Link to="/ListAllP" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faKey} className="icon"/>
+                            <span>Permisos</span>                        
+                        </li>
+                    </Link>
+
+*/
