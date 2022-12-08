@@ -26,14 +26,14 @@ import SiteLogs from "./Pages/SiteLogs";
 
 function App() {
 
-  const {darkMode} = useContext(DarkModeContext)
+  const { darkMode } = useContext(DarkModeContext)
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
-    <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Login />} />
-          <Route exact path="/recovery" element={<Recovery />} /> 
+          <Route exact path="/recovery" element={<Recovery />} />
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
           <Route exact path="/clients" element={<Clients />} />
           <Route exact path="/clientInfo" element={<ClientInfo />} />
@@ -41,12 +41,12 @@ function App() {
           <Route exact path="/tecnicosLogs" element={<TechLogs />} />
           <Route exact path="/siteLogs" element={<SiteLogs />} />
           <Route exact path="/create" element={<Create />} />
-          <Route exact path="/update" element={<Update />} /> 
-          <Route exact path="/listAll" element={<ListUsers />} /> 
-          <Route exact path="/listAllR" element={<ListRoles />} /> 
-          <Route exact path="/listAllP" element={<ListPermissions />} /> 
+          <Route exact path="/update" element={<Update />} />
+          <Route exact path="/listAll" element={<ListUsers />} />
+          <Route exact path="/listAllR" element={<ListRoles />} />
+          <Route exact path="/listAllP" element={<ListPermissions />} />
         </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
     </div>
   );
 }

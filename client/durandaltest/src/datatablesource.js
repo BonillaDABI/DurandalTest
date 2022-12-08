@@ -18,14 +18,14 @@ import TechDisplayLogComponent from "./Components/LogsDisplay/TechDisplayLogComp
 // Site Logs
 
 export const SiteLogsTableAxios = () => {
-    const [siteLogData, setSiteLogData] = useState ( [] )
+    const [siteLogData, setSiteLogData] = useState([])
 
     var logSiteId = localStorage.getItem("siteIdForLog")
     console.log(logSiteId)
 
     const endpoint = `http://localhost:3001/listSiteLogs/${logSiteId}`;
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             console.log(response.data);
             const siteLogData = response.data;
@@ -33,52 +33,52 @@ export const SiteLogsTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     // Columnas
     const siteLogsColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 70
         },
-        { 
-            field: 'mov_name', 
-            headerName: 'Tipo de Movimiento', 
-            width: 280 
+        {
+            field: 'mov_name',
+            headerName: 'Tipo de Movimiento',
+            width: 280
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 110,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
+        {
+            field: 'updated_at',
+            headerName: 'Fecha de Actualización',
             width: 150
         }
     ];
 
-    const [selected, setSelected] = useState ( [] )
+    const [selected, setSelected] = useState([])
     return (
         <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -92,34 +92,34 @@ export const SiteLogsTableAxios = () => {
                     }}
                 >
                     <DataGrid
-                    initialState={{
-                        sorting: {
-                            sortModel: [{ field: 'id', sort: 'desc'}],
-                        },
-                    }}
+                        initialState={{
+                            sorting: {
+                                sortModel: [{ field: 'id', sort: 'desc' }],
+                            },
+                        }}
                         checkboxSelection
                         rows={siteLogData}
                         columns={siteLogsColumns}
-                        components={{Toolbar: GridToolbar}}
+                        components={{ Toolbar: GridToolbar }}
                         onSelectionModelChange={(ids) => {
                             const selectedIDs = new Set(ids);
                             const selected = siteLogData.filter((row) =>
-                              selectedIDs.has(row.id)
+                                selectedIDs.has(row.id)
                             );
                             console.log(selected);
-                          }}
-                    
+                        }}
+
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        
-                        //getRowId={({id}) => id}
-                        
+
+                    //getRowId={({id}) => id}
+
                     />
                 </div>
             </Grid>
             <Grid item xs={6}>
                 <Typography>Log(s) seleccionado(s)</Typography>
-                
+
             </Grid>
         </Grid>
     );
@@ -128,14 +128,14 @@ export const SiteLogsTableAxios = () => {
 // Tech Logs
 
 export const TechLogsTableAxios = () => {
-    const [techLogData, setTechLogData] = useState ( [] )
+    const [techLogData, setTechLogData] = useState([])
 
     var logTechId = localStorage.getItem("techIdForLog")
     console.log(logTechId)
 
     const endpoint = `http://localhost:3001/listTech/${logTechId}`;
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             console.log(response.data);
             const techLogData = response.data.techLogs;
@@ -143,52 +143,52 @@ export const TechLogsTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     // Columnas
     const techLogsColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 70
         },
-        { 
-            field: 'mov_name', 
-            headerName: 'Tipo de Movimiento', 
-            width: 280 
+        {
+            field: 'mov_name',
+            headerName: 'Tipo de Movimiento',
+            width: 280
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 110,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
+        {
+            field: 'updated_at',
+            headerName: 'Fecha de Actualización',
             width: 150
         }
     ];
 
-    const [selected, setSelected] = useState ( [] )
+    const [selected, setSelected] = useState([])
     return (
         <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -202,34 +202,34 @@ export const TechLogsTableAxios = () => {
                     }}
                 >
                     <DataGrid
-                    initialState={{
-                        sorting: {
-                            sortModel: [{ field: 'id', sort: 'desc'}],
-                        },
-                    }}
+                        initialState={{
+                            sorting: {
+                                sortModel: [{ field: 'id', sort: 'desc' }],
+                            },
+                        }}
                         checkboxSelection
                         rows={techLogData}
                         columns={techLogsColumns}
-                        components={{Toolbar: GridToolbar}}
+                        components={{ Toolbar: GridToolbar }}
                         onSelectionModelChange={(ids) => {
                             const selectedIDs = new Set(ids);
                             const selected = techLogData.filter((row) =>
-                              selectedIDs.has(row.id)
+                                selectedIDs.has(row.id)
                             );
                             console.log(selected);
-                          }}
-                    
+                        }}
+
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        
-                        //getRowId={({id}) => id}
-                        
+
+                    //getRowId={({id}) => id}
+
                     />
                 </div>
             </Grid>
             <Grid item xs={6}>
                 <Typography>Log(s) seleccionado(s)</Typography>
-                
+
             </Grid>
         </Grid>
     );
@@ -239,14 +239,14 @@ export const TechLogsTableAxios = () => {
 
 export const SitesTableAxios = () => {
     // Config de hooks
-    const [sitesData, setSitesData] = useState ( [] )
+    const [sitesData, setSitesData] = useState([])
 
     var clientId = localStorage.getItem("client_id")
     console.log(clientId)
 
     const endpoint = `http://localhost:3001/listClientSites/${clientId}`;
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const sitesData = response.data
             //console.log(sitesData)
@@ -254,14 +254,14 @@ export const SitesTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     const [modalSDeleteShow, setModalSDeleteShow] = useState(false);
     const navigate = useNavigate();
 
-    function manageSiteDelete(siteInfo){
+    function manageSiteDelete(siteInfo) {
         //console.log(siteInfo);
         var siteId = siteInfo.id;
         localStorage.setItem("siteIdToDelete", siteId);
@@ -282,7 +282,7 @@ export const SitesTableAxios = () => {
 
     }
 
-    function manageSiteLogs(siteInfo){
+    function manageSiteLogs(siteInfo) {
         var siteId = siteInfo.id;
         localStorage.setItem("siteIdForLog", siteId);
         navigate("/siteLogs")
@@ -301,9 +301,9 @@ export const SitesTableAxios = () => {
                             onHide={() => setModalSDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageSiteLogs(params.row)}}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon"/></button>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalSDeleteShow(true); manageSiteDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageSiteLogs(params.row) }}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSDeleteShow(true); manageSiteDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -312,56 +312,56 @@ export const SitesTableAxios = () => {
 
     // Columnas
     const sitesColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 70
         },
-        { 
-            field: 'name', 
-            headerName: 'Nombre de sitio', 
-            width: 150 
+        {
+            field: 'name',
+            headerName: 'Nombre de sitio',
+            width: 150
         },
-        { 
-            field: 'address_street', 
-            headerName: 'Nombre de la calle', 
-            width: 150 
+        {
+            field: 'address_street',
+            headerName: 'Nombre de la calle',
+            width: 150
         },
         {
             field: 'address_number',
             headerName: 'Número de dirección',
             width: 150
         },
-        { 
-            field: 'address_postal_code', 
-            headerName: 'Código postal', 
-            width: 120 
+        {
+            field: 'address_postal_code',
+            headerName: 'Código postal',
+            width: 120
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 110,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
             width: 150
         }
     ];
@@ -370,15 +370,15 @@ export const SitesTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={sitesData}
-                columns={sitesColumns.concat(actionColumn)}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={sitesData}
+            columns={sitesColumns.concat(actionColumn)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }
@@ -387,30 +387,30 @@ export const SitesTableAxios = () => {
 
 export const ClientContactsTableAxios = () => {
     // Config de hooks
-    const [clientContactData, setClientContactData] = useState ( [] )
+    const [clientContactData, setClientContactData] = useState([])
 
     var clientId = localStorage.getItem("client_id");
     //console.log(clientId);
 
     const endpoint = `http://localhost:3001/listClientsContacts/${clientId}`;
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             //console.log(response.data);
             const clientContactData = response.data.clientContacts;
-         
+
             //console.log(clientFullData)
             setClientContactData(clientContactData)
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     const [modalCCDeleteShow, setModalCCDeleteShow] = useState(false);
 
-    function manageContactDelete(contactInfo){
+    function manageContactDelete(contactInfo) {
         //console.log(contactInfo);
         //console.log(contactInfo.id);
         var contactId = contactInfo.id;
@@ -440,8 +440,8 @@ export const ClientContactsTableAxios = () => {
                             onHide={() => setModalCCDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalCCDeleteShow(true); manageContactDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCCDeleteShow(true); manageContactDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -450,9 +450,9 @@ export const ClientContactsTableAxios = () => {
 
     // Columnas
     const clientContactColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 100
         },
         {
@@ -463,46 +463,46 @@ export const ClientContactsTableAxios = () => {
                 var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
                 return (
                     <div>
-                      <span>{full_name}</span>
+                        <span>{full_name}</span>
                     </div>
-                  );
+                );
             }
         },
-        { 
-            field: 'email', 
-            headerName: 'E-mail', 
-            width: 200 
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 200
         },
         {
             field: 'type',
             headerName: 'Tipo',
             width: 180
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 150,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
             width: 200
         }
     ];
@@ -511,15 +511,15 @@ export const ClientContactsTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={clientContactData}
-                columns={clientContactColumns.concat(actionColumn)}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={clientContactData}
+            columns={clientContactColumns.concat(actionColumn)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }
@@ -528,11 +528,11 @@ export const ClientContactsTableAxios = () => {
 
 export const ContactsTableAxios = () => {
     // Config de hooks
-    const [contactData, setContactData] = useState ( [] )
+    const [contactData, setContactData] = useState([])
 
     const endpoint = 'http://localhost:3001/listContacts'
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const contactData = response.data
             //console.log(contactData)
@@ -540,13 +540,13 @@ export const ContactsTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     const [modalCCDeleteShow, setModalCCDeleteShow] = useState(false);
 
-    function manageContactDelete(contactInfo){
+    function manageContactDelete(contactInfo) {
         //console.log(contactInfo);
         //console.log(contactInfo.id);
         var contactId = contactInfo.id;
@@ -575,8 +575,8 @@ export const ContactsTableAxios = () => {
                             onHide={() => setModalCCDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalCCDeleteShow(true); manageContactDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCCDeleteShow(true); manageContactDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -585,56 +585,56 @@ export const ContactsTableAxios = () => {
 
     // Columnas
     const contactColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 100
         },
-        { 
-            field: 'name', 
-            headerName: 'Nombre de contacto', 
-            width: 200 
+        {
+            field: 'name',
+            headerName: 'Nombre de contacto',
+            width: 200
         },
-        { 
-            field: 'email', 
-            headerName: 'E-mail', 
-            width: 180 
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
         },
-        { 
-            field: 'business_name', 
-            headerName: 'Cliente', 
-            width: 180 
+        {
+            field: 'business_name',
+            headerName: 'Cliente',
+            width: 180
         },
         {
             field: 'type',
             headerName: 'Tipo',
             width: 180
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 150,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
             width: 200
         }
     ];
@@ -643,26 +643,26 @@ export const ContactsTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={contactData}
-                columns={contactColumns.concat(actionColumn)}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={contactData}
+            columns={contactColumns.concat(actionColumn)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }
 
 export const AgentsTableAxios = () => {
     // Config de hooks
-    const [agentData, setAgentData] = useState ( [] )
+    const [agentData, setAgentData] = useState([])
 
     const endpoint = 'http://localhost:3001/listTechs'
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const agentData = response.data
             //console.log(agentData)
@@ -670,14 +670,14 @@ export const AgentsTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     const [modalTDeleteShow, setModalTDeleteShow] = useState(false);
     const navigate = useNavigate();
 
-    function manageTechDelete(techInfo){
+    function manageTechDelete(techInfo) {
         console.log(techInfo);
         console.log(techInfo.id);
         var techId = techInfo.id;
@@ -696,7 +696,7 @@ export const AgentsTableAxios = () => {
         //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
     }
 
-    function manageTechLogs(techInfo){
+    function manageTechLogs(techInfo) {
         var techId = techInfo.id;
         localStorage.setItem("techIdForLog", techId);
         navigate("/tecnicosLogs")
@@ -715,9 +715,9 @@ export const AgentsTableAxios = () => {
                             onHide={() => setModalTDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageTechLogs(params.row)}}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon"/></button>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalTDeleteShow(true); manageTechDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageTechLogs(params.row) }}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalTDeleteShow(true); manageTechDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -726,9 +726,9 @@ export const AgentsTableAxios = () => {
 
     // Columnas
     const agentColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 100
         },
         {
@@ -739,51 +739,51 @@ export const AgentsTableAxios = () => {
                 var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
                 return (
                     <div>
-                      <span>{full_name}</span>
+                        <span>{full_name}</span>
                     </div>
-                  );
+                );
             }
         },
-        { 
-            field: 'email', 
-            headerName: 'E-mail', 
-            width: 180 
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
         },
-        { 
-            field: 'telefono', 
-            headerName: 'Teléfono', 
-            width: 130 
+        {
+            field: 'telefono',
+            headerName: 'Teléfono',
+            width: 130
         },
-        { 
-            field: 'fechaNacimiento', 
-            headerName: 'Fecha de nacimiento', 
-            width: 200 
+        {
+            field: 'fechaNacimiento',
+            headerName: 'Fecha de nacimiento',
+            width: 200
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 150,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
             width: 200
         }
     ];
@@ -792,15 +792,15 @@ export const AgentsTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={agentData}
-                columns={agentColumns.concat(actionColumn)}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={agentData}
+            columns={agentColumns.concat(actionColumn)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }
@@ -808,11 +808,11 @@ export const AgentsTableAxios = () => {
 
 export const ClientsTableAxios = () => {
     // Config de hooks
-    const [clientData, setClientData] = useState ( [] )
+    const [clientData, setClientData] = useState([])
 
     const endpoint = 'http://localhost:3001/listClients'
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const clientData = response.data
             //console.log(clientData)
@@ -820,14 +820,14 @@ export const ClientsTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     const [modalCDeleteShow, setModalCDeleteShow] = useState(false);
     const navigate = useNavigate();
 
-    function manageClientInfo(clientInfo){
+    function manageClientInfo(clientInfo) {
         navigate("/clientInfo")
         var business_name = clientInfo.business_name;
         var client_id = clientInfo.id;
@@ -839,7 +839,7 @@ export const ClientsTableAxios = () => {
         localStorage.setItem("client_tax_id", client_tax_id);
     }
 
-    function manageClientDelete(clientInfo){
+    function manageClientDelete(clientInfo) {
         //console.log(clientInfo);
         //console.log(clientInfo.id);
         var clientId = clientInfo.id;
@@ -864,9 +864,9 @@ export const ClientsTableAxios = () => {
                             onHide={() => setModalCDeleteShow(false)}
 
                         />
-                        
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {manageClientInfo(params.row)}}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/></button>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalCDeleteShow(true); manageClientDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageClientInfo(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCDeleteShow(true); manageClientDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -875,9 +875,9 @@ export const ClientsTableAxios = () => {
 
     // Columnas
     const clientColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 100
         },
         {
@@ -888,37 +888,37 @@ export const ClientsTableAxios = () => {
                 var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
                 return (
                     <div>
-                      <span>{full_name}</span>
+                        <span>{full_name}</span>
                     </div>
-                  );
+                );
             }
         },
-        { 
-            field: 'business_name', 
-            headerName: 'Cliente', 
-            width: 180 
+        {
+            field: 'business_name',
+            headerName: 'Cliente',
+            width: 180
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 150,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         }
     ];
 
@@ -926,28 +926,28 @@ export const ClientsTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={clientData}
-                columns={clientColumns.concat(actionColumn)}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={clientData}
+            columns={clientColumns.concat(actionColumn)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }
 
 
 export const UserTableAxios = () => {
-    
+
     // Config de hooks
-    const [userData, setUserData] = useState ( [] )
+    const [userData, setUserData] = useState([])
 
     const endpoint = 'http://localhost:3001/listAll'
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const userData = response.data
             console.log(userData)
@@ -955,13 +955,13 @@ export const UserTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
     const [modalUDeleteShow, setModalUDeleteShow] = useState(false);
 
-    function manageUserDelete(userInfo){
+    function manageUserDelete(userInfo) {
         console.log(userInfo);
         console.log(userInfo.id);
         var userId = userInfo.id;
@@ -971,7 +971,7 @@ export const UserTableAxios = () => {
         var userEmail = userInfo.email;
         var userCreatedDate = userInfo.created_at;
 
-        
+
         localStorage.setItem("userNameToDelete", userName);
         localStorage.setItem("userEmailToDelete", userEmail);
         localStorage.setItem("userCreatedDateToDelete", userCreatedDate);
@@ -982,17 +982,17 @@ export const UserTableAxios = () => {
             field: "action",
             headerName: "Detalle",
             width: 120,
-            renderCell: (params) => {                
+            renderCell: (params) => {
                 return (
-                
+
                     <div className="cellAction">
                         <ModalUDelete
                             show={modalUDeleteShow}
                             onHide={() => setModalUDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <button style={{background: "none", border: "none", padding: 0, marginTop: "5px"}} onClick={() => {setModalUDeleteShow(true); manageUserDelete(params.row)}}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/></button>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalUDeleteShow(true); manageUserDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -1001,46 +1001,46 @@ export const UserTableAxios = () => {
 
     // Columnas
     const userColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 100
         },
-        { 
-            field: 'name', 
-            headerName: 'Nombre', 
-            width: 130 
+        {
+            field: 'name',
+            headerName: 'Nombre',
+            width: 130
         },
-        { 
-            field: 'email', 
-            headerName: 'E-mail', 
-            width: 180 
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
         },
-        { 
-            field: 'is_active', 
-            headerName: 'Estatus', 
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
             width: 150,
             renderCell: (params) => {
-                if (params.row.is_active === "Activo"){
+                if (params.row.is_active === "Activo") {
                     return (
                         <div>
-                          <span className="statusActive">{params.row.is_active}</span>
+                            <span className="statusActive">{params.row.is_active}</span>
                         </div>
-                      );
-                }else{
+                    );
+                } else {
                     return (
                         <div>
-                          <span className="statusInactive">{params.row.is_active}</span>
+                            <span className="statusInactive">{params.row.is_active}</span>
                         </div>
-                      );
+                    );
                 }
 
-              },
-              valueGetter: (params) => params.row.is_active
+            },
+            valueGetter: (params) => params.row.is_active
         },
-        { 
-            field: 'created_at', 
-            headerName: 'Fecha de alta', 
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
             width: 200
         }
     ];
@@ -1049,26 +1049,26 @@ export const UserTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={userData}
-                columns={userColumns.concat(actionColumn)}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={userData}
+            columns={userColumns.concat(actionColumn)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }
 
 export const PermissionsTableAxios = () => {
     // Config de hooks
-    const [permissionData, setPermissionData] = useState ( [] )
+    const [permissionData, setPermissionData] = useState([])
 
     const endpoint = 'http://localhost:3001/permissions'
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const permissionData = response.data
             //console.log(permissionData)
@@ -1076,7 +1076,7 @@ export const PermissionsTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
@@ -1088,8 +1088,8 @@ export const PermissionsTableAxios = () => {
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" />
                     </div>
                 )
             }
@@ -1098,15 +1098,15 @@ export const PermissionsTableAxios = () => {
 
     // Columnas
     const permissionColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 100
         },
-        { 
-            field: 'per_name', 
-            headerName: 'Permiso', 
-            width: 150 
+        {
+            field: 'per_name',
+            headerName: 'Permiso',
+            width: 150
         }
     ];
 
@@ -1114,26 +1114,26 @@ export const PermissionsTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={permissionData}
-                columns={permissionColumns.concat(actionColumn)}
-                pageSize={10}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={permissionData}
+            columns={permissionColumns.concat(actionColumn)}
+            pageSize={10}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }
 
 export const RolesTableAxios = () => {
     // Config de hooks
-    const [rolesData, setRolesData] = useState ( [] )
+    const [rolesData, setRolesData] = useState([])
 
     const endpoint = 'http://localhost:3001/roles'
 
-    const getData = async() => {
+    const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const rolesData = response.data
             //console.log(rolesData)
@@ -1141,7 +1141,7 @@ export const RolesTableAxios = () => {
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getData()
     }, [])
 
@@ -1153,8 +1153,8 @@ export const RolesTableAxios = () => {
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon"/>
-                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon"/>
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" />
                     </div>
                 )
             }
@@ -1163,15 +1163,15 @@ export const RolesTableAxios = () => {
 
     // Columnas
     const rolesColumns = [
-        { 
-            field: 'id', 
-            headerName: 'ID', 
+        {
+            field: 'id',
+            headerName: 'ID',
             width: 100
         },
-        { 
-            field: 'role_name', 
-            headerName: 'Rol', 
-            width: 130 
+        {
+            field: 'role_name',
+            headerName: 'Rol',
+            width: 130
         }
     ];
 
@@ -1179,15 +1179,15 @@ export const RolesTableAxios = () => {
         <DataGrid
             initialState={{
                 sorting: {
-                    sortModel: [{ field: 'id', sort: 'desc'}],
+                    sortModel: [{ field: 'id', sort: 'desc' }],
                 },
             }}
-                rows={rolesData}
-                columns={rolesColumns.concat(actionColumn)}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                components={{Toolbar: GridToolbar}}
+            rows={rolesData}
+            columns={rolesColumns.concat(actionColumn)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
         />
     )
 }

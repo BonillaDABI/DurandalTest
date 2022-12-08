@@ -50,6 +50,15 @@ const sendContactTypes = () => {
     })
 }
 
+const sendClientsContacts = (client_id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT c.id, u.name, u.first_surname FROM users u, contacts c, clients cl WHERE c.client_id = cl.id AND c.user_id = u.id AND c.client_id = ?', [client_id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 const getAllContacts = () => {
     return new Promise(async (resolve, reject) => {
         await connection.query('SELECT co.id, u.name, u.email, cl.business_name, co.is_active, co.created_at, ct.type FROM contacts co, clients cl, users u, contact_type ct WHERE co.user_id = u.id AND co.client_id = cl.id AND co.contact_type_id = ct.id', (err, rows) => {
@@ -119,5 +128,6 @@ module.exports = {
     getAllContactsByID,
     sendContactTypes,
     insertExtraContact,
-    updateContact
+    updateContact,
+    sendClientsContacts
 }

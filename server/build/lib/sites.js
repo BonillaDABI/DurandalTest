@@ -3,7 +3,7 @@ const connection = require('../config/database')
 
 const getAllSites = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT s.id, s.name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.name, st.name, ci.name, col.name FROM sites s, clients cl, colony col, city ci, state st, country co WHERE s.client_id = cl.id AND s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id', (err, rows) => {
+        await connection.query('SELECT s.id, s.name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.name, st.name, ci.name, col.name, s.created_at FROM sites s, clients cl, colony col, city ci, state st, country co WHERE s.client_id = cl.id AND s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -31,6 +31,7 @@ const insertSite = (client_id, name, address_street, address_number, address_col
                 reject(err)
             }
             resolve(rows)
+
             await connection.query('CALL log_crearSitio(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [rows.insertId, client_id, 2, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, 1, creator_id, date])
         })
     })
@@ -38,7 +39,7 @@ const insertSite = (client_id, name, address_street, address_number, address_col
 
 const getSitesByClientID = (client_id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT s.id, s.name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.name, st.name, ci.name, col.name FROM sites s, clients cl, colony col, city ci, state st, country co WHERE ? = cl.id AND s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id', [client_id], (err, rows) => {
+        await connection.query('SELECT s.id, s.name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.name, st.name, ci.name, col.name, s.created_at FROM sites s, clients cl, colony col, city ci, state st, country co WHERE s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id AND s.client_id = cl.id AND s.client_id = ?', [client_id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -47,7 +48,7 @@ const getSitesByClientID = (client_id) => {
 
 const getSitesByID = (id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT s.id, s.name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.name, st.name, ci.name, col.name FROM sites s, clients cl, colony col, city ci, state st, country co WHERE s.client_id = cl.id AND s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id AND s.id = ?', [id], (err, rows) => {
+        await connection.query('SELECT s.id, s.name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.name, st.name, ci.name, col.name, s.created_at FROM sites s, clients cl, colony col, city ci, state st, country co WHERE s.client_id = cl.id AND s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id AND s.id = ?', [id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -114,7 +115,7 @@ const deleteById = (id) => {
 
 const getLogs = (id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT st.id, sm.mov_name, st.name, st.address_street, st.address_number, col.name, c.name, s.name, cou.name, st.address_postal_code, st.is_active, st.created_at, st.updated_at, st.updated_reason, cl.business_name, cl.rfc, u.name, u.email FROM sites_logs st, sites_movements sm, clients cl, contacts co, users u, city c, state s, colony col, country cou WHERE st.site_movement_id = sm.id AND st.client_id = cl.id AND st.contact_id = co.id AND co.user_id = u.id AND st.address_colony_id = col.id AND st.address_city_id = c.id AND st.address_state_id = s.id AND st.address_country_id = cou.id AND st.site_id = ?', [id], (err, rows) => {
+        await connection.query('SELECT st.id, sm.mov_name, st.name, st.address_street, st.address_number, col.name, c.name, s.name, cou.name, st.address_postal_code, st.is_active, st.created_at, st.updated_at, st.updated_reason, cl.business_name, cl.rfc FROM sites_logs st, sites_movements sm, clients cl, city c, state s, colony col, country cou, contacts_sites cs WHERE st.site_movement_id = sm.id AND st.client_id = cl.id AND st.site_id = cs.site_id AND st.address_colony_id = col.id AND st.address_city_id = c.id AND st.address_state_id = s.id AND st.address_country_id = cou.id AND st.site_id = ?', [id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         })
