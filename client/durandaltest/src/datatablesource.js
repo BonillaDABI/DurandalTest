@@ -78,7 +78,8 @@ export const SiteLogsTableAxios = () => {
         }
     ];
 
-    const [selected, setSelected] = useState([])
+    const [selected, setSelected] = useState( [ ] )
+    const [selectionModel, setSelectionModel] = useState( [ ] );
     return (
         <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -97,18 +98,28 @@ export const SiteLogsTableAxios = () => {
                                 sortModel: [{ field: 'id', sort: 'desc' }],
                             },
                         }}
-                        checkboxSelection
                         rows={siteLogData}
                         columns={siteLogsColumns}
                         components={{ Toolbar: GridToolbar }}
+                        disableSelectionOnClick
+                        checkboxSelection
                         onSelectionModelChange={(ids) => {
                             const selectedIDs = new Set(ids);
                             const selected = siteLogData.filter((row) =>
                                 selectedIDs.has(row.id)
                             );
-                            console.log(selected);
+                            setSelected(selected);
+                            if (ids.length > 1) {
+                                const selectionSet = new Set(selectionModel);
+                                const result = ids.filter((s) => !selectionSet.has(s));
+                    
+                                setSelectionModel(result);
+                              } else {
+                                setSelectionModel(ids);
+                            }
                         }}
 
+                        selectionModel={selectionModel}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
 
@@ -118,8 +129,36 @@ export const SiteLogsTableAxios = () => {
                 </div>
             </Grid>
             <Grid item xs={6}>
-                <Typography>Log(s) seleccionado(s)</Typography>
+                <div className="logs-info-section">
+                    {selected.map((i) => 
+                        <Typography key={i} className="logs-info">
+                            <div className="divider"></div>
 
+                            <strong>Cliente:</strong>&nbsp;{selected[0].business_name}<br />
+                            <span>RFC:</span>&nbsp;{selected[0].rfc}<br />
+
+                            <div className="divider"></div>
+
+                            <strong>Sitio:</strong><br />
+                            
+                            <span>Pais:</span>&nbsp;{selected[0].name}<br />
+                            <span>Nombre de la calle:</span>&nbsp;{selected[0].address_street}
+                            <span>Número de dirección:</span>&nbsp;{selected[0].address_number}<br />
+                            <span>Código postal:</span>&nbsp;{selected[0].address_postal_code}<br />
+                            
+                            
+                            <div className="divider"></div>
+
+                            <strong>Información del log:</strong><br />
+                            <span>Tipo de movimiento:</span>&nbsp;{selected[0].mov_name}<br />
+                            <span>Fecha de creación:</span>&nbsp;{selected[0].created_at}<br />
+                            <span>Razón:</span>&nbsp;{selected[0].updated_reason}<br />
+                            <span>Fecha de actualización:</span>&nbsp;{selected[0].updated_at}<br />
+
+                            <div className="divider"></div>
+                        </Typography>
+                    )}
+                </div>    
             </Grid>
         </Grid>
     );
@@ -189,6 +228,8 @@ export const TechLogsTableAxios = () => {
     ];
 
     const [selected, setSelected] = useState([])
+    const [selectionModel, setSelectionModel] = useState( [ ] );
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -211,14 +252,31 @@ export const TechLogsTableAxios = () => {
                         rows={techLogData}
                         columns={techLogsColumns}
                         components={{ Toolbar: GridToolbar }}
+                        disableSelectionOnClick
+                        /*onSelectionModelChange={(ids) => {
+                            const selectedIDs = new Set(ids);
+                            const selected = techLogData.filter((row) =>
+                                selectedIDs.has(row.id)
+                            );
+                            setSelected(selected);
+                        }}*/
                         onSelectionModelChange={(ids) => {
                             const selectedIDs = new Set(ids);
                             const selected = techLogData.filter((row) =>
                                 selectedIDs.has(row.id)
                             );
-                            console.log(selected);
+                            setSelected(selected);
+                            if (ids.length > 1) {
+                                const selectionSet = new Set(selectionModel);
+                                const result = ids.filter((s) => !selectionSet.has(s));
+                    
+                                setSelectionModel(result);
+                              } else {
+                                setSelectionModel(ids);
+                            }
                         }}
 
+                        selectionModel={selectionModel}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
 
@@ -228,8 +286,29 @@ export const TechLogsTableAxios = () => {
                 </div>
             </Grid>
             <Grid item xs={6}>
-                <Typography>Log(s) seleccionado(s)</Typography>
+                <div className="logs-info-section">
+                    {selected.map((i) => 
+                        <Typography key={i} className="logs-info">
+                            <div className="divider"></div>
 
+                            <strong>Técnico:</strong><br />
+                            <span>Nombre:</span>&nbsp;{selected[0].name}&nbsp;{selected[0].first_surname}&nbsp;{selected[0].second_surname}<br />
+                            <span>Fecha de nacimiento:</span>&nbsp;{selected[0].fechaNacimiento}<br />
+                            <span>E-mail:</span>&nbsp;{selected[0].email}<br />
+                            <span>Teléfono:</span>&nbsp;{selected[0].telefono}<br />
+                            
+                            <div className="divider"></div>
+
+                            <strong>Información del log:</strong><br />
+                            <span>Tipo de movimiento:</span>&nbsp;{selected[0].mov_name}<br />
+                            <span>Fecha de creación:</span>&nbsp;{selected[0].created_at}<br />
+                            <span>Razón:</span>&nbsp;{selected[0].updated_reason}<br />
+                            <span>Fecha de actualización:</span>&nbsp;{selected[0].updated_at}<br />
+
+                            <div className="divider"></div>
+                        </Typography>
+                    )}
+                </div>    
             </Grid>
         </Grid>
     );
@@ -378,6 +457,7 @@ export const SitesTableAxios = () => {
             pageSize={5}
             rowsPerPageOptions={[5]}
             checkboxSelection
+            disableSelectionOnClick
             components={{ Toolbar: GridToolbar }}
         />
     )
@@ -518,6 +598,7 @@ export const ClientContactsTableAxios = () => {
             columns={clientContactColumns.concat(actionColumn)}
             pageSize={5}
             rowsPerPageOptions={[5]}
+            disableSelectionOnClick
             checkboxSelection
             components={{ Toolbar: GridToolbar }}
         />
@@ -650,6 +731,7 @@ export const ContactsTableAxios = () => {
             columns={contactColumns.concat(actionColumn)}
             pageSize={5}
             rowsPerPageOptions={[5]}
+            disableSelectionOnClick
             checkboxSelection
             components={{ Toolbar: GridToolbar }}
         />
@@ -798,6 +880,7 @@ export const AgentsTableAxios = () => {
             rows={agentData}
             columns={agentColumns.concat(actionColumn)}
             pageSize={5}
+            disableSelectionOnClick
             rowsPerPageOptions={[5]}
             checkboxSelection
             components={{ Toolbar: GridToolbar }}
@@ -933,6 +1016,7 @@ export const ClientsTableAxios = () => {
             columns={clientColumns.concat(actionColumn)}
             pageSize={5}
             rowsPerPageOptions={[5]}
+            disableSelectionOnClick
             checkboxSelection
             components={{ Toolbar: GridToolbar }}
         />
@@ -1056,6 +1140,7 @@ export const UserTableAxios = () => {
             columns={userColumns.concat(actionColumn)}
             pageSize={5}
             rowsPerPageOptions={[5]}
+            disableSelectionOnClick
             checkboxSelection
             components={{ Toolbar: GridToolbar }}
         />
@@ -1122,6 +1207,7 @@ export const PermissionsTableAxios = () => {
             pageSize={10}
             rowsPerPageOptions={[5]}
             checkboxSelection
+            disableSelectionOnClick
             components={{ Toolbar: GridToolbar }}
         />
     )
@@ -1186,6 +1272,7 @@ export const RolesTableAxios = () => {
             columns={rolesColumns.concat(actionColumn)}
             pageSize={5}
             rowsPerPageOptions={[5]}
+            disableSelectionOnClick
             checkboxSelection
             components={{ Toolbar: GridToolbar }}
         />

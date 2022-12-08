@@ -92,3 +92,21 @@ form .form-fields {
     text-align: center;
     
 }
+
+.logs-info-section {
+    max-height: 100%;
+    justify-content: left;
+    left: 0;
+    font-family: $general-font;
+    .logs-info {
+        height: 50px;
+        justify-content: left;
+
+        span {
+            color: $gray-dabi;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+    }
+}
+

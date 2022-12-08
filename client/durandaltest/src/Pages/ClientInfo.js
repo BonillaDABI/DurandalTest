@@ -10,6 +10,7 @@ import "../SCSS/Elements/_tables.scss"
 
 import { Box, Tab, Tabs } from '@mui/material';
 import axios from "axios";
+import ClientBreadcrumbs from "../Components/ClientBreadcrumbs";
 
 
 function ClientInfo() {    
@@ -56,6 +57,9 @@ function ClientInfo() {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <br />
+        <ClientBreadcrumbs />
+        
         <form className="update-client-form">
           <div className='form-fields' id="large-form-field">
             <div className='mini-input-container'>
