@@ -74,7 +74,7 @@ export const SiteLogsTableAxios = () => {
         {
             field: 'updated_at',
             headerName: 'Fecha de Actualización',
-            width: 150
+            width: 200
         }
     ];
 
@@ -184,7 +184,7 @@ export const TechLogsTableAxios = () => {
         {
             field: 'updated_at',
             headerName: 'Fecha de Actualización',
-            width: 150
+            width: 200
         }
     ];
 
@@ -699,7 +699,7 @@ export const AgentsTableAxios = () => {
     function manageTechLogs(techInfo) {
         var techId = techInfo.id;
         localStorage.setItem("techIdForLog", techId);
-        navigate("/tecnicosLogs")
+        navigate("/tecnicos/tecnicosLogs")
     }
 
     const actionColumn = [
@@ -828,7 +828,7 @@ export const ClientsTableAxios = () => {
     const navigate = useNavigate();
 
     function manageClientInfo(clientInfo) {
-        navigate("/clientInfo")
+        navigate("/clients/clientInfo")
         var business_name = clientInfo.business_name;
         var client_id = clientInfo.id;
         var client_rfc = clientInfo.rfc;

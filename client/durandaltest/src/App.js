@@ -19,9 +19,10 @@ import Clients from "./Pages/Clients";
 import ClientInfo from "./Pages/ClientInfo";
 import Tecnicos from "./Pages/Tecnicos";
 import TechLogs from "./Pages/TechLogs";
+import SiteLogs from "./Pages/SiteLogs";
+
 
 import { DarkModeContext } from "./Context/darkModeContext";
-import SiteLogs from "./Pages/SiteLogs";
 
 
 function App() {
@@ -36,9 +37,9 @@ function App() {
           <Route exact path="/recovery" element={<Recovery />} />
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
           <Route exact path="/clients" element={<Clients />} />
-          <Route exact path="/clientInfo" element={<ClientInfo />} />
+          <Route exact path="/clients/clientInfo" element={<ClientInfo />} />
           <Route exact path="/tecnicos" element={<Tecnicos />} />
-          <Route exact path="/tecnicosLogs" element={<TechLogs />} />
+          <Route exact path="/tecnicos/tecnicosLogs" element={<TechLogs />} />
           <Route exact path="/siteLogs" element={<SiteLogs />} />
           <Route exact path="/create" element={<Create />} />
           <Route exact path="/update" element={<Update />} />
