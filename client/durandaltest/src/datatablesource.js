@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 //import MaterialReactTable from "material-react-table";
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { faFileLines, faPenToSquare, faTrashCan, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faClockRotateLeft, faFileLines, faPenToSquare, faTrashCan, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
@@ -47,7 +47,7 @@ export const SiteLogsTableAxios = () => {
         {
             field: 'mov_name',
             headerName: 'Tipo de Movimiento',
-            width: 280
+            width: 250
         },
         {
             field: 'is_active',
@@ -74,7 +74,7 @@ export const SiteLogsTableAxios = () => {
         {
             field: 'updated_at',
             headerName: 'Fecha de Actualización',
-            width: 200
+            width: 160
         }
     ];
 
@@ -85,7 +85,7 @@ export const SiteLogsTableAxios = () => {
             <Grid item xs={6}>
                 <div
                     style={{
-                        height: "700%",
+                        height: "650%",
                         width: "100%",
                         display: "block",
                         marginLeft: "auto",
@@ -101,8 +101,6 @@ export const SiteLogsTableAxios = () => {
                         rows={siteLogData}
                         columns={siteLogsColumns}
                         components={{ Toolbar: GridToolbar }}
-                        disableSelectionOnClick
-                        checkboxSelection
                         onSelectionModelChange={(ids) => {
                             const selectedIDs = new Set(ids);
                             const selected = siteLogData.filter((row) =>
@@ -196,7 +194,7 @@ export const TechLogsTableAxios = () => {
         {
             field: 'mov_name',
             headerName: 'Tipo de Movimiento',
-            width: 280
+            width: 250
         },
         {
             field: 'is_active',
@@ -223,7 +221,7 @@ export const TechLogsTableAxios = () => {
         {
             field: 'updated_at',
             headerName: 'Fecha de Actualización',
-            width: 200
+            width: 160
         }
     ];
 
@@ -248,11 +246,11 @@ export const TechLogsTableAxios = () => {
                                 sortModel: [{ field: 'id', sort: 'desc' }],
                             },
                         }}
-                        checkboxSelection
+                        
                         rows={techLogData}
                         columns={techLogsColumns}
                         components={{ Toolbar: GridToolbar }}
-                        disableSelectionOnClick
+                        
                         /*onSelectionModelChange={(ids) => {
                             const selectedIDs = new Set(ids);
                             const selected = techLogData.filter((row) =>
@@ -381,7 +379,7 @@ export const SitesTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageSiteLogs(params.row) }}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageSiteLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSDeleteShow(true); manageSiteDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
@@ -798,7 +796,7 @@ export const AgentsTableAxios = () => {
 
                         />
                         <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageTechLogs(params.row) }}><FontAwesomeIcon icon={faFileLines} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageTechLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalTDeleteShow(true); manageTechDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
