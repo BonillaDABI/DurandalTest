@@ -752,8 +752,8 @@ authController.login = async (req, res) => {
         const role_id = user.roles_id
         const user_id = user.id
         const permissions = await User.getAllPermissionsFromUser(role_id, user_id)
-        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        user.created_at = user.created_at.toLocaleDateString("en-US", options)
+        const sidebar = await User.sendSideBar(role_id, user_id)
+        console.log(sidebar)
         await bcrypt.compare(password, dbPassword).then((match) => {
             if (!match) {
                 res

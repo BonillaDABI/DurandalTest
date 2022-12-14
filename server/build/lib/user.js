@@ -184,7 +184,18 @@ const getAllPermissionsFromUser = (role_id, id) => {
             if (err) {
                 reject(err)
             }
-            resolve(rows)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
+const sendSideBar = (role_id, id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT s.id, s.name, s.link FROM roles r, permissions p, permissions_roles pr, sidebar s WHERE ? = r.id AND r.id = pr.role_id AND pr.permissions_id = p.id AND pr.permissions_id = s.permission_id UNION SELECT s.id, s.name, s.link FROM permissions p, permissions_user pu, sidebar s WHERE ? = pu.user_id AND pu.permissions_id = p.id AND pu.permissions_id = s.permission_id ORDER BY id ASC;', [role_id, id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
         })
     })
 }
@@ -343,5 +354,6 @@ module.exports = {
     getFunctionById,
     getPermissionByRoleId,
     getUserByPasswordToken,
-    getAllPermissionsFromUser
+    getAllPermissionsFromUser,
+    sendSideBar
 }
