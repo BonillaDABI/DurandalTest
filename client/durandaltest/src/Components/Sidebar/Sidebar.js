@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import "../../SCSS/Components/_sidebar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressBook, faBell, faBook, faBorderAll, faCalendarDays, faGear, faHelmetSafety, faKey, faLocationDot, faRightFromBracket, faSquarePollVertical, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook, faBell, faBook, faBorderAll, faBox, faBoxesPacking, faBoxesStacked, faCalendarDays, faGear, faHelmetSafety, faKey, faListCheck, faLocationArrow, faLocationDot, faRightFromBracket, faScrewdriverWrench, faSquarePollVertical, faUser, faUserGear, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { DarkModeContext } from "../../Context/darkModeContext";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -54,6 +54,37 @@ const Sidebar = () => {
                             <span>Usuarios</span>
                         </li>
                     </Link>
+                    <p className="title">MÓDULOS</p>
+                    <Link to="/visits" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faLocationArrow} className="icon"/>
+                            <span>Visitas</span>
+                        </li>
+                    </Link>
+                    <Link to="/activities" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faListCheck} className="icon"/>
+                            <span>Actividades</span>
+                        </li>
+                    </Link>
+                    <Link to="/equipments" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faScrewdriverWrench} className="icon"/>
+                            <span>Equipos</span>
+                        </li>
+                    </Link>
+                    <Link to="/items" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faBox} className="icon"/>
+                            <span>Items</span>
+                        </li>
+                    </Link>
+                    <Link to="/assets" style={{textDecoration: 'none'}} >
+                        <li>
+                            <FontAwesomeIcon icon={faBoxesPacking} className="icon"/>
+                            <span>Activos</span>
+                        </li>
+                    </Link>                 
                     <p className="title">FUNCIONES</p>
                     <Link to="#" style={{textDecoration: 'none'}} >
                         <li>
@@ -75,21 +106,21 @@ const Sidebar = () => {
                     </Link>
                     
                     <p className="title">EXTRAS / USUARIO</p>
-                    <li>
+                    {/* <li>
                         <FontAwesomeIcon icon={faBell} className="icon"/>
                         <span>Notificaciones</span>
                     </li>
                     <li>
                         <FontAwesomeIcon icon={faGear} className="icon"/>
                         <span>Ajustes</span>
-                    </li>
+                    </li> */}
                     <li onClick={() => logoutUser()}>
                         <FontAwesomeIcon icon={faRightFromBracket} className="icon"/>
                         <span>Logout</span>
                     </li>                    
                 </ul>
             </div>
-            <div className="bottom">
+            {/* <div className="bottom">
                 <div 
                     className="colorOption" 
                     onClick={() => dispatch({type:"LIGHT"})}
@@ -98,7 +129,7 @@ const Sidebar = () => {
                     className="colorOption" 
                     onClick={() => dispatch({type:"DARK"})}
                 ></div>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -10,12 +10,777 @@ import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
 import ModalCCDelete from "./Components/Modal/Delete/ModalCCDelete";
 import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
 import ModalSDelete from "./Components/Modal/Delete/ModalSDelete";
+
+import ModalADelete from "./Components/Modal/Delete/ModalADelete";
+import ModalVDelete from "./Components/Modal/Delete/ModalVDelete";
+import ModalEDelete from "./Components/Modal/Delete/ModalEDelete";
+import ModalIDelete from "./Components/Modal/Delete/ModalIDelete";
+import ModalActDelete from "./Components/Modal/Delete/ModalActDelete";
+
+
 import { useNavigate } from "react-router-dom";
 import { param } from "express-validator";
 import { Grid, Typography } from "@mui/material";
 import TechDisplayLogComponent from "./Components/LogsDisplay/TechDisplayLogComponent";
 
-// Site Logs
+// #region Activities
+
+export const ActivitiesTableAxios = () => {
+    // Config de hooks
+    const [actData, setActData] = useState([])
+
+    const endpoint = 'http://localhost:3001/listActs'
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            const actData = response.data
+            //console.log(actData)
+            setActData(actData)
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const [modalActDeleteShow, setModalActDeleteShow] = useState(false);
+    const navigate = useNavigate();
+
+    function manageActDelete(actInfo) {
+        console.log(actInfo);
+        console.log(actInfo.id);
+        var actId = actInfo.id;
+        localStorage.setItem("activityIdToDelete", actId);
+
+        // var techName = techInfo.name;
+        // var techEmail = techInfo.email;
+        // var techCreatedDate = techInfo.created_at;
+        // var techPhone = techInfo.telefono;
+        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
+        // //var techNacimiento = techInfo.fechaNacimiento;
+        // localStorage.setItem("techNameToDelete", techName);
+        // localStorage.setItem("techEmailToDelete", techEmail);
+        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
+        // localStorage.setItem("techPhoneToDelete", techPhone);
+        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+    }
+
+    function manageActLogs(actInfo) {
+        var actId = actInfo.id;
+        localStorage.setItem("activityIdForLog", actId);
+        //navigate("/tecnicos/tecnicosLogs")
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalActDelete
+                            show={modalActDeleteShow}
+                            onHide={() => setModalActDeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageActLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalActDeleteShow(true); manageActDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const actColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 100
+        },
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                        <span>{full_name}</span>
+                    </div>
+                );
+            }
+        },
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
+        },
+        {
+            field: 'telefono',
+            headerName: 'Teléfono',
+            width: 130
+        },
+        {
+            field: 'fechaNacimiento',
+            headerName: 'Fecha de nacimiento',
+            width: 200
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc' }],
+                },
+            }}
+            rows={actData}
+            columns={actColumns.concat(actionColumn)}
+            pageSize={5}
+            disableSelectionOnClick
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
+        />
+    )
+}
+// #endregion
+
+// #region Items
+export const ItemsTableAxios = () => {
+    // Config de hooks
+    const [itemData, setItemData] = useState([])
+
+    const endpoint = 'http://localhost:3001/listItems'
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            const itemData = response.data
+            //console.log(itemData)
+            setItemData(itemData)
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const [modalIDeleteShow, setModalIDeleteShow] = useState(false);
+    const navigate = useNavigate();
+
+    function manageItemDelete(itemInfo) {
+        console.log(itemInfo);
+        console.log(itemInfo.id);
+        var itemId = itemInfo.id;
+        localStorage.setItem("itemIdToDelete", itemId);
+
+        // var techName = techInfo.name;
+        // var techEmail = techInfo.email;
+        // var techCreatedDate = techInfo.created_at;
+        // var techPhone = techInfo.telefono;
+        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
+        // //var techNacimiento = techInfo.fechaNacimiento;
+        // localStorage.setItem("techNameToDelete", techName);
+        // localStorage.setItem("techEmailToDelete", techEmail);
+        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
+        // localStorage.setItem("techPhoneToDelete", techPhone);
+        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalIDelete
+                            show={modalIDeleteShow}
+                            onHide={() => setModalIDeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalIDeleteShow(true); manageItemDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const itemColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 100
+        },
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                        <span>{full_name}</span>
+                    </div>
+                );
+            }
+        },
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
+        },
+        {
+            field: 'telefono',
+            headerName: 'Teléfono',
+            width: 130
+        },
+        {
+            field: 'fechaNacimiento',
+            headerName: 'Fecha de nacimiento',
+            width: 200
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc' }],
+                },
+            }}
+            rows={itemData}
+            columns={itemColumns.concat(actionColumn)}
+            pageSize={5}
+            disableSelectionOnClick
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
+        />
+    )
+}
+// #endregion
+
+// #region Equipments
+
+export const EquipsTableAxios = () => {
+    // Config de hooks
+    const [equipData, setEquipData] = useState([])
+
+    const endpoint = 'http://localhost:3001/listEquips'
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            const equipData = response.data
+            //console.log(equipData)
+            setEquipData(equipData)
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const [modalEDeleteShow, setModalEDeleteShow] = useState(false);
+    const navigate = useNavigate();
+
+    function manageEquipDelete(equipInfo) {
+        console.log(equipInfo);
+        console.log(equipInfo.id);
+        var equipId = equipInfo.id;
+        localStorage.setItem("equipIdToDelete", equipId);
+
+        // var techName = techInfo.name;
+        // var techEmail = techInfo.email;
+        // var techCreatedDate = techInfo.created_at;
+        // var techPhone = techInfo.telefono;
+        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
+        // //var techNacimiento = techInfo.fechaNacimiento;
+        // localStorage.setItem("techNameToDelete", techName);
+        // localStorage.setItem("techEmailToDelete", techEmail);
+        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
+        // localStorage.setItem("techPhoneToDelete", techPhone);
+        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+    }
+
+    function manageEquipLogs(equipInfo) {
+        var equipId = equipInfo.id;
+        localStorage.setItem("visitIdForLog", equipId);
+        //navigate("/tecnicos/tecnicosLogs")
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalEDelete
+                            show={modalEDeleteShow}
+                            onHide={() => setModalEDeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageEquipLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEDeleteShow(true); manageEquipDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const equipColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 100
+        },
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                        <span>{full_name}</span>
+                    </div>
+                );
+            }
+        },
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
+        },
+        {
+            field: 'telefono',
+            headerName: 'Teléfono',
+            width: 130
+        },
+        {
+            field: 'fechaNacimiento',
+            headerName: 'Fecha de nacimiento',
+            width: 200
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc' }],
+                },
+            }}
+            rows={equipData}
+            columns={equipColumns.concat(actionColumn)}
+            pageSize={5}
+            disableSelectionOnClick
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
+        />
+    )
+}
+// #endregion
+
+// #region Visits
+
+export const VisitsTableAxios = () => {
+    // Config de hooks
+    const [visitData, setVisitData] = useState([])
+
+    const endpoint = 'http://localhost:3001/listVisits'
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            const visitData = response.data
+            //console.log(visitData)
+            setVisitData(visitData)
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const [modalVDeleteShow, setModalVDeleteShow] = useState(false);
+    const navigate = useNavigate();
+
+    function manageVisitDelete(visitInfo) {
+        console.log(visitInfo);
+        console.log(visitInfo.id);
+        var visitId = visitInfo.id;
+        localStorage.setItem("visitIdToDelete", visitId);
+
+        // var techName = techInfo.name;
+        // var techEmail = techInfo.email;
+        // var techCreatedDate = techInfo.created_at;
+        // var techPhone = techInfo.telefono;
+        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
+        // //var techNacimiento = techInfo.fechaNacimiento;
+        // localStorage.setItem("techNameToDelete", techName);
+        // localStorage.setItem("techEmailToDelete", techEmail);
+        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
+        // localStorage.setItem("techPhoneToDelete", techPhone);
+        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+    }
+
+    function manageVisitLogs(visitInfo) {
+        var visitId = visitInfo.id;
+        localStorage.setItem("visitIdForLog", visitId);
+        //navigate("/tecnicos/tecnicosLogs")
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalVDelete
+                            show={modalVDeleteShow}
+                            onHide={() => setModalVDeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageVisitLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalVDeleteShow(true); manageVisitDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const visitColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 100
+        },
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                        <span>{full_name}</span>
+                    </div>
+                );
+            }
+        },
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
+        },
+        {
+            field: 'telefono',
+            headerName: 'Teléfono',
+            width: 130
+        },
+        {
+            field: 'fechaNacimiento',
+            headerName: 'Fecha de nacimiento',
+            width: 200
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc' }],
+                },
+            }}
+            rows={visitData}
+            columns={visitColumns.concat(actionColumn)}
+            pageSize={5}
+            disableSelectionOnClick
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
+        />
+    )
+}
+// #endregion
+
+// #region Assets
+
+export const AssetsTableAxios = () => {
+    // Config de hooks
+    const [assetData, setAssetData] = useState([])
+
+    const endpoint = 'http://localhost:3001/listAssets'
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            const assetData = response.data
+            //console.log(assetData)
+            setAssetData(assetData)
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const [modalADeleteShow, setModalADeleteShow] = useState(false);
+    const navigate = useNavigate();
+
+    function manageAssetDelete(assetInfo) {
+        console.log(assetInfo);
+        console.log(assetInfo.id);
+        var assetId = assetInfo.id;
+        localStorage.setItem("assetIdToDelete", assetId);
+
+        // var techName = techInfo.name;
+        // var techEmail = techInfo.email;
+        // var techCreatedDate = techInfo.created_at;
+        // var techPhone = techInfo.telefono;
+        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
+        // //var techNacimiento = techInfo.fechaNacimiento;
+        // localStorage.setItem("techNameToDelete", techName);
+        // localStorage.setItem("techEmailToDelete", techEmail);
+        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
+        // localStorage.setItem("techPhoneToDelete", techPhone);
+        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+    }
+
+    function manageAssetLogs(assetInfo) {
+        var assetId = assetInfo.id;
+        localStorage.setItem("assetIdForLog", assetId);
+        //navigate("/tecnicos/tecnicosLogs")
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalADelete
+                            show={modalADeleteShow}
+                            onHide={() => setModalADeleteShow(false)}
+
+                        />
+                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageAssetLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalADeleteShow(true); manageAssetDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const assetColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 100
+        },
+        {
+            field: 'full_name',
+            headerName: 'Nombre de contacto',
+            width: 200,
+            renderCell: (params) => {
+                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
+                return (
+                    <div>
+                        <span>{full_name}</span>
+                    </div>
+                );
+            }
+        },
+        {
+            field: 'email',
+            headerName: 'E-mail',
+            width: 180
+        },
+        {
+            field: 'telefono',
+            headerName: 'Teléfono',
+            width: 130
+        },
+        {
+            field: 'fechaNacimiento',
+            headerName: 'Fecha de nacimiento',
+            width: 200
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 150,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'created_at',
+            headerName: 'Fecha de alta',
+            width: 200
+        }
+    ];
+
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc' }],
+                },
+            }}
+            rows={assetData}
+            columns={assetColumns.concat(actionColumn)}
+            pageSize={5}
+            disableSelectionOnClick
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
+        />
+    )
+}
+// #endregion
+
+// #region Site Logs
 
 export const SiteLogsTableAxios = () => {
     const [siteLogData, setSiteLogData] = useState([])
@@ -161,8 +926,9 @@ export const SiteLogsTableAxios = () => {
         </Grid>
     );
 }
+//#endregion
 
-// Tech Logs
+// #region Tech Logs
 
 export const TechLogsTableAxios = () => {
     const [techLogData, setTechLogData] = useState([])
@@ -311,8 +1077,9 @@ export const TechLogsTableAxios = () => {
         </Grid>
     );
 }
+//#endregion
 
-// Sites
+// #region Sites
 
 export const SitesTableAxios = () => {
     // Config de hooks
@@ -460,8 +1227,9 @@ export const SitesTableAxios = () => {
         />
     )
 }
+// #endregion
 
-// CONTACTS PER CLIENT
+// #region Conctats per client
 
 export const ClientContactsTableAxios = () => {
     // Config de hooks
@@ -602,8 +1370,9 @@ export const ClientContactsTableAxios = () => {
         />
     )
 }
+// #endregion
 
-// CONTACTS GENERAL
+// #region Contacts General
 
 export const ContactsTableAxios = () => {
     // Config de hooks
@@ -735,6 +1504,9 @@ export const ContactsTableAxios = () => {
         />
     )
 }
+// #endregion
+
+// #region Techs
 
 export const AgentsTableAxios = () => {
     // Config de hooks
@@ -885,7 +1657,9 @@ export const AgentsTableAxios = () => {
         />
     )
 }
+// #endregion
 
+// #region Clients
 
 export const ClientsTableAxios = () => {
     // Config de hooks
@@ -1020,7 +1794,9 @@ export const ClientsTableAxios = () => {
         />
     )
 }
+// #endregion
 
+// #region Users
 
 export const UserTableAxios = () => {
 
@@ -1144,6 +1920,9 @@ export const UserTableAxios = () => {
         />
     )
 }
+// #endregion
+
+// #region Permissions
 
 export const PermissionsTableAxios = () => {
     // Config de hooks
@@ -1210,6 +1989,9 @@ export const PermissionsTableAxios = () => {
         />
     )
 }
+// #endregion
+
+// #region Roles
 
 export const RolesTableAxios = () => {
     // Config de hooks
@@ -1276,6 +2058,7 @@ export const RolesTableAxios = () => {
         />
     )
 }
+// #endregion
 
 /*
 
