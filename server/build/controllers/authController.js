@@ -939,10 +939,16 @@ authController.modulesANDfunctions = async (req, res) => {
 }
 
 authController.rudPermissions = async (req, res) => {
-    const { id, user_id } = req.body
+    const { user_id } = req.body
     const id_perms = [05, 06]
 
-    User.addPermissions(user_id, id_perms, id)
+    const addedPerms = await User.addPermissions(user_id, id_perms)
+
+    if (addedPerms) {
+        res.status(200).json('Permisos creados')
+    } else {
+        res.status(400).json('Error al obtener usuarios')
+    }
 
 }
 
