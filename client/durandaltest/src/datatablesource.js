@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 //import MaterialReactTable from "material-react-table";
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { faClockRotateLeft, faFileLines, faPenToSquare, faTrashCan, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faClockRotateLeft, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
@@ -17,11 +17,8 @@ import ModalEDelete from "./Components/Modal/Delete/ModalEDelete";
 import ModalIDelete from "./Components/Modal/Delete/ModalIDelete";
 import ModalActDelete from "./Components/Modal/Delete/ModalActDelete";
 
-
 import { useNavigate } from "react-router-dom";
-import { param } from "express-validator";
 import { Grid, Typography } from "@mui/material";
-import TechDisplayLogComponent from "./Components/LogsDisplay/TechDisplayLogComponent";
 
 // #region Activities
 

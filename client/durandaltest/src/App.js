@@ -40,6 +40,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/recovery" element={<Recovery />} />
+          <Route exact path="/listAll" element={<ListUsers />} />
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
           <Route exact path="/clients" element={<Clients />} />
           <Route exact path="/clients/clientInfo" element={<ClientInfo />} />
@@ -53,11 +54,10 @@ function App() {
           <Route exact path="/items" element={<Items />} /> 
           <Route exact path="/visits" element={<Visits />} /> 
 
-          <Route exact path="/create" element={<Create />} />
+          {/* <Route exact path="/create" element={<Create />} />
           <Route exact path="/update" element={<Update />} />
-          <Route exact path="/listAll" element={<ListUsers />} />
           <Route exact path="/listAllR" element={<ListRoles />} />
-          <Route exact path="/listAllP" element={<ListPermissions />} />
+          <Route exact path="/listAllP" element={<ListPermissions />} /> */}
         </Routes>
       </BrowserRouter>
     </div>
