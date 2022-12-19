@@ -3,7 +3,7 @@ const connection = require('../config/database')
 
 const getAllItems = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT i.name, i.description, i.is_active, i.updated_at, u.name, i.cost, c.name FROM items i, currencies c, units u WHERE i.currency_id = c.id AND i.unit_id = u.id', (err, rows) => {
+        await connection.query('SELECT i.name, i.description, i.is_active, i.updated_at, u.unit_name, i.cost, c.currency_name FROM items i, currencies c, units u WHERE i.currency_id = c.id AND i.unit_id = u.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -93,6 +93,7 @@ const insertItemVal = (item_id, item_attributes_id, value, creator_id, date) => 
         })
     })
 }
+
 
 module.exports = {
     getAllItems,

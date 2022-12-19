@@ -397,6 +397,74 @@ authController.updateClient = async (req, res) => {
     }
 }
 
+authController.updateEquipment = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+    const id = req.params.id
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const date = new Date()
+        const { name, description, brand_id } = req.body;
+
+        try {
+            await connection.query(
+                "UPDATE equipments SET ? WHERE id = ?",
+                [{
+                    name,
+                    description,
+                    brand_id,
+                    updated_by: userID,
+                    updated_at: date
+                }, id],
+            )
+            res.status(200).send('Equipo actualizado.')
+        } catch (error) {
+            res.status(400).send('Error al actualizar equipo.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
+
+authController.updateitem = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+    const id = req.params.id
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const date = new Date()
+        const { name, description, brand_id } = req.body;
+
+        try {
+            await connection.query(
+                "UPDATE equipments SET ? WHERE id = ?",
+                [{
+                    name,
+                    description,
+                    brand_id,
+                    updated_by: userID,
+                    updated_at: date
+                }, id],
+            )
+            res.status(200).send('Equipo actualizado.')
+        } catch (error) {
+            res.status(400).send('Error al actualizar equipo.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
+
 authController.updateSite = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
     const id = req.params.id
