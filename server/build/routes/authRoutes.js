@@ -91,5 +91,24 @@ router.patch("/updateTech/:id", authController.updateTechnical)
 
 router.patch("/updateContact/:id", authController.updateContact)
 
+//Equipments
+
+router.get("/listEquipments", authController.listEquipments)
+
+router.get("/autofillBrands", authController.sendBrands)
+
+router.post("/createEquip", authController.protect, authController.createEquipment)
+
+router.post("/createEqAttr", authController.protect, authController.createEquipmentAttr)
+
+//Items
+
+router.get("/listItems", authController.listItems)
+
+router.get("/autofillCurrenciesAndUnits", authController.sendCurrenciesAndUnits)
+
+router.post("/createItem", authController.protect, authController.createItem)
+
+router.post("/createItemAttr", authController.protect, authController.createItemAttr)
 
 module.exports = router;

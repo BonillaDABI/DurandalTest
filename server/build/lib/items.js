@@ -1,18 +1,18 @@
 require('dotenv').config()
 const connection = require('../config/database')
 
-const getAllEquipments = () => {
+const getAllItems = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT eq.name, eq.description, eq.updated_at, eq.is_active, eqv.value, b.name FROM equipments eq, equipment_values eqv, brands b WHERE eq.id = eqv.equipment_id AND eq.brand_id = b.id', (err, rows) => {
+        await connection.query('SELECT i.name, i.description, i.is_active, i.updated_at, u.name, i.cost, c.name FROM items i, currencies c, units u WHERE i.currency_id = c.id AND i.unit_id = u.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
     });
 };
 
-const sendBrands = () => {
+const sendUnits = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM brands', (err, rows) => {
+        await connection.query('SELECT id, name FROM units', (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -21,12 +21,25 @@ const sendBrands = () => {
     })
 }
 
-const insertEquipment = (name, description, brand_id, creator_id, date) => {
+const sendCurrency = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('INSERT INTO equipments SET ?', [{
+        await connection.query('SELECT id, name FROM currencies', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
+const insertItem = (name, description, cost, unit_id, currency_id, creator_id, date) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('INSERT INTO items SET ?', [{
             name,
             description,
-            brand_id,
+            cost,
+            unit_id,
+            currency_id,
             is_active: 01,
             created_by: creator_id,
             created_at: date,
@@ -41,9 +54,9 @@ const insertEquipment = (name, description, brand_id, creator_id, date) => {
     })
 }
 
-const insertEquipmentAttr = (name, description, dimensiones, creator_id, date) => {
+const insertItemAttr = (name, description, dimensiones, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('INSERT INTO equipment_attributes SET ?', [{
+        await connection.query('INSERT INTO item_attributes SET ?', [{
             name,
             description,
             dimensiones,
@@ -61,11 +74,11 @@ const insertEquipmentAttr = (name, description, dimensiones, creator_id, date) =
     })
 }
 
-const insertEquipmentVal = (equipment_id, equipment_attributes_id, value, creator_id, date) => {
+const insertItemVal = (item_id, item_attributes_id, value, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('INSERT INTO equipment_values SET ?', [{
-            equipment_id,
-            equipment_attributes_id,
+        await connection.query('INSERT INTO item_values SET ?', [{
+            item_id,
+            item_attributes_id,
             value,
             is_active: 01,
             created_by: creator_id,
@@ -82,9 +95,10 @@ const insertEquipmentVal = (equipment_id, equipment_attributes_id, value, creato
 }
 
 module.exports = {
-    getAllEquipments,
-    insertEquipment,
-    insertEquipmentAttr,
-    insertEquipmentVal,
-    sendBrands
+    getAllItems,
+    insertItem,
+    insertItemAttr,
+    insertItemVal,
+    sendUnits,
+    sendCurrency
 }

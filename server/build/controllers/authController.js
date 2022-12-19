@@ -19,6 +19,8 @@ const Client = require('../lib/clients')
 const Techs = require('../lib/technicals');
 const Contact = require('../lib/contact')
 const Site = require('../lib/sites')
+const Equipo = require('../lib/equipments')
+const Item = require('../lib/items')
 
 
 const authController = {}
@@ -283,6 +285,46 @@ authController.listClientAndContacts = async (req, res) => {
         res.status(400).send('Error al obtener Cliente')
     }
 
+}
+
+authController.listEquipments = async (req, res) => {
+    var equips = await Equipo.getAllEquipments()
+    moment.locale('es-mx')
+    for (let i = 0; i < equips.length; i++) {
+        equips[i].updated_at = moment(equips[i].updated_at).format("ll")
+        if (equips[i].is_active === 1) {
+            equips[i].is_active = "Activo"
+        } else {
+            equips[i].is_active = "Inactivo"
+        }
+    }
+
+    if (equips) {
+        res.json(equips)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener equipos')
+    }
+}
+
+authController.listItems = async (req, res) => {
+    var item = await Item.getAllItems()
+    moment.locale('es-mx')
+    for (let i = 0; i < item.length; i++) {
+        item[i].updated_at = moment(item[i].updated_at).format("ll")
+        if (item[i].is_active === 1) {
+            item[i].is_active = "Activo"
+        } else {
+            item[i].is_active = "Inactivo"
+        }
+    }
+
+    if (item) {
+        res.json(item)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener items')
+    }
 }
 
 authController.update = async (req, res) => {
@@ -564,6 +606,20 @@ authController.sendCountryDetails = async (req, res) => {
     res.json({ countries, states, cities, colonies })
 }
 
+authController.sendBrands = async (req, res) => {
+    //Mandar tipos de contactos
+    const brands = await Equipo.sendBrands()
+    res.json(brands)
+}
+
+authController.sendCurrenciesAndUnits = async (req, res) => {
+    //Mandar tipos de contactos
+    const currencies = await Item.sendCurrency()
+    const units = await Item.sendUnits()
+    res.json({ currencies, units })
+}
+
+
 // authController.sendParentID = async (req, res) => {
 //     //Mandar parents_id
 //     const parentsID = await Client.sendParentsID()
@@ -694,8 +750,6 @@ authController.extraContact = async (req, res) => {
     }
 }
 
-
-
 authController.createTechnical = async (req, res) => {
 
     if (req.userPermissions.includes(1)) {
@@ -739,6 +793,95 @@ authController.createTechnical = async (req, res) => {
         }
     }
 }
+
+authController.createEquipment = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+
+        const { name, description, brand_id } = req.body;
+
+        const createdEquip = await Equipo.insertEquipment(name, description, brand_id, req.userID, date)
+
+        if (createdEquip) {
+            res.status(200).json(createdEquip)
+        } else {
+            res.status(400).json('Error al crear equipo')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+authController.createItem = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+
+        const { name, description, cost, unit_id, currency_id } = req.body;
+
+        const createdItem = await Equipo.insertEquipment(name, description, cost, unit_id, currency_id, req.userID, date)
+
+        if (createdItem) {
+            res.status(200).json(createdItem)
+        } else {
+            res.status(400).json('Error al crear consumible')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+authController.createEquipmentAttr = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+
+        const { name, description, dimensiones, equipment_id, value } = req.body;
+
+        const createdAttrID = await Equipo.insertEquipmentAttr(name, description, dimensiones, req.userID, date)
+
+        if (createdAttrID) {
+            const insertedEqVal = await Equipo.insertEquipmentVal(equipment_id, createdAttrID, value, req.userID, date)
+
+            if (insertedEqVal) {
+                res.status(200).json('Atributo registrado.')
+            }
+        } else {
+            res.status(400).json('Error al crear atributo.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+authController.createItemAttr = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+
+        const { name, description, dimensiones, item_id, value } = req.body;
+
+        const createdAttrID = await Item.insertItemAttr(name, description, dimensiones, req.userID, date)
+
+        if (createdAttrID) {
+            const insertedItemVal = await Item.insertItemVal(item_id, createdAttrID, value, req.userID, date)
+
+            if (insertedItemVal) {
+                res.status(200).json('Atributo registrado.')
+            }
+        } else {
+            res.status(400).json('Error al crear atributo.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
 
 authController.login = async (req, res) => {
     const { email, password } = req.body;
