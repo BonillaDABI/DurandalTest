@@ -45,7 +45,7 @@ const sendAssetsStatus = () => {
 
 const insertAsset = (asset_name, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('INSERT INTO equipments SET ?', [{
+        await connection.query('INSERT INTO asset SET ?', [{
             asset_name,
             description,
             site_id,
@@ -62,7 +62,7 @@ const insertAsset = (asset_name, description, site_id, equipment_id, asset_activ
             const lastID = result.insertId;
             resolve(lastID)
 
-            await connection.query('CALL log_crearAsset(?, ?, ?, ?, ?, ?, ?, ?)', [name, description, site_id, lastID, 1, 1, creator_id, date])
+            await connection.query('CALL log_crearAsset(?, ?, ?, ?, ?, ?, ?, ?)', [asset_name, description, site_id, lastID, 1, 1, creator_id, date])
         })
     })
 }
