@@ -6,11 +6,11 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalADelete(props) {
-    // var deleteTechName = localStorage.getItem("techNameToDelete");
-    // var deleteTechEmail = localStorage.getItem("techEmailToDelete");
-    // var deleteTechCreatedDate = localStorage.getItem("techCreatedDateToDelete");
-    // var deleteTechPhone = localStorage.getItem("techPhoneToDelete");
-
+    var deleteAssetName = localStorage.getItem("assetNameToDelete");
+    var deleteAssetEquipName = localStorage.getItem("assetEquipNameToDelete");
+    var deleteAssetUpdatedDate = localStorage.getItem("assetUpdatedDateToDelete");
+    var deleteAssetClientSite = localStorage.getItem("assetClientSiteToDelete");
+    
     const deleteAsset = () => {
         var deleteAssetId = localStorage.getItem("assetIdToDelete");
         const response = axios.delete(`http://localhost:3001/deleteAsset/${deleteAssetId}`);
@@ -40,10 +40,10 @@ function ModalADelete(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/* <span className='delete-info'><strong>Nombre:</strong> {deleteTechName}</span><br />
-                <span className='delete-info'><strong>Email:</strong> {deleteTechEmail}</span><br />
-                <span className='delete-info'><strong>Teléfono:</strong> {deleteTechPhone}</span><br />
-                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteTechCreatedDate}</span> */}
+                <span className='delete-info'><strong>Nombre del asset:</strong> {deleteAssetName}</span><br />
+                <span className='delete-info'><strong>Nombre del equipo:</strong> {deleteAssetEquipName}</span><br />
+                <span className='delete-info'><strong>Cliente:</strong> {deleteAssetClientSite}</span><br />
+                <span className='delete-info'><strong>Fecha de actualización:</strong> {deleteAssetUpdatedDate}</span>
             </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteAsset(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>

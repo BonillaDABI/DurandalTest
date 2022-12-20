@@ -23,7 +23,7 @@ const sendSites = () => {
 
 const sendEquipments = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM equipments', (err, rows) => {
+        await connection.query('SELECT id, equip_name FROM equipments', (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -34,7 +34,7 @@ const sendEquipments = () => {
 
 const sendAssetsStatus = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM asset_active_statuses', (err, rows) => {
+        await connection.query('SELECT id, aas_name FROM asset_active_statuses', (err, rows) => {
             if (err) {
                 reject(err)
             }

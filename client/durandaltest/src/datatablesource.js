@@ -348,7 +348,7 @@ export const EquipsTableAxios = () => {
         var equipId = equipInfo.id;
         localStorage.setItem("equipIdToDelete", equipId);
 
-        var equipName = equipInfo.name;
+        var equipName = equipInfo.equip_name;
         console.log(equipName);
         var equipBrand = equipInfo.brand_name;
         console.log(equipBrand);
@@ -408,7 +408,7 @@ export const EquipsTableAxios = () => {
             width: 100
         },
         {
-            field: 'name',
+            field: 'equip_name',
             headerName: 'Nombre',
             width: 180
         },
@@ -629,7 +629,7 @@ export const AssetsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const assetData = response.data
-            //console.log(assetData)
+            console.log(assetData)
             setAssetData(assetData)
         })
     }
@@ -647,17 +647,15 @@ export const AssetsTableAxios = () => {
         var assetId = assetInfo.id;
         localStorage.setItem("assetIdToDelete", assetId);
 
-        // var techName = techInfo.name;
-        // var techEmail = techInfo.email;
-        // var techCreatedDate = techInfo.created_at;
-        // var techPhone = techInfo.telefono;
-        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
-        // //var techNacimiento = techInfo.fechaNacimiento;
-        // localStorage.setItem("techNameToDelete", techName);
-        // localStorage.setItem("techEmailToDelete", techEmail);
-        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
-        // localStorage.setItem("techPhoneToDelete", techPhone);
-        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+        var assetName = assetInfo.asset_name;
+        var assetEquipName = assetInfo.equip_name;
+        var assetClientSite = assetInfo.name;
+        var assetUpdatedDate = assetInfo.updated_at;
+
+        localStorage.setItem("assetNameToDelete", assetName);
+        localStorage.setItem("assetEquipNameToDelete", assetEquipName);
+        localStorage.setItem("assetClientSiteToDelete", assetClientSite);
+        localStorage.setItem("assetUpdatedDateToDelete", assetUpdatedDate);
     }
 
     function manageAssetLogs(assetInfo) {
@@ -696,32 +694,19 @@ export const AssetsTableAxios = () => {
             width: 100
         },
         {
-            field: 'full_name',
-            headerName: 'Nombre de contacto',
-            width: 200,
-            renderCell: (params) => {
-                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
-                return (
-                    <div>
-                        <span>{full_name}</span>
-                    </div>
-                );
-            }
-        },
-        {
-            field: 'email',
-            headerName: 'E-mail',
-            width: 180
-        },
-        {
-            field: 'telefono',
-            headerName: 'Teléfono',
+            field: 'asset_name',
+            headerName: 'Nombre',
             width: 130
         },
         {
-            field: 'fechaNacimiento',
-            headerName: 'Fecha de nacimiento',
-            width: 200
+            field: 'equip_name',
+            headerName: 'Equipo',
+            width: 130
+        },
+        {
+            field: 'name',
+            headerName: 'Cliente-Sitio',
+            width: 180
         },
         {
             field: 'is_active',
@@ -746,8 +731,8 @@ export const AssetsTableAxios = () => {
             valueGetter: (params) => params.row.is_active
         },
         {
-            field: 'created_at',
-            headerName: 'Fecha de alta',
+            field: 'updated_at',
+            headerName: 'Fecha de actualización',
             width: 200
         }
     ];
