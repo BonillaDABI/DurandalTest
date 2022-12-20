@@ -309,6 +309,28 @@ authController.listEquipments = async (req, res) => {
     }
 }
 
+authController.listequipLogs = async (req, res) => {
+    const id = req.params.id
+    var equipLogs = await Equipo.getLogs(id)
+    moment.locale('es-mx')
+    for (let i = 0; i < equipLogs.length; i++) {
+        equipLogs[i].updated_at = moment(equipLogs[i].updated_at).format("ll")
+        equipLogs[i].updated_at = moment(equipLogs[i].created_at).format("ll")
+        if (equipLogs[i].is_active === 1) {
+            equipLogs[i].is_active = "Activo"
+        } else {
+            equipLogs[i].is_active = "Inactivo"
+        }
+    }
+
+    if (equipLogs) {
+        res.json(equipLogs)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener items')
+    }
+}
+
 authController.listItems = async (req, res) => {
     var item = await Item.getAllItems()
     moment.locale('es-mx')
@@ -498,19 +520,37 @@ authController.updateEquipment = async (req, res) => {
         const { name, description, brand_id } = req.body;
 
         try {
-            await connection.query(
-                "UPDATE equipments SET ? WHERE id = ?",
-                [{
-                    name,
-                    description,
-                    brand_id,
-                    updated_by: userID,
-                    updated_at: date
-                }, id],
-            )
+            await Equipo.updateEquipment(id, name, brand_id, description, userID, date)
+
             res.status(200).send('Equipo actualizado.')
         } catch (error) {
             res.status(400).send('Error al actualizar equipo.')
+        }
+    } else {
+        res.status(400).send('No tienes permiso.')
+    }
+}
+
+authController.updateEquipmentAttr = async (req, res) => {
+    const token = req.body.Authorization.split(' ')[1];
+    const id = req.params.id
+
+    const decodedToken = jwt.verify(token, "jwtsecret")
+    const userID = decodedToken.id
+    // const userID = validateToken()
+    const userRoleID = await User.getUserRoleID(userID);
+    const userPermissions = await User.getPermissionByRoleId(userRoleID)
+
+    if (userPermissions.includes(2)) {
+        const date = new Date()
+        const { name, description, dimensiones } = req.body;
+
+        try {
+            await Equipo.updateAttr(id, name, description, dimensiones, userID, date)
+
+            res.status(200).send('Atributo actualizado.')
+        } catch (error) {
+            res.status(400).send('Error al actualizar atributo.')
         }
     } else {
         res.status(400).send('No tienes permiso.')
@@ -529,24 +569,21 @@ authController.updateItem = async (req, res) => {
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { name, description, brand_id } = req.body;
+        const { name, description, cost, unit_id, currency_id } = req.body;
 
         try {
-            await connection.query(
-                "UPDATE equipments SET ? WHERE id = ?",
-                [{
-                    name,
-                    description,
-                    brand_id,
-                    updated_by: userID,
-                    updated_at: date
-                }, id],
-            )
-            res.status(200).send('Equipo actualizado.')
+
+            await Item.updateItem(id, name, description, cost, unit_id, currency_id, userID, date)
+
+            res.status(200).send('Item actualizado.')
+
         } catch (error) {
-            res.status(400).send('Error al actualizar equipo.')
+
+            res.status(400).send('Error al actualizar item.')
+
         }
     } else {
+
         res.status(400).send('No tienes permiso.')
     }
 }
@@ -1014,10 +1051,13 @@ authController.createEquipment = async (req, res) => {
 
         const { name, description, brand_id } = req.body;
 
-        const createdEquip = await Equipo.insertEquipment(name, description, brand_id, req.userID, date)
+        const createdEquipID = await Equipo.insertEquipment(name, description, brand_id, req.userID, date)
 
-        if (createdEquip) {
-            res.status(200).json(createdEquip)
+        const createdEquipInfo = await Equipo.getEquipmentByID(createdEquipID)
+
+
+        if (createdEquipID) {
+            res.status(200).json({ createdEquipID, createdEquipInfo })
         } else {
             res.status(400).json('Error al crear equipo')
         }
@@ -1056,11 +1096,13 @@ authController.createEquipmentAttr = async (req, res) => {
 
         const createdAttrID = await Equipo.insertEquipmentAttr(name, description, dimensiones, req.userID, date)
 
+
         if (createdAttrID) {
             const insertedEqVal = await Equipo.insertEquipmentVal(equipment_id, createdAttrID, value, req.userID, date)
 
             if (insertedEqVal) {
-                res.status(200).json('Atributo registrado.')
+                const createdEquipAttr = await Equipo.getEquipAttrs(equipment_id)
+                res.status(200).json(createdEquipAttr)
             }
         } else {
             res.status(400).json('Error al crear atributo.')
@@ -1298,6 +1340,61 @@ authController.deleteSite = async (req, res) => {
         res.status(200).send('Site borrado.')
     } else {
         res.status(400).send('Error al borrar site')
+    }
+}
+
+authController.deleteEquip = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Equipo.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Equipo borrado.')
+    } else {
+        res.status(400).send('Error al borrar equipo')
+    }
+}
+
+authController.deleteItem = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Item.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Item borrado.')
+    } else {
+        res.status(400).send('Error al borrar item')
+    }
+}
+
+authController.deleteAsset = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Asset.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Asset borrado.')
+    } else {
+        res.status(400).send('Error al borrar asset')
+    }
+}
+
+authController.deleteVisit = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Visits.deleteById(id)
+
+    if (deleted) {
+        res.status(200).send('Visit borrado.')
+    } else {
+        res.status(400).send('Error al borrar visit,')
+    }
+}
+
+authController.deleteAttr = async (req, res) => {
+    const id = req.params.id
+    const deleted = await Equipo.deleteAttrById(id)
+
+    if (deleted) {
+        res.status(200).send('Visit borrado.')
+    } else {
+        res.status(400).send('Error al borrar visit,')
     }
 }
 

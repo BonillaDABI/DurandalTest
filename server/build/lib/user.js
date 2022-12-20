@@ -110,7 +110,7 @@ const getRoleById = (id) => {
 
 const userRegister = async (name, first_surname, second_surname, email, password) => {
 
-    new_password = await bcrypt.hashSync(password, 10)
+    const new_password = await bcrypt.hashSync(password, 10)
 
     connection.query(
         "SELECT * FROM `users` WHERE `email` = ?",

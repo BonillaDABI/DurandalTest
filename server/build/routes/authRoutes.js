@@ -101,6 +101,16 @@ router.post("/createEquip", authController.protect, authController.createEquipme
 
 router.post("/createEqAttr", authController.protect, authController.createEquipmentAttr)
 
+router.delete("/deleteEquip/:id", authController.deleteEquip);
+
+router.delete("/deleteAttr/:id", authController.deleteAttr);
+
+router.get("/listEquipLogs/:id", authController.listequipLogs)
+
+router.patch("/updateEquip", authController.updateEquipment)
+
+router.patch("/updateAttr", authController.updateEquipmentAttr)
+
 //Items
 
 router.get("/listItems", authController.listItems)
@@ -110,6 +120,10 @@ router.get("/autofillCurrenciesAndUnits", authController.sendCurrenciesAndUnits)
 router.post("/createItem", authController.protect, authController.createItem)
 
 router.post("/createItemAttr", authController.protect, authController.createItemAttr)
+
+router.delete("/deleteItem/:id", authController.deleteItem);
+
+router.patch("/updateItem", authController.updateItem)
 
 //Assets
 
@@ -123,6 +137,8 @@ router.patch("/updateAsset/:id", authController.protect, authController.updateAs
 
 router.get("/listAssetLogs/:id", authController.listAssetsLogs)
 
+router.delete("/deleteAsset/:id", authController.deleteAsset);
+
 //Visits
 
 router.get("/listVisits", authController.listVisits)
@@ -134,6 +150,8 @@ router.post("/createVisit", authController.protect, authController.createVisit)
 router.patch("/updateVisit/:id", authController.protect, authController.updateVisit)
 
 router.get("/listVisitLogs/:id", authController.listVisitsLogs)
+
+router.delete("/deleteVisit/:id", authController.deleteVisit);
 
 
 module.exports = router;

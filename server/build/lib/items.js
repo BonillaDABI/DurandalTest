@@ -94,6 +94,50 @@ const insertItemVal = (item_id, item_attributes_id, value, creator_id, date) => 
     })
 }
 
+const updateItem = (id, name, description, cost, unit_id, currency_id, creator_id, date) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('UPDATE item SET ? WHERE id = ?',
+            [{
+                name,
+                description,
+                cost,
+                unit_id,
+                currency_id,
+                is_active,
+                updated_by: creator_id,
+                updated_at: date,
+                updated_reason,
+            }, id], async (err, rows) => {
+                if (err) reject(err)
+                resolve(true)
+
+                // if (is_active === '1') {
+                //     await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 3, telefono, fechaNacimiento, 1, creator_id, date, updated_reason])
+                // } else {
+                //     await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 1, telefono, fechaNacimiento, is_active, creator_id, date, updated_reason])
+                // }
+            })
+    })
+}
+
+const deleteById = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connection.query(
+                ' DELETE FROM `items` WHERE `id` = ?  ', id,
+                function (err, rows) {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(true);
+                }
+            );
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
 
 module.exports = {
     getAllItems,
@@ -101,5 +145,7 @@ module.exports = {
     insertItemAttr,
     insertItemVal,
     sendUnits,
-    sendCurrency
+    sendCurrency,
+    deleteById,
+    updateItem
 }
