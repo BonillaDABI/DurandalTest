@@ -3,7 +3,7 @@ const connection = require('../config/database')
 
 const getAllEquipments = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT eq.name, eq.description, eq.updated_at, eq.is_active, b.brand_name FROM equipments eq, brands b WHERE eq.brand_id = b.id', (err, rows) => {
+        await connection.query('SELECT eq.id, eq.name, eq.description, eq.updated_at, eq.is_active, b.brand_name FROM equipments eq, brands b WHERE eq.brand_id = b.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -12,7 +12,7 @@ const getAllEquipments = () => {
 
 const sendBrands = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM brands', (err, rows) => {
+        await connection.query('SELECT id, brand_name FROM brands', (err, rows) => {
             if (err) {
                 reject(err)
             }

@@ -6,10 +6,9 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalEDelete(props) {
-    // var deleteTechName = localStorage.getItem("techNameToDelete");
-    // var deleteTechEmail = localStorage.getItem("techEmailToDelete");
-    // var deleteTechCreatedDate = localStorage.getItem("techCreatedDateToDelete");
-    // var deleteTechPhone = localStorage.getItem("techPhoneToDelete");
+    var deleteEquipName = localStorage.getItem("equipNameToDelete");
+    var deleteEquipBrand = localStorage.getItem("equipBrandToDelete");
+    var deleteEquipUpdatedAt = localStorage.getItem("equipUpdatedAtToDelete");
 
     const deleteEquip = () => {
         var deleteEquipId = localStorage.getItem("equipIdToDelete");
@@ -40,10 +39,9 @@ function ModalEDelete(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/* <span className='delete-info'><strong>Nombre:</strong> {deleteTechName}</span><br />
-                <span className='delete-info'><strong>Email:</strong> {deleteTechEmail}</span><br />
-                <span className='delete-info'><strong>Teléfono:</strong> {deleteTechPhone}</span><br />
-                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteTechCreatedDate}</span> */}
+                <span className='delete-info'><strong>Nombre:</strong> {deleteEquipName}</span><br />
+                <span className='delete-info'><strong>Marca:</strong> {deleteEquipBrand}</span><br />
+                <span className='delete-info'><strong>Fecha de actualización:</strong> {deleteEquipUpdatedAt}</span>
             </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteEquip(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>

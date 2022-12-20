@@ -6,10 +6,11 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalIDelete(props) {
-    // var deleteTechName = localStorage.getItem("techNameToDelete");
-    // var deleteTechEmail = localStorage.getItem("techEmailToDelete");
-    // var deleteTechCreatedDate = localStorage.getItem("techCreatedDateToDelete");
-    // var deleteTechPhone = localStorage.getItem("techPhoneToDelete");
+    var deleteItemName = localStorage.getItem("itemNameToDelete");
+    var deleteItemCurrency = localStorage.getItem("itemCurrencyToDelete");
+    var deleteItemUnit = localStorage.getItem("itemUnitToDelete");
+    var deleteItemUpdatedDate = localStorage.getItem("itemUpdatedDateToDelete");
+
 
     const deleteItem = () => {
         var deleteItemId = localStorage.getItem("itemIdToDelete");
@@ -40,10 +41,10 @@ function ModalIDelete(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/* <span className='delete-info'><strong>Nombre:</strong> {deleteTechName}</span><br />
-                <span className='delete-info'><strong>Email:</strong> {deleteTechEmail}</span><br />
-                <span className='delete-info'><strong>Teléfono:</strong> {deleteTechPhone}</span><br />
-                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteTechCreatedDate}</span> */}
+                <span className='delete-info'><strong>Nombre:</strong> {deleteItemName}</span><br />
+                <span className='delete-info'><strong>Divisa:</strong> {deleteItemCurrency}</span><br />
+                <span className='delete-info'><strong>Unidad:</strong> {deleteItemUnit}</span><br />
+                <span className='delete-info'><strong>Fecha de actualización:</strong> {deleteItemUpdatedDate}</span>
             </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteItem(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>

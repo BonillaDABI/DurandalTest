@@ -59,6 +59,17 @@
     
 }
 
+#description-field {
+    width: 100%;
+    .input-container {
+        width: 1050px;
+        .input-field{
+            width: 100%;
+            height: 80px;
+        }
+    }
+}
+
 form .form-fields {
     display: flex;
     float: left;

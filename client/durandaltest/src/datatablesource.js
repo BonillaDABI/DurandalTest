@@ -20,6 +20,22 @@ import ModalActDelete from "./Components/Modal/Delete/ModalActDelete";
 import { useNavigate } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
 
+// #region Activities Logs
+
+// #endregion
+
+// #region Assets Logs
+
+// #endregion
+
+// #region Activities Logs
+
+// #endregion
+
+// #region Visits Logs
+
+// #endregion
+
 // #region Activities
 
 export const ActivitiesTableAxios = () => {
@@ -183,7 +199,7 @@ export const ItemsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const itemData = response.data
-            //console.log(itemData)
+            console.log(itemData)
             setItemData(itemData)
         })
     }
@@ -201,17 +217,15 @@ export const ItemsTableAxios = () => {
         var itemId = itemInfo.id;
         localStorage.setItem("itemIdToDelete", itemId);
 
-        // var techName = techInfo.name;
-        // var techEmail = techInfo.email;
-        // var techCreatedDate = techInfo.created_at;
-        // var techPhone = techInfo.telefono;
-        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
-        // //var techNacimiento = techInfo.fechaNacimiento;
-        // localStorage.setItem("techNameToDelete", techName);
-        // localStorage.setItem("techEmailToDelete", techEmail);
-        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
-        // localStorage.setItem("techPhoneToDelete", techPhone);
-        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+        var itemName = itemInfo.name;
+        var itemCurrency = itemInfo.currency_name;
+        var itemUnit = itemInfo.unit_name;
+        var itemUpdatedDate = itemInfo.updated_at;
+
+        localStorage.setItem("itemNameToDelete", itemName);
+        localStorage.setItem("itemCurrencyToDelete", itemCurrency);
+        localStorage.setItem("itemUnitToDelete", itemUnit);
+        localStorage.setItem("itemUpdatedDateToDelete", itemUpdatedDate);
     }
 
     const actionColumn = [
@@ -243,32 +257,19 @@ export const ItemsTableAxios = () => {
             width: 100
         },
         {
-            field: 'full_name',
-            headerName: 'Nombre de contacto',
-            width: 200,
-            renderCell: (params) => {
-                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
-                return (
-                    <div>
-                        <span>{full_name}</span>
-                    </div>
-                );
-            }
-        },
-        {
-            field: 'email',
-            headerName: 'E-mail',
+            field: 'name',
+            headerName: 'Nombre',
             width: 180
         },
         {
-            field: 'telefono',
-            headerName: 'Teléfono',
-            width: 130
+            field: 'currency_name',
+            headerName: 'Divisa',
+            width: 180
         },
         {
-            field: 'fechaNacimiento',
-            headerName: 'Fecha de nacimiento',
-            width: 200
+            field: 'unit_name',
+            headerName: 'Unidad',
+            width: 180
         },
         {
             field: 'is_active',
@@ -293,8 +294,8 @@ export const ItemsTableAxios = () => {
             valueGetter: (params) => params.row.is_active
         },
         {
-            field: 'created_at',
-            headerName: 'Fecha de alta',
+            field: 'updated_at',
+            headerName: 'Fecha de actualización',
             width: 200
         }
     ];
@@ -324,12 +325,12 @@ export const EquipsTableAxios = () => {
     // Config de hooks
     const [equipData, setEquipData] = useState([])
 
-    const endpoint = 'http://localhost:3001/listEquips'
+    const endpoint = 'http://localhost:3001/listEquipments'
 
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const equipData = response.data
-            //console.log(equipData)
+            console.log(equipData)
             setEquipData(equipData)
         })
     }
@@ -346,6 +347,17 @@ export const EquipsTableAxios = () => {
         console.log(equipInfo.id);
         var equipId = equipInfo.id;
         localStorage.setItem("equipIdToDelete", equipId);
+
+        var equipName = equipInfo.name;
+        console.log(equipName);
+        var equipBrand = equipInfo.brand_name;
+        console.log(equipBrand);
+        var equipUpdatedDate = equipInfo.updated_at;
+        console.log(equipUpdatedDate);
+
+        localStorage.setItem("equipNameToDelete", equipName);
+        localStorage.setItem("equipBrandToDelete", equipBrand);
+        localStorage.setItem("equipUpdatedAtToDelete", equipUpdatedDate);
 
         // var techName = techInfo.name;
         // var techEmail = techInfo.email;
@@ -396,32 +408,14 @@ export const EquipsTableAxios = () => {
             width: 100
         },
         {
-            field: 'full_name',
-            headerName: 'Nombre de contacto',
-            width: 200,
-            renderCell: (params) => {
-                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
-                return (
-                    <div>
-                        <span>{full_name}</span>
-                    </div>
-                );
-            }
-        },
-        {
-            field: 'email',
-            headerName: 'E-mail',
+            field: 'name',
+            headerName: 'Nombre',
             width: 180
         },
         {
-            field: 'telefono',
-            headerName: 'Teléfono',
-            width: 130
-        },
-        {
-            field: 'fechaNacimiento',
-            headerName: 'Fecha de nacimiento',
-            width: 200
+            field: 'brand_name',
+            headerName: 'Marca',
+            width: 180
         },
         {
             field: 'is_active',
@@ -446,8 +440,8 @@ export const EquipsTableAxios = () => {
             valueGetter: (params) => params.row.is_active
         },
         {
-            field: 'created_at',
-            headerName: 'Fecha de alta',
+            field: 'updated_at',
+            headerName: 'Fecha de actualización',
             width: 200
         }
     ];
@@ -1667,7 +1661,7 @@ export const ClientsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const clientData = response.data
-            //console.log(clientData)
+            console.log(clientData)
             setClientData(clientData)
         })
     }

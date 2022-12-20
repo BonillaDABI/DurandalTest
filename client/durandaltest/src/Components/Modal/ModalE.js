@@ -33,36 +33,37 @@ function ModalE(props) {
         });
       }
     
-    /*
-    const [email, setEmail] = useState("");
+      axios.get("http://localhost:3001/autofillBrands", {
+      })
+      .then((response) => {
+        const brandInfo = JSON.stringify(response.data);
+        console.log(brandInfo);
+        localStorage.setItem("brands", brandInfo)
+    })
+    
+    var brands = JSON.parse(localStorage.getItem("brands"));
+    
     const [name, setName] = useState("");
-    const [firstSurname, setFirstSurname] = useState("");
-    const [secondSurname, setSecondSurname] = useState("");
-    const [password, setPW] = useState("");
-    const [phone, setPhone] = useState("");
-    const [nacimiento, setNacimiento] = useState("");
-    */
+    const [brandId, setBrand] = useState("");
+    const [description, setDescription] = useState("");
+
 
     function createEquip () {
-        /*
-        axios.post('http://localhost:3001/createAsset', { // url to POST
+        
+        axios.post('http://localhost:3001/createEquip', { // url to POST
             'Authorization': "bearer " + localStorage.getItem('token'),
             name: name,
-            first_surname: firstSurname,
-            second_surname: secondSurname,
-            email: email,
-            password: password,
-            telefono: phone,
-            fechaNacimiento: nacimiento
+            brand_id: brandId,
+            description: description
         })
         .then((response) => {
             console.log(response);
         }, (error) => {
             console.log(error);
             errorAlert();
-            //alert("Error al crear técnico. Vuelve a intentarlo.");
+            //alert("Error al crear equipo. Vuelve a intentarlo.");
         });
-        */
+        
     }
 
     function hide(){
@@ -71,7 +72,7 @@ function ModalE(props) {
         setTimeout(() => {
             window.location.reload();
         }, 3600);
-        //alert("Técnico creado exitosamente en la base de datos.");
+        //alert("Equipo creado exitosamente en la base de datos.");
     }
 
     return (
@@ -88,7 +89,30 @@ function ModalE(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            
+            <form>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Nombre</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                    </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Marca</span>
+                        <select className="input-field"  value={brandId} onChange={(e) => setBrand(e.target.value)} required>
+                            {brands.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
+                            })};
+                        </select>
+                    </div>
+                </div>
+                <div id="description-field" className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Descripción</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                    </div>
+                </div>
+            </form>
             </Modal.Body>
             <Modal.Footer>
                 <button className='save-modal-button' onClick={() => {createEquip(); hide()}}>Guardar</button>
