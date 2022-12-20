@@ -960,7 +960,7 @@ authController.createItem = async (req, res) => {
 
         const { name, description, cost, unit_id, currency_id } = req.body;
 
-        const createdItem = await Equipo.insertEquipment(name, description, cost, unit_id, currency_id, req.userID, date)
+        const createdItem = await Item.insertItem(name, description, cost, unit_id, currency_id, req.userID, date)
 
         if (createdItem) {
             res.status(200).json(createdItem)
