@@ -24,8 +24,146 @@ import { Grid, Typography } from "@mui/material";
 
 // #endregion
 
-// #region Assets Logs
+// #region Asset Logs
 
+export const AssetLogsTableAxios = () => {
+    const [assetLogData, setAssetLogData] = useState([])
+
+    var logAssetId = localStorage.getItem("assetIdForLog")
+    console.log(logAssetId)
+
+    const endpoint = `http://localhost:3001/listAssetLogs/${logAssetId}`;
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            console.log(response.data);
+            const assetLogData = response.data;
+            setAssetLogData(assetLogData);
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    // Columnas
+    const assetLogsColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 70
+        },
+        {
+            field: 'asset_mov_name',
+            headerName: 'Tipo de Movimiento',
+            width: 250
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 110,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'updated_at',
+            headerName: 'Fecha de Actualización',
+            width: 160
+        }
+    ];
+
+    const [selected, setSelected] = useState( [ ] )
+    const [selectionModel, setSelectionModel] = useState( [ ] );
+    return (
+        <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <div
+                    style={{
+                        height: "650%",
+                        width: "100%",
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    }}
+                >
+                    <DataGrid
+                        initialState={{
+                            sorting: {
+                                sortModel: [{ field: 'id', sort: 'desc' }],
+                            },
+                        }}
+                        rows={assetLogData}
+                        columns={assetLogsColumns}
+                        components={{ Toolbar: GridToolbar }}
+                        onSelectionModelChange={(ids) => {
+                            const selectedIDs = new Set(ids);
+                            const selected = assetLogData.filter((row) =>
+                                selectedIDs.has(row.id)
+                            );
+                            setSelected(selected);
+                            if (ids.length > 1) {
+                                const selectionSet = new Set(selectionModel);
+                                const result = ids.filter((s) => !selectionSet.has(s));
+                    
+                                setSelectionModel(result);
+                              } else {
+                                setSelectionModel(ids);
+                            }
+                        }}
+
+                        selectionModel={selectionModel}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+
+                    //getRowId={({id}) => id}
+
+                    />
+                </div>
+            </Grid>
+            <Grid item xs={6}>
+                <div className="logs-info-section">
+                    {selected.map((i) => 
+                        <Typography key={i} className="logs-info">
+                            <div className="divider"></div>
+
+                            <strong>Asset:</strong><br />
+                            
+                            <span>Nombre:</span>&nbsp;{selected[0].asset_name}<br />
+                            <span>Cliente - Sitio:</span>&nbsp;{selected[0].name}<br />
+                            <span>Descripción:</span>&nbsp;{selected[0].description}<br />
+                            
+                            
+                            <div className="divider"></div>
+
+                            <strong>Información del log:</strong><br />
+                            <span>Tipo de movimiento:</span>&nbsp;{selected[0].asset_mov_name}<br />
+                            <span>Fecha de creación:</span>&nbsp;{selected[0].created_at}<br />
+                            <span>Razón:</span>&nbsp;{selected[0].updated_reason}<br />
+                            <span>Fecha de actualización:</span>&nbsp;{selected[0].updated_at}<br />
+
+                            <div className="divider"></div>
+                        </Typography>
+                    )}
+                </div>    
+            </Grid>
+        </Grid>
+    );
+}
 // #endregion
 
 // #region Activities Logs
@@ -661,7 +799,7 @@ export const AssetsTableAxios = () => {
     function manageAssetLogs(assetInfo) {
         var assetId = assetInfo.id;
         localStorage.setItem("assetIdForLog", assetId);
-        //navigate("/tecnicos/tecnicosLogs")
+        navigate("/assetLogs")
     }
 
     const actionColumn = [

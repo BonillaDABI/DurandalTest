@@ -25,6 +25,7 @@ import Activities from "./Pages/Activities";
 import Equipments from "./Pages/Equipments";
 import Items from "./Pages/Items";
 import Visits from "./Pages/Visits";
+import AssetLogs from "./Pages/AssetLogs";
 
 
 import { DarkModeContext } from "./Context/darkModeContext";
@@ -40,6 +41,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/recovery" element={<Recovery />} />
+          
           <Route exact path="/listAll" element={<ListUsers />} />
           <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
           <Route exact path="/clients" element={<Clients />} />
@@ -47,6 +49,7 @@ function App() {
           <Route exact path="/tecnicos" element={<Tecnicos />} />
           <Route exact path="/tecnicos/tecnicosLogs" element={<TechLogs />} />
           <Route exact path="/siteLogs" element={<SiteLogs />} />
+          <Route exact path="/assetLogs" element={<AssetLogs />} />
 
           <Route exact path="/assets" element={<Assets />} /> 
           <Route exact path="/activities" element={<Activities />} /> 
