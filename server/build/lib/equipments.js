@@ -3,7 +3,7 @@ const connection = require('../config/database')
 
 const getAllEquipments = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT eq.id, eq.name, eq.description, eq.updated_at, eq.is_active, b.brand_name FROM equipments eq, brands b WHERE eq.brand_id = b.id', (err, rows) => {
+        await connection.query('SELECT eq.id, eq.equip_name, eq.description, eq.updated_at, eq.is_active, b.brand_name FROM equipments eq, brands b WHERE eq.brand_id = b.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -21,10 +21,10 @@ const sendBrands = () => {
     })
 }
 
-const insertEquipment = (name, description, brand_id, creator_id, date) => {
+const insertEquipment = (equip_name, description, brand_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('INSERT INTO equipments SET ?', [{
-            name,
+            equip_name,
             description,
             brand_id,
             is_active: 01,

@@ -349,7 +349,8 @@ authController.listAssets = async (req, res) => {
 }
 
 authController.listAssetsLogs = async (req, res) => {
-    var assetLogs = await Asset.getLogs()
+    const id = req.params.id
+    var assetLogs = await Asset.getLogs(id)
     moment.locale('es-mx')
     for (let i = 0; i < assetLogs.length; i++) {
         assetLogs[i].updated_at = moment(assetLogs[i].updated_at).format("ll")

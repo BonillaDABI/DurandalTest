@@ -3,7 +3,7 @@ const connection = require('../config/database')
 
 const getAssets = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT a.name, s.name, eq.name, a.is_active, a.updated_at, aas.name FROM asset a, asset_active_statuses aas, sites s, equipments eq WHERE a.site_id = s.id AND a.equipment_id = eq.id AND a.asset_active_status_id = aas.id', (err, rows) => {
+        await connection.query('SELECT a.id, a.asset_name, s.name, eq.equip_name, a.is_active, a.updated_at, aas.aas_name FROM asset a, asset_active_statuses aas, sites s, equipments eq WHERE a.site_id = s.id AND a.equipment_id = eq.id AND a.asset_active_status_id = aas.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -43,10 +43,10 @@ const sendAssetsStatus = () => {
     })
 }
 
-const insertAsset = (name, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
+const insertAsset = (asset_name, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('INSERT INTO equipments SET ?', [{
-            name,
+            asset_name,
             description,
             site_id,
             equipment_id,
@@ -67,11 +67,11 @@ const insertAsset = (name, description, site_id, equipment_id, asset_active_stat
     })
 }
 
-const updateAsset = (id, name, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
+const updateAsset = (id, asset_name, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE assets SET ? WHERE id = ?',
             [{
-                name,
+                asset_name,
                 description,
                 is_active,
                 site_id,
@@ -113,7 +113,7 @@ const deleteById = (id) => {
 
 const getLogs = (id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT al.name, al.description, am.name, s.name, al.is_active, al.created_at, al.updated_at, al.updated_reason FROM asset_logs al, asset_movements am, sites s WHERE al.asset_movement_id = am.id AND al.site_id = s.id AND al.asset_id = ?', [id], (err, rows) => {
+        await connection.query('SELECT al.id, al.asset_log_name, al.description, am.asset_mov_name, s.name, al.is_active, al.created_at, al.updated_at, al.updated_reason FROM asset_logs al, asset_movements am, sites s WHERE al.asset_movement_id = am.id AND al.site_id = s.id AND al.asset_id = ?', [id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         })

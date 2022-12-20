@@ -121,7 +121,7 @@ router.post("/createAsset", authController.protect, authController.createAsset)
 
 router.patch("/updateAsset", authController.protect, authController.updateAsset)
 
-router.get("/listAssetLogs", authController.listAssetsLogs)
+router.get("/listAssetLogs/:id", authController.listAssetsLogs)
 
 
 
