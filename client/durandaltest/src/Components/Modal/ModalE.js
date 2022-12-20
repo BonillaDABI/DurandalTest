@@ -100,6 +100,7 @@ function ModalE(props) {
                     <div className='input-container'>
                         <span className="input-span">Marca</span>
                         <select className="input-field"  value={brandId} onChange={(e) => setBrand(e.target.value)} required>
+                            <option value="" disabled hidden className="options">Seleccionar...</option> 
                             {brands.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
                             })};
