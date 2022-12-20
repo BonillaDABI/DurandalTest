@@ -144,7 +144,7 @@ export const AssetLogsTableAxios = () => {
                             <strong>Asset:</strong><br />
                             
                             <span>Nombre:</span>&nbsp;{selected[0].asset_name}<br />
-                            <span>Cliente - Sitio:</span>&nbsp;{selected[0].name}<br />
+                            <span>Sitio:</span>&nbsp;{selected[0].name}<br />
                             <span>Descripción:</span>&nbsp;{selected[0].description}<br />
                             
                             
@@ -172,6 +172,143 @@ export const AssetLogsTableAxios = () => {
 
 // #region Visits Logs
 
+export const VisitLogsTableAxios = () => {
+    const [visitLogData, setVisitLogData] = useState([])
+
+    var logVisitId = localStorage.getItem("visitIdForLog")
+    console.log(logVisitId)
+
+    const endpoint = `http://localhost:3001/listVisitLogs/${logVisitId}`;
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            console.log(response.data);
+            const visitLogData = response.data;
+            setVisitLogData(visitLogData);
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    // Columnas
+    const visitLogsColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 70
+        },
+        {
+            field: 'visit_mov_name',
+            headerName: 'Tipo de Movimiento',
+            width: 250
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 110,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'updated_at',
+            headerName: 'Fecha de Actualización',
+            width: 160
+        }
+    ];
+
+    const [selected, setSelected] = useState( [ ] )
+    const [selectionModel, setSelectionModel] = useState( [ ] );
+    return (
+        <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <div
+                    style={{
+                        height: "650%",
+                        width: "100%",
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    }}
+                >
+                    <DataGrid
+                        initialState={{
+                            sorting: {
+                                sortModel: [{ field: 'id', sort: 'desc' }],
+                            },
+                        }}
+                        rows={visitLogData}
+                        columns={visitLogsColumns}
+                        components={{ Toolbar: GridToolbar }}
+                        onSelectionModelChange={(ids) => {
+                            const selectedIDs = new Set(ids);
+                            const selected = visitLogData.filter((row) =>
+                                selectedIDs.has(row.id)
+                            );
+                            setSelected(selected);
+                            if (ids.length > 1) {
+                                const selectionSet = new Set(selectionModel);
+                                const result = ids.filter((s) => !selectionSet.has(s));
+                    
+                                setSelectionModel(result);
+                              } else {
+                                setSelectionModel(ids);
+                            }
+                        }}
+
+                        selectionModel={selectionModel}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+
+                    //getRowId={({id}) => id}
+
+                    />
+                </div>
+            </Grid>
+            <Grid item xs={6}>
+                <div className="logs-info-section">
+                    {selected.map((i) => 
+                        <Typography key={i} className="logs-info">
+                            <div className="divider"></div>
+
+                            <strong>Visita:</strong><br />
+                            
+                            <span>Nombre:</span>&nbsp;{selected[0].visit_name}<br />
+                            <span>Sitio de la visita:</span>&nbsp;{selected[0].site_name}<br />
+                            <span>Descripción:</span>&nbsp;{selected[0].description}<br />
+                            <span>Técnico:</span>&nbsp;{selected[0].name}<br />
+                            
+                            <div className="divider"></div>
+
+                            <strong>Información del log:</strong><br />
+                            <span>Tipo de movimiento:</span>&nbsp;{selected[0].visit_mov_name}<br />
+                            <span>Razón:</span>&nbsp;{selected[0].updated_reason}<br />
+                            <span>Fecha de actualización:</span>&nbsp;{selected[0].updated_at}<br />
+
+                            <div className="divider"></div>
+                        </Typography>
+                    )}
+                </div>    
+            </Grid>
+        </Grid>
+    );
+}
 // #endregion
 
 // #region Activities
@@ -614,7 +751,7 @@ export const VisitsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const visitData = response.data
-            //console.log(visitData)
+            console.log(visitData)
             setVisitData(visitData)
         })
     }
@@ -627,28 +764,28 @@ export const VisitsTableAxios = () => {
     const navigate = useNavigate();
 
     function manageVisitDelete(visitInfo) {
-        console.log(visitInfo);
+        //console.log(visitInfo);
         console.log(visitInfo.id);
         var visitId = visitInfo.id;
         localStorage.setItem("visitIdToDelete", visitId);
 
-        // var techName = techInfo.name;
-        // var techEmail = techInfo.email;
-        // var techCreatedDate = techInfo.created_at;
-        // var techPhone = techInfo.telefono;
-        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
-        // //var techNacimiento = techInfo.fechaNacimiento;
-        // localStorage.setItem("techNameToDelete", techName);
-        // localStorage.setItem("techEmailToDelete", techEmail);
-        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
-        // localStorage.setItem("techPhoneToDelete", techPhone);
-        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
+        var visitName = visitInfo.visit_name;
+        var visitSiteName = visitInfo.site_name;
+        var visitTypeName = visitInfo.vt_name;
+        var visitTech = visitInfo.name;
+        var visitUpdatedDate = visitInfo.updated_at;
+
+        localStorage.setItem("visitNameToDelete", visitName);
+        localStorage.setItem("visitSiteNameToDelete", visitSiteName);
+        localStorage.setItem("visitTypeNameToDelete", visitTypeName);
+        localStorage.setItem("visitTechToDelete", visitTech);
+        localStorage.setItem("visitUpdatedDateToDelete", visitUpdatedDate);
     }
 
     function manageVisitLogs(visitInfo) {
         var visitId = visitInfo.id;
         localStorage.setItem("visitIdForLog", visitId);
-        //navigate("/tecnicos/tecnicosLogs")
+        navigate("/visitLogs")
     }
 
     const actionColumn = [
@@ -681,32 +818,24 @@ export const VisitsTableAxios = () => {
             width: 100
         },
         {
-            field: 'full_name',
-            headerName: 'Nombre de contacto',
-            width: 200,
-            renderCell: (params) => {
-                var full_name = params.row.name + " " + params.row.first_surname + " " + params.row.second_surname;
-                return (
-                    <div>
-                        <span>{full_name}</span>
-                    </div>
-                );
-            }
+            field: 'visit_name',
+            headerName: 'Nombre de la visita',
+            width: 160
         },
         {
-            field: 'email',
-            headerName: 'E-mail',
+            field: 'site_name',
+            headerName: 'Sitio',
+            width: 160
+        },
+        {
+            field: 'vt_name',
+            headerName: 'Tipo de visita',
             width: 180
         },
         {
-            field: 'telefono',
-            headerName: 'Teléfono',
-            width: 130
-        },
-        {
-            field: 'fechaNacimiento',
-            headerName: 'Fecha de nacimiento',
-            width: 200
+            field: 'name',
+            headerName: 'Técnico',
+            width: 100
         },
         {
             field: 'is_active',
@@ -731,8 +860,8 @@ export const VisitsTableAxios = () => {
             valueGetter: (params) => params.row.is_active
         },
         {
-            field: 'created_at',
-            headerName: 'Fecha de alta',
+            field: 'updated_at',
+            headerName: 'Fecha de actualización',
             width: 200
         }
     ];
@@ -843,7 +972,7 @@ export const AssetsTableAxios = () => {
         },
         {
             field: 'name',
-            headerName: 'Cliente-Sitio',
+            headerName: 'Sitio',
             width: 180
         },
         {

@@ -6,10 +6,12 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalVDelete(props) {
-    // var deleteTechName = localStorage.getItem("techNameToDelete");
-    // var deleteTechEmail = localStorage.getItem("techEmailToDelete");
-    // var deleteTechCreatedDate = localStorage.getItem("techCreatedDateToDelete");
-    // var deleteTechPhone = localStorage.getItem("techPhoneToDelete");
+    var deleteVisitName = localStorage.getItem("visitNameToDelete");
+    var deleteVisitSiteName = localStorage.getItem("visitSiteNameToDelete");
+    var deleteVisitTypeName = localStorage.getItem("visitTypeNameToDelete");
+    var deleteVisitTech = localStorage.getItem("visitTechToDelete");
+    var deleteVisitUpdatedDate = localStorage.getItem("visitUpdatedDateToDelete");
+
 
     const deleteVisit = () => {
         var deleteVisitId = localStorage.getItem("visitIdToDelete");
@@ -40,10 +42,11 @@ function ModalVDelete(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/* <span className='delete-info'><strong>Nombre:</strong> {deleteTechName}</span><br />
-                <span className='delete-info'><strong>Email:</strong> {deleteTechEmail}</span><br />
-                <span className='delete-info'><strong>Teléfono:</strong> {deleteTechPhone}</span><br />
-                <span className='delete-info'><strong>Fecha de alta:</strong> {deleteTechCreatedDate}</span> */}
+                <span className='delete-info'><strong>Nombre de visita:</strong> {deleteVisitName}</span><br />
+                <span className='delete-info'><strong>Sitio:</strong> {deleteVisitSiteName}</span><br />
+                <span className='delete-info'><strong>Tipo de visita:</strong> {deleteVisitTypeName}</span><br />
+                <span className='delete-info'><strong>Técnico:</strong> {deleteVisitTech}</span><br />
+                <span className='delete-info'><strong>Fecha de actualización:</strong> {deleteVisitUpdatedDate}</span>
             </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteVisit(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>
