@@ -111,4 +111,18 @@ router.post("/createItem", authController.protect, authController.createItem)
 
 router.post("/createItemAttr", authController.protect, authController.createItemAttr)
 
+//Assets
+
+router.get("/listAssets", authController.listAssets)
+
+router.get("/autofillAssets", authController.sendSitesAndEquips)
+
+router.post("/createAsset", authController.protect, authController.createAsset)
+
+router.patch("/updateAsset", authController.protect, authController.updateAsset)
+
+router.get("/listAssetLogs", authController.listAssetsLogs)
+
+
+
 module.exports = router;

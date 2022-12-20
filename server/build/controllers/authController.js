@@ -21,6 +21,7 @@ const Contact = require('../lib/contact')
 const Site = require('../lib/sites')
 const Equipo = require('../lib/equipments')
 const Item = require('../lib/items')
+const Asset = require('../lib/assets')
 
 
 const authController = {}
@@ -327,6 +328,47 @@ authController.listItems = async (req, res) => {
     }
 }
 
+authController.listAssets = async (req, res) => {
+    var asset = await Asset.getAssets()
+    moment.locale('es-mx')
+    for (let i = 0; i < asset.length; i++) {
+        asset[i].updated_at = moment(asset[i].updated_at).format("ll")
+        if (asset[i].is_active === 1) {
+            asset[i].is_active = "Activo"
+        } else {
+            asset[i].is_active = "Inactivo"
+        }
+    }
+
+    if (asset) {
+        res.json(asset)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener items')
+    }
+}
+
+authController.listAssetsLogs = async (req, res) => {
+    var assetLogs = await Asset.getLogs()
+    moment.locale('es-mx')
+    for (let i = 0; i < assetLogs.length; i++) {
+        assetLogs[i].updated_at = moment(assetLogs[i].updated_at).format("ll")
+        assetLogs[i].updated_at = moment(assetLogs[i].created_at).format("ll")
+        if (assetLogs[i].is_active === 1) {
+            assetLogs[i].is_active = "Activo"
+        } else {
+            assetLogs[i].is_active = "Inactivo"
+        }
+    }
+
+    if (assetLogs) {
+        res.json(assetLogs)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener items')
+    }
+}
+
 authController.update = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
 
@@ -431,7 +473,7 @@ authController.updateEquipment = async (req, res) => {
     }
 }
 
-authController.updateitem = async (req, res) => {
+authController.updateItem = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
     const id = req.params.id
 
@@ -589,6 +631,28 @@ authController.updateContact = async (req, res) => {
     }
 }
 
+authController.updateAsset = async (req, res) => {
+
+    if (req.userPermissions.includes(2)) {
+        const id = req.params.id
+
+        const date = new Date()
+
+        const { name, description, site_id, equipment_id, asset_active_status_id } = req.body;
+
+        const updatedAsset = await Asset.updateAsset(id, name, description, site_id, equipment_id, asset_active_status_id, req.userID, date)
+
+        if (updatedAsset) {
+            res.status(200).json('Asset actualizado.')
+        } else {
+            res.status(400).json('Error al actualizar asset.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
 authController.register = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
 
@@ -687,6 +751,13 @@ authController.sendCurrenciesAndUnits = async (req, res) => {
     res.json({ currencies, units })
 }
 
+authController.sendSitesAndEquips = async (req, res) => {
+    //Mandar tipos de contactos
+    const sites = await Asset.sendSites()
+    const equips = await Asset.sendEquipments()
+    const statuses = await Asset.sendAssetsStatus()
+    res.json({ sites, equips, statuses })
+}
 
 // authController.sendParentID = async (req, res) => {
 //     //Mandar parents_id
@@ -943,6 +1014,26 @@ authController.createItemAttr = async (req, res) => {
             }
         } else {
             res.status(400).json('Error al crear atributo.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+authController.createAsset = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+
+        const { name, description, site_id, equipment_id, asset_active_status_id } = req.body;
+
+        const createdAsset = await Asset.insertAsset(name, description, site_id, equipment_id, asset_active_status_id, req.userID, date)
+
+        if (createdAsset) {
+            res.status(200).json('Asset creado.')
+        } else {
+            res.status(400).json('Error al crear asset')
         }
 
     } else {
