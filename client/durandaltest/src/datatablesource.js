@@ -144,7 +144,7 @@ export const AssetLogsTableAxios = () => {
                             <strong>Asset:</strong><br />
                             
                             <span>Nombre:</span>&nbsp;{selected[0].asset_name}<br />
-                            <span>Sitio:</span>&nbsp;{selected[0].name}<br />
+                            <span>Sitio:</span>&nbsp;{selected[0].site_name}<br />
                             <span>Descripción:</span>&nbsp;{selected[0].description}<br />
                             
                             

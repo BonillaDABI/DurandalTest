@@ -113,7 +113,7 @@ const deleteById = (id) => {
 
 const getLogs = (id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT al.id, al.asset_name, al.description, am.asset_mov_name, s.name, al.is_active, al.created_at, al.updated_at, al.updated_reason FROM asset_logs al, asset_movements am, sites s WHERE al.asset_movement_id = am.id AND al.site_id = s.id AND al.asset_id = ?', [id], (err, rows) => {
+        await connection.query('SELECT al.id, al.asset_name, al.description, am.asset_mov_name, s.site_name, al.is_active, al.created_at, al.updated_at, al.updated_reason FROM asset_logs al, asset_movements am, sites s WHERE al.asset_movement_id = am.id AND al.site_id = s.id AND al.asset_id = ?', [id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         })
