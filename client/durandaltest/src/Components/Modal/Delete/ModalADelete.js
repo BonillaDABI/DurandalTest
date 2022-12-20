@@ -42,7 +42,7 @@ function ModalADelete(props) {
             <Modal.Body>
                 <span className='delete-info'><strong>Nombre del asset:</strong> {deleteAssetName}</span><br />
                 <span className='delete-info'><strong>Nombre del equipo:</strong> {deleteAssetEquipName}</span><br />
-                <span className='delete-info'><strong>Cliente:</strong> {deleteAssetClientSite}</span><br />
+                <span className='delete-info'><strong>Sitio:</strong> {deleteAssetClientSite}</span><br />
                 <span className='delete-info'><strong>Fecha de actualización:</strong> {deleteAssetUpdatedDate}</span>
             </Modal.Body>
             <Modal.Footer>

@@ -3,7 +3,7 @@ const connection = require('../config/database')
 
 const getAssets = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT a.id, a.asset_name, s.name, eq.equip_name, a.is_active, a.updated_at, aas.aas_name FROM asset a, asset_active_statuses aas, sites s, equipments eq WHERE a.site_id = s.id AND a.equipment_id = eq.id AND a.asset_active_status_id = aas.id', (err, rows) => {
+        await connection.query('SELECT a.id, a.asset_name, s.site_name, eq.equip_name, a.is_active, a.updated_at, aas.aas_name FROM asset a, asset_active_statuses aas, sites s, equipments eq WHERE a.site_id = s.id AND a.equipment_id = eq.id AND a.asset_active_status_id = aas.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -12,7 +12,7 @@ const getAssets = () => {
 
 const sendSites = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM sites', (err, rows) => {
+        await connection.query('SELECT id, site_name FROM sites', (err, rows) => {
             if (err) {
                 reject(err)
             }

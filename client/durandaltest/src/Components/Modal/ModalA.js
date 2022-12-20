@@ -119,7 +119,7 @@ function ModalA(props) {
                         <select className="input-field"  value={siteId} onChange={(e) => setSiteId(e.target.value)} required>
                             <option value="" disabled hidden className="options">Seleccionar...</option> 
                             {assets.sites.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.name}</option>
+                                return <option className="options" key={i} value={item.id}>{item.site_name}</option>
                             })};
                         </select>
                     </div>

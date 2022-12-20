@@ -916,7 +916,7 @@ export const AssetsTableAxios = () => {
 
         var assetName = assetInfo.asset_name;
         var assetEquipName = assetInfo.equip_name;
-        var assetClientSite = assetInfo.name;
+        var assetClientSite = assetInfo.site_name;
         var assetUpdatedDate = assetInfo.updated_at;
 
         localStorage.setItem("assetNameToDelete", assetName);
@@ -971,7 +971,7 @@ export const AssetsTableAxios = () => {
             width: 130
         },
         {
-            field: 'name',
+            field: 'site_name',
             headerName: 'Sitio',
             width: 180
         },
