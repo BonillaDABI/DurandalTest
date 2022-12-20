@@ -12,7 +12,7 @@ const getAllItems = () => {
 
 const sendUnits = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM units', (err, rows) => {
+        await connection.query('SELECT id, unit_name FROM units', (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -23,7 +23,7 @@ const sendUnits = () => {
 
 const sendCurrency = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM currencies', (err, rows) => {
+        await connection.query('SELECT id, currency_name FROM currencies', (err, rows) => {
             if (err) {
                 reject(err)
             }
