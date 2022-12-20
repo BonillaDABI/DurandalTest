@@ -119,10 +119,21 @@ router.get("/autofillAssets", authController.sendSitesAndEquips)
 
 router.post("/createAsset", authController.protect, authController.createAsset)
 
-router.patch("/updateAsset", authController.protect, authController.updateAsset)
+router.patch("/updateAsset/:id", authController.protect, authController.updateAsset)
 
 router.get("/listAssetLogs/:id", authController.listAssetsLogs)
 
+//Visits
+
+router.get("/listVisits", authController.listVisits)
+
+router.get("/autofillVisits", authController.sendVisitInfo)
+
+router.post("/createVisit", authController.protect, authController.createVisit)
+
+router.patch("/updateVisit/:id", authController.protect, authController.updateVisit)
+
+router.get("/listVisitLogs/:id", authController.listVisitsLogs)
 
 
 module.exports = router;

@@ -22,6 +22,7 @@ const Site = require('../lib/sites')
 const Equipo = require('../lib/equipments')
 const Item = require('../lib/items')
 const Asset = require('../lib/assets')
+const Visits = require('../lib/visits')
 
 
 const authController = {}
@@ -370,6 +371,48 @@ authController.listAssetsLogs = async (req, res) => {
     }
 }
 
+authController.listVisits = async (req, res) => {
+    var visits = await Visits.getVisits()
+    moment.locale('es-mx')
+    for (let i = 0; i < visits.length; i++) {
+        visits[i].updated_at = moment(visits[i].updated_at).format("ll")
+        if (visits[i].is_active === 1) {
+            visits[i].is_active = "Activo"
+        } else {
+            visits[i].is_active = "Inactivo"
+        }
+    }
+
+    if (visits) {
+        res.json(visits)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener visitas.')
+    }
+}
+
+authController.listVisitsLogs = async (req, res) => {
+    const id = req.params.id
+    var visitLogs = await Visits.getLogs(id)
+    moment.locale('es-mx')
+    for (let i = 0; i < visitLogs.length; i++) {
+        visitLogs[i].updated_at = moment(visitLogs[i].updated_at).format("ll")
+        visitLogs[i].updated_at = moment(visitLogs[i].created_at).format("ll")
+        if (visitLogs[i].is_active === 1) {
+            visitLogs[i].is_active = "Activo"
+        } else {
+            visitLogs[i].is_active = "Inactivo"
+        }
+    }
+
+    if (visitLogs) {
+        res.json(visitLogs)
+        // res.status(200).send('Usuarios creados')
+    } else {
+        res.status(400).send('Error al obtener items')
+    }
+}
+
 authController.update = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
 
@@ -654,6 +697,28 @@ authController.updateAsset = async (req, res) => {
     }
 }
 
+authController.updateVisit = async (req, res) => {
+
+    if (req.userPermissions.includes(2)) {
+        const id = req.params.id
+
+        const date = new Date()
+
+        const { visit_type_id, site_id, technical_id, visit_name, description, is_active, updated_reason } = req.body;
+
+        const updatedVisit = await Visits.updateVisit(id, visit_type_id, site_id, technical_id, visit_name, description, is_active, req.userID, date, updated_reason)
+
+        if (updatedVisit) {
+            res.status(200).json('Visit actualizado.')
+        } else {
+            res.status(400).json('Error al actualizar visit.')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
 authController.register = async (req, res) => {
     const token = req.body.Authorization.split(' ')[1];
 
@@ -758,6 +823,14 @@ authController.sendSitesAndEquips = async (req, res) => {
     const equips = await Asset.sendEquipments()
     const statuses = await Asset.sendAssetsStatus()
     res.json({ sites, equips, statuses })
+}
+
+authController.sendVisitInfo = async (req, res) => {
+    //Mandar tipos de contactos
+    const sites = await Visits.sendSites()
+    const visitTypes = await Visits.sendVisitTypes()
+    const techs = await Visits.sendTechnicals()
+    res.json({ sites, visitTypes, techs })
 }
 
 // authController.sendParentID = async (req, res) => {
@@ -1035,6 +1108,26 @@ authController.createAsset = async (req, res) => {
             res.status(200).json('Asset creado.')
         } else {
             res.status(400).json('Error al crear asset')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+authController.createVisit = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+
+        const { visit_type_id, site_id, technical_id, visit_name, description, } = req.body;
+
+        const createdVisit = await Visits.insertVisit(visit_type_id, site_id, technical_id, visit_name, description, req.userID, date)
+
+        if (createdVisit) {
+            res.status(200).json('Visit creado.')
+        } else {
+            res.status(400).json('Error al crear visit')
         }
 
     } else {

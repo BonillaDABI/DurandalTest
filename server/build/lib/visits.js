@@ -3,7 +3,7 @@ const connection = require('../config/database')
 
 const getVisits = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT v.visit_name, v.description, v.is_active, v.updated_at, vt.vt_name, s.name, u.name FROM visits v, visit_types vt, sites s, technicals t, users u WHERE v.visit_type_id = vt.id AND v.site_id = s.id AND v.technical_id = t.id AND t.user_id = u.id', (err, rows) => {
+        await connection.query('SELECT v.id, v.visit_name, v.description, v.is_active, v.updated_at, vt.vt_name, s.site_name, u.name FROM visits v, visit_types vt, sites s, technicals t, users u WHERE v.visit_type_id = vt.id AND v.site_id = s.id AND v.technical_id = t.id AND t.user_id = u.id', (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });
@@ -12,7 +12,7 @@ const getVisits = () => {
 
 const sendSites = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM sites', (err, rows) => {
+        await connection.query('SELECT id, site_name FROM sites', (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -23,7 +23,7 @@ const sendSites = () => {
 
 const sendVisitTypes = () => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT id, name FROM visit_types', (err, rows) => {
+        await connection.query('SELECT id, vt_name FROM visit_types', (err, rows) => {
             if (err) {
                 reject(err)
             }
@@ -46,7 +46,7 @@ const sendTechnicals = () => {
 
 const insertVisit = (visit_type_id, site_id, technical_id, visit_name, description, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('INSERT INTO equipments SET ?', [{
+        await connection.query('INSERT INTO visits SET ?', [{
             visit_type_id,
             site_id,
             technical_id,
@@ -63,21 +63,21 @@ const insertVisit = (visit_type_id, site_id, technical_id, visit_name, descripti
             const lastID = result.insertId;
             resolve(lastID)
 
-            await connection.query('CALL log_crearAsset(?, ?, ?, ?, ?, ?, ?, ?)', [name, description, site_id, lastID, 1, 1, creator_id, date])
+            await connection.query('CALL log_crearVisit(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [lastID, 1, visit_type_id, site_id, technical_id, visit_name, description, 1, creator_id, date])
         })
     })
 }
 
-const updateAsset = (id, asset_name, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
+const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, description, is_active, creator_id, date, updated_reason) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('UPDATE assets SET ? WHERE id = ?',
+        await connection.query('UPDATE visits SET ? WHERE id = ?',
             [{
-                asset_name,
+                visit_type_id,
+                site_id,
+                technical_id,
+                visit_name,
                 description,
                 is_active,
-                site_id,
-                equipment_id,
-                asset_active_status_id,
                 updated_by: creator_id,
                 updated_at: date,
                 updated_reason,
@@ -98,7 +98,7 @@ const deleteById = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connection.query(
-                ' DELETE FROM `asset` WHERE `id` = ?  ', id,
+                ' DELETE FROM `visits` WHERE `id` = ?  ', id,
                 function (err, rows) {
                     if (err) {
                         reject(err)
@@ -114,7 +114,7 @@ const deleteById = (id) => {
 
 const getLogs = (id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT al.id, al.asset_log_name, al.description, am.asset_mov_name, s.name, al.is_active, al.created_at, al.updated_at, al.updated_reason FROM asset_logs al, asset_movements am, sites s WHERE al.asset_movement_id = am.id AND al.site_id = s.id AND al.asset_id = ?', [id], (err, rows) => {
+        await connection.query('SELECT vl.id, vl.visit_name, s.site_name, u.name, vl.description, vl.is_active, vl.updated_at, vl.updated_reason, vm.visit_mov_name FROM visit_movements vm, visit_logs vl, sites s, technicals t, users u WHERE vl.id = ? AND vl.site_id = s.id AND vl.technical_id = t.id AND t.user_id = u.id AND vl.visit_movement_id = vm.id', [id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         })
@@ -122,12 +122,12 @@ const getLogs = (id) => {
 }
 
 module.exports = {
-    getAssets,
+    getVisits,
     getLogs,
     deleteById,
-    insertAsset,
+    insertVisit,
     sendSites,
-    sendEquipments,
-    updateAsset,
-    sendAssetsStatus
+    sendTechnicals,
+    sendVisitTypes,
+    updateVisit
 }
