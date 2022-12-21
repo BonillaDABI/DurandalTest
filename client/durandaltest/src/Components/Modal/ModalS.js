@@ -66,7 +66,7 @@ function ModalS(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form className='contact-form'>
+            <form>
 
             </form> 
             </Modal.Body>

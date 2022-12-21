@@ -196,7 +196,7 @@ export const EquipLogsTableAxios = () => {
             width: 70
         },
         {
-            field: 'mov_name',
+            field: 'name',
             headerName: 'Tipo de Movimiento',
             width: 250
         },
@@ -283,23 +283,16 @@ export const EquipLogsTableAxios = () => {
                         <Typography key={i} className="logs-info">
                             <div className="divider"></div>
 
-                            <strong>Cliente:</strong>&nbsp;{selected[0].business_name}<br />
-                            <span>RFC:</span>&nbsp;{selected[0].rfc}<br />
-
-                            <div className="divider"></div>
-
-                            <strong>Sitio:</strong><br />
+                            <strong>Equipo:</strong><br />
                             
-                            <span>Pais:</span>&nbsp;{selected[0].name}<br />
-                            <span>Nombre de la calle:</span>&nbsp;{selected[0].address_street}
-                            <span>Número de dirección:</span>&nbsp;{selected[0].address_number}<br />
-                            <span>Código postal:</span>&nbsp;{selected[0].address_postal_code}<br />
-                            
+                            <span>Nombre de equipo:</span>&nbsp;{selected[0].equip_name}<br />
+                            <span>Marca:</span>&nbsp;{selected[0].brand_name}<br />
+                            <span>Descripción:</span>&nbsp;{selected[0].description}<br />                            
                             
                             <div className="divider"></div>
 
                             <strong>Información del log:</strong><br />
-                            <span>Tipo de movimiento:</span>&nbsp;{selected[0].mov_name}<br />
+                            <span>Tipo de movimiento:</span>&nbsp;{selected[0].name}<br />
                             <span>Fecha de creación:</span>&nbsp;{selected[0].created_at}<br />
                             <span>Razón:</span>&nbsp;{selected[0].updated_reason}<br />
                             <span>Fecha de actualización:</span>&nbsp;{selected[0].updated_at}<br />
