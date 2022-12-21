@@ -47,7 +47,7 @@ const insertTech = (user_id, telefono, fechaNacimiento, creator_id, date) => {
             }
             resolve(rows)
 
-            await connection.query('CALL log_createTecnico(?, ?, ?, ?, ?, ?, ?, ?)', [rows.insertId, user_id, 2, telefono, fechaNacimiento, 1, creator_id, date])
+            // await connection.query('CALL log_createTecnico(?, ?, ?, ?, ?, ?, ?, ?)', [rows.insertId, user_id, 2, telefono, fechaNacimiento, 1, creator_id, date])
         })
     })
 }
@@ -66,11 +66,11 @@ const updateTech = (id, telefono, fechaNacimiento, user_id, creator_id, is_activ
                 if (err) reject(err)
                 resolve(true)
 
-                if (is_active === '1') {
-                    await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 3, telefono, fechaNacimiento, 1, creator_id, date, updated_reason])
-                } else {
-                    await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 1, telefono, fechaNacimiento, is_active, creator_id, date, updated_reason])
-                }
+                // if (is_active === '1') {
+                //     await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 3, telefono, fechaNacimiento, 1, creator_id, date, updated_reason])
+                // } else {
+                //     await connection.query('CALL log_actualizarTecnico(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, user_id, 1, telefono, fechaNacimiento, is_active, creator_id, date, updated_reason])
+                // }
             })
     })
 }
