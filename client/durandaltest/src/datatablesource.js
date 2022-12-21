@@ -166,8 +166,152 @@ export const AssetLogsTableAxios = () => {
 }
 // #endregion
 
-// #region Activities Logs
+// #region Equipment Logs
 
+export const EquipLogsTableAxios = () => {
+    const [equipLogData, setEquipLogData] = useState([])
+
+    var logEquipId = localStorage.getItem("equipIdForLog")
+    console.log(logEquipId)
+
+    const endpoint = `http://localhost:3001/listEquipLogs/${logEquipId}`;
+
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            console.log(response.data);
+            const equipLogData = response.data;
+            setEquipLogData(equipLogData);
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    // Columnas
+    const equipLogsColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 70
+        },
+        {
+            field: 'mov_name',
+            headerName: 'Tipo de Movimiento',
+            width: 250
+        },
+        {
+            field: 'is_active',
+            headerName: 'Estatus',
+            width: 110,
+            renderCell: (params) => {
+                if (params.row.is_active === "Activo") {
+                    return (
+                        <div>
+                            <span className="statusActive">{params.row.is_active}</span>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div>
+                            <span className="statusInactive">{params.row.is_active}</span>
+                        </div>
+                    );
+                }
+
+            },
+            valueGetter: (params) => params.row.is_active
+        },
+        {
+            field: 'updated_at',
+            headerName: 'Fecha de Actualización',
+            width: 160
+        }
+    ];
+
+    const [selected, setSelected] = useState( [ ] )
+    const [selectionModel, setSelectionModel] = useState( [ ] );
+    return (
+        <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <div
+                    style={{
+                        height: "650%",
+                        width: "100%",
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    }}
+                >
+                    <DataGrid
+                        initialState={{
+                            sorting: {
+                                sortModel: [{ field: 'id', sort: 'desc' }],
+                            },
+                        }}
+                        rows={equipLogData}
+                        columns={equipLogsColumns}
+                        components={{ Toolbar: GridToolbar }}
+                        onSelectionModelChange={(ids) => {
+                            const selectedIDs = new Set(ids);
+                            const selected = equipLogData.filter((row) =>
+                                selectedIDs.has(row.id)
+                            );
+                            setSelected(selected);
+                            if (ids.length > 1) {
+                                const selectionSet = new Set(selectionModel);
+                                const result = ids.filter((s) => !selectionSet.has(s));
+                    
+                                setSelectionModel(result);
+                              } else {
+                                setSelectionModel(ids);
+                            }
+                        }}
+
+                        selectionModel={selectionModel}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+
+                    //getRowId={({id}) => id}
+
+                    />
+                </div>
+            </Grid>
+            <Grid item xs={6}>
+                <div className="logs-info-section">
+                    {selected.map((i) => 
+                        <Typography key={i} className="logs-info">
+                            <div className="divider"></div>
+
+                            <strong>Cliente:</strong>&nbsp;{selected[0].business_name}<br />
+                            <span>RFC:</span>&nbsp;{selected[0].rfc}<br />
+
+                            <div className="divider"></div>
+
+                            <strong>Sitio:</strong><br />
+                            
+                            <span>Pais:</span>&nbsp;{selected[0].name}<br />
+                            <span>Nombre de la calle:</span>&nbsp;{selected[0].address_street}
+                            <span>Número de dirección:</span>&nbsp;{selected[0].address_number}<br />
+                            <span>Código postal:</span>&nbsp;{selected[0].address_postal_code}<br />
+                            
+                            
+                            <div className="divider"></div>
+
+                            <strong>Información del log:</strong><br />
+                            <span>Tipo de movimiento:</span>&nbsp;{selected[0].mov_name}<br />
+                            <span>Fecha de creación:</span>&nbsp;{selected[0].created_at}<br />
+                            <span>Razón:</span>&nbsp;{selected[0].updated_reason}<br />
+                            <span>Fecha de actualización:</span>&nbsp;{selected[0].updated_at}<br />
+
+                            <div className="divider"></div>
+                        </Typography>
+                    )}
+                </div>    
+            </Grid>
+        </Grid>
+    );
+}
 // #endregion
 
 // #region Visits Logs
@@ -633,24 +777,12 @@ export const EquipsTableAxios = () => {
         localStorage.setItem("equipNameToDelete", equipName);
         localStorage.setItem("equipBrandToDelete", equipBrand);
         localStorage.setItem("equipUpdatedAtToDelete", equipUpdatedDate);
-
-        // var techName = techInfo.name;
-        // var techEmail = techInfo.email;
-        // var techCreatedDate = techInfo.created_at;
-        // var techPhone = techInfo.telefono;
-        // var techName = techInfo.name + " " + techInfo.first_surname + " " + techInfo.second_surname;
-        // //var techNacimiento = techInfo.fechaNacimiento;
-        // localStorage.setItem("techNameToDelete", techName);
-        // localStorage.setItem("techEmailToDelete", techEmail);
-        // localStorage.setItem("techCreatedDateToDelete", techCreatedDate);
-        // localStorage.setItem("techPhoneToDelete", techPhone);
-        // //localStorage.setItem("techCreatedDateToDelete", techNacimiento);
     }
 
     function manageEquipLogs(equipInfo) {
         var equipId = equipInfo.id;
-        localStorage.setItem("visitIdForLog", equipId);
-        //navigate("/tecnicos/tecnicosLogs")
+        localStorage.setItem("equipIdForLog", equipId);
+        navigate("/equipLogs");
     }
 
     const actionColumn = [

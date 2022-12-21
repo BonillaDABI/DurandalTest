@@ -14,7 +14,7 @@ function ModalIDelete(props) {
 
     const deleteItem = () => {
         var deleteItemId = localStorage.getItem("itemIdToDelete");
-        const response = axios.delete(`http://localhost:3001/deleteAsset/${deleteItemId}`);
+        const response = axios.delete(`http://localhost:3001/deleteItem/${deleteItemId}`);
         console.log(deleteItemId);
     } 
     
