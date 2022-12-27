@@ -569,11 +569,11 @@ authController.updateItem = async (req, res) => {
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { name, description, cost, unit_id, currency_id } = req.body;
+        const { name, is_active, description, cost, unit_id, currency_id } = req.body;
 
         try {
 
-            await Item.updateItem(id, name, description, cost, unit_id, currency_id, userID, date)
+            await Item.updateItem(id, name, is_active, description, cost, unit_id, currency_id, userID, date)
 
             res.status(200).send('Item actualizado.')
 
