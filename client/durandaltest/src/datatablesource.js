@@ -651,7 +651,7 @@ export const ItemsTableAxios = () => {
 
     function manageItemUpdate(itemInfo) {
         var itemId = itemInfo.id;
-        localStorage.setItem("itemIdToDelete", itemId);
+        localStorage.setItem("itemIdToUpdate", itemId);
     }
 
     const actionColumn = [

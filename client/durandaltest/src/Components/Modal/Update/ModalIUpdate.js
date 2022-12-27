@@ -55,7 +55,25 @@ function ModalIUpdate(props) {
     const [status, setStatus] = useState("");
 
     function updateItem(){
-        
+        var updateItemId = localStorage.getItem("itemIdToUpdate");
+        axios.patch(`http://localhost:3001/updateItem/${updateItemId}`, { // url to POST
+            'Authorization': "bearer " + localStorage.getItem('token'),
+            //user_name: userName,
+            name: name,
+            description: description,
+            cost: cost,
+            currency_id: currencyId,
+            unit_id: unitId,
+            is_active: status
+        },)
+            .then((response) => {
+                console.log(response);
+                //alert("Cliente actualizado exitosamente en la base de datos.");
+                window.location.reload();
+            }, (error) => {
+                console.log(error);
+                //alert("Error al actualizar datos del cliente. Vuelve a intentarlo.");
+            });
     }
 
     function hide(){
@@ -88,6 +106,16 @@ function ModalIUpdate(props) {
                 </div>
                 <div className='form-fields'>
                     <div className='input-container'>
+                        <span className="input-span">Estatus</span>
+                        <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
+                            <option value="" selected disabled className="options">Seleccionar...</option>
+                            <option value="1" className="options">Activo</option>
+                            <option value="0" className="options">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
                         <span className="input-span">Costo</span>
                         <input className="input-field" type="number" placeholder="Ingresar..." value={cost} onChange={(e) => setCost(e.target.value)} required />
                     </div>
@@ -103,7 +131,7 @@ function ModalIUpdate(props) {
                         </select>
                     </div>
                 </div>
-                <div className='form-fields'>
+                <div className='form-fields' id='large-form-field'>
                     <div className='input-container'>
                         <span className="input-span">Unidad</span>
                         <select className="input-field"  value={unitId} onChange={(e) => setUnit(e.target.value)} required>

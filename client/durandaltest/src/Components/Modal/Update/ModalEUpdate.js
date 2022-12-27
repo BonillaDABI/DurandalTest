@@ -59,7 +59,7 @@ function ModalEUpdate(props) {
             .then((response) => {
                 console.log(response);
                 //alert("Cliente actualizado exitosamente en la base de datos.");
-                // window.location.reload();
+                window.location.reload();
             }, (error) => {
                 console.log(error);
                 //alert("Error al actualizar datos del cliente. Vuelve a intentarlo.");
@@ -69,9 +69,9 @@ function ModalEUpdate(props) {
     function hide() {
         props.onHide();
         successAlert();
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 3600);
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
     }
 
     return (

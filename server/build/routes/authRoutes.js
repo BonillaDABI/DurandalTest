@@ -123,7 +123,7 @@ router.post("/createItemAttr", authController.protect, authController.createItem
 
 router.delete("/deleteItem/:id", authController.deleteItem);
 
-router.patch("/updateItem", authController.updateItem)
+router.patch("/updateItem/:id", authController.updateItem)
 
 //Assets
 

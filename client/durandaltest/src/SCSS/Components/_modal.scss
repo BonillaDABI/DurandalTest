@@ -69,6 +69,17 @@
     
 }
 
+#small-form-field {
+    width: 100%;
+    .input-container {
+        width: 200px;
+        .input-field{
+            width: 100%;
+        }
+    }
+    
+}
+
 #description-field {
     width: 100%;
     .input-container {
@@ -86,6 +97,7 @@ form .form-fields {
     box-sizing: border-box;
     width: 50%;
     justify-content: center;
+    
     
     .input-container {
         float: left;
