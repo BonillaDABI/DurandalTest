@@ -517,10 +517,10 @@ authController.updateEquipment = async (req, res) => {
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { name, description, brand_id } = req.body;
+        const { equip_name, description, brand_id, is_active } = req.body;
 
         try {
-            await Equipo.updateEquipment(id, name, brand_id, description, userID, date)
+            await Equipo.updateEquipment(id, equip_name, is_active, brand_id, description, userID, date)
 
             res.status(200).send('Equipo actualizado.')
         } catch (error) {
@@ -601,10 +601,10 @@ authController.updateSite = async (req, res) => {
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, is_active, updated_reason } = req.body;
+        const { site_name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, is_active, updated_reason } = req.body;
 
         try {
-            const updateSite = await Site.updateSiteByID(id, client_id, name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, userID, date, is_active, updated_reason)
+            const updateSite = await Site.updateSiteByID(id, client_id, site_name, address_street, address_number, address_colony_id, address_city_id, address_state_id, address_country_id, address_postal_code, userID, date, is_active, updated_reason)
 
             if (updateSite) {
                 res.status(200).send('Sitio actualizado.')

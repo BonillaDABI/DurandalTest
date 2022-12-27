@@ -109,7 +109,6 @@ const updateEquipment = (id, equip_name, is_active, brand_id, description, creat
                 brand_id,
                 is_active,
                 description,
-                is_active,
                 updated_by: creator_id,
                 updated_at: date,
                 //updated_reason,
