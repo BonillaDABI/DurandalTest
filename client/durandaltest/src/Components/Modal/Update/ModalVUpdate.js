@@ -51,15 +51,33 @@ function ModalVUpdate(props) {
     const [status, setStatus] = useState("");
 
     function updateVisit(){
-        
+        var updateVisitId = localStorage.getItem("visitIdForUpdate");
+        axios.patch(`http://localhost:3001/updateVisit/${updateVisitId}`, { // url to POST
+            'Authorization': "bearer " + localStorage.getItem('token'),
+            //user_name: userName,
+            visit_name: visitName,
+            description: description,
+            visit_type_id: visitTypeId,
+            site_id: visitSiteId,
+            technical_id: visitTechId,
+            is_active: status
+        },)
+            .then((response) => {
+                console.log(response);
+                //alert("Cliente actualizado exitosamente en la base de datos.");
+                window.location.reload();
+            }, (error) => {
+                console.log(error);
+                //alert("Error al actualizar datos del cliente. Vuelve a intentarlo.");
+            });
     }
 
     function hide(){
         props.onHide();
         successAlert();
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 3600);
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
     }
 
     return (
@@ -83,6 +101,16 @@ function ModalVUpdate(props) {
                     </div>
                 </div>
                 <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Estatus</span>
+                        <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
+                            <option value="" selected disabled className="options">Seleccionar...</option>
+                            <option value="1" className="options">Activo</option>
+                            <option value="0" className="options">Inactivo</option>
+                        </select>
+                     </div>
+                </div>
+                <div className='form-fields' id='large-form-field'>
                     <div className='input-container'>
                         <span className="input-span">Técnico</span>
                         <select className="input-field"  value={visitTechId} onChange={(e) => setVisitTechId(e.target.value)} required>

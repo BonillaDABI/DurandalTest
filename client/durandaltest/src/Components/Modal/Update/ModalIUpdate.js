@@ -79,9 +79,9 @@ function ModalIUpdate(props) {
     function hide(){
         props.onHide();
         successAlert();
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 3600);
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
     }
 
     return (
