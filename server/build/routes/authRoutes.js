@@ -111,6 +111,8 @@ router.patch("/updateEquip/:id", authController.updateEquipment)
 
 router.patch("/updateAttr", authController.updateEquipmentAttr)
 
+router.get("/autofillEquipo/:id", authController.updateEquipmentInfo)
+
 //Items
 
 router.get("/listItems", authController.listItems)
@@ -124,6 +126,8 @@ router.post("/createItemAttr", authController.protect, authController.createItem
 router.delete("/deleteItem/:id", authController.deleteItem);
 
 router.patch("/updateItem/:id", authController.updateItem)
+
+router.get("/autofillItem/:id", authController.updateItemInfo)
 
 //Assets
 
@@ -139,6 +143,8 @@ router.get("/listAssetLogs/:id", authController.listAssetsLogs)
 
 router.delete("/deleteAsset/:id", authController.deleteAsset);
 
+router.get("/autofillAsset/:id", authController.updateAssetInfo)
+
 //Visits
 
 router.get("/listVisits", authController.listVisits)
@@ -152,6 +158,8 @@ router.patch("/updateVisit/:id", authController.protect, authController.updateVi
 router.get("/listVisitLogs/:id", authController.listVisitsLogs)
 
 router.delete("/deleteVisit/:id", authController.deleteVisit);
+
+router.get("/autofillVisit/:id", authController.updateVisitInfo)
 
 
 module.exports = router;

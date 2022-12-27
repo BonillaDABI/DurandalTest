@@ -94,7 +94,18 @@ const insertItemVal = (item_id, item_attributes_id, value, creator_id, date) => 
     })
 }
 
-const updateItem = (id, name, is_active, description, cost, unit_id, currency_id, creator_id, date) => {
+const sendItemInfo = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT i.name, i.is_active, i.cost, u.unit_name, c.currency_name, i.description FROM items i, currencies c, units u WHERE i.currency_id = c.id AND i.unit_id = u.id AND i.id = ?', [id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows[0])))
+        })
+    })
+}
+
+const updateItem = (id, name, is_active, description, cost, unit_id, currency_id, creator_id, date, updated_reason) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE items SET ? WHERE id = ?',
             [{
@@ -106,7 +117,7 @@ const updateItem = (id, name, is_active, description, cost, unit_id, currency_id
                 currency_id,
                 updated_by: creator_id,
                 updated_at: date,
-                //updated_reason,
+                updated_reason,
             }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)
@@ -147,5 +158,6 @@ module.exports = {
     sendUnits,
     sendCurrency,
     deleteById,
-    updateItem
+    updateItem,
+    sendItemInfo
 }

@@ -517,10 +517,10 @@ authController.updateEquipment = async (req, res) => {
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { equip_name, description, brand_id, is_active } = req.body;
+        const { equip_name, description, brand_id, is_active, updated_reason } = req.body;
 
         try {
-            await Equipo.updateEquipment(id, equip_name, is_active, brand_id, description, userID, date)
+            await Equipo.updateEquipment(id, equip_name, is_active, brand_id, description, userID, date, updated_reason)
 
             res.status(200).send('Equipo actualizado.')
         } catch (error) {
@@ -569,11 +569,11 @@ authController.updateItem = async (req, res) => {
 
     if (userPermissions.includes(2)) {
         const date = new Date()
-        const { name, is_active, description, cost, unit_id, currency_id } = req.body;
+        const { name, is_active, description, cost, unit_id, currency_id, updated_reason } = req.body;
 
         try {
 
-            await Item.updateItem(id, name, is_active, description, cost, unit_id, currency_id, userID, date)
+            await Item.updateItem(id, name, is_active, description, cost, unit_id, currency_id, userID, date, updated_reason)
 
             res.status(200).send('Item actualizado.')
 
@@ -719,9 +719,9 @@ authController.updateAsset = async (req, res) => {
 
         const date = new Date()
 
-        const { asset_name, is_active, description, site_id, equipment_id, asset_active_status_id } = req.body;
+        const { asset_name, is_active, description, site_id, equipment_id, asset_active_status_id, updated_reason } = req.body;
 
-        const updatedAsset = await Asset.updateAsset(id, asset_name, is_active, description, site_id, equipment_id, asset_active_status_id, req.userID, date)
+        const updatedAsset = await Asset.updateAsset(id, asset_name, is_active, description, site_id, equipment_id, asset_active_status_id, req.userID, date, updated_reason)
 
         if (updatedAsset) {
             res.status(200).json('Asset actualizado.')
@@ -868,6 +868,58 @@ authController.sendVisitInfo = async (req, res) => {
     const visitTypes = await Visits.sendVisitTypes()
     const techs = await Visits.sendTechnicals()
     res.json({ sites, visitTypes, techs })
+}
+
+authController.updateEquipmentInfo = async (req, res) => {
+    const id = req.params.id
+    var equipInfo = await Equipo.sendEquipInfo(id)
+    if (equipInfo.is_active === 1) {
+        equipInfo.is_active = "Activo"
+    } else {
+        equipInfo.is_active = "Inactivo"
+    }
+
+    res.json(equipInfo)
+
+}
+
+authController.updateItemInfo = async (req, res) => {
+    const id = req.params.id
+    var itemInfo = await Item.sendItemInfo(id)
+    if (itemInfo.is_active === 1) {
+        itemInfo.is_active = "Activo"
+    } else {
+        itemInfo.is_active = "Inactivo"
+    }
+
+    res.json(itemInfo)
+
+}
+
+authController.updateVisitInfo = async (req, res) => {
+    const id = req.params.id
+    var visitInfo = await Visits.sendVisitInfo(id)
+    if (visitInfo.is_active === 1) {
+        visitInfo.is_active = "Activo"
+    } else {
+        visitInfo.is_active = "Inactivo"
+    }
+
+    res.json(visitInfo)
+
+}
+
+authController.updateAssetInfo = async (req, res) => {
+    const id = req.params.id
+    var assetInfo = await Asset.sendAssetInfo(id)
+    if (assetInfo.is_active === 1) {
+        assetInfo.is_active = "Activo"
+    } else {
+        assetInfo.is_active = "Inactivo"
+    }
+
+    res.json(assetInfo)
+
 }
 
 // authController.sendParentID = async (req, res) => {

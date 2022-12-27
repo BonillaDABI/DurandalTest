@@ -21,6 +21,17 @@ const sendBrands = () => {
     })
 }
 
+const sendEquipInfo = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT e.equip_name, e.description, e.is_active, b.brand_name FROM equipments e, brands b WHERE e.id = ? AND e.brand_id = b.id', [id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows[0])))
+        })
+    })
+}
+
 const insertEquipment = (equip_name, description, brand_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('INSERT INTO equipments SET ?', [{
@@ -101,7 +112,7 @@ const getEquipAttrs = (id) => {
     })
 }
 
-const updateEquipment = (id, equip_name, is_active, brand_id, description, creator_id, date) => {
+const updateEquipment = (id, equip_name, is_active, brand_id, description, creator_id, date, updated_reason) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE equipments SET ? WHERE id = ?',
             [{
@@ -111,7 +122,7 @@ const updateEquipment = (id, equip_name, is_active, brand_id, description, creat
                 description,
                 updated_by: creator_id,
                 updated_at: date,
-                //updated_reason,
+                updated_reason,
             }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)
@@ -206,5 +217,6 @@ module.exports = {
     getEquipAttrs,
     getEquipmentByID,
     updateEquipment,
-    updateAttr
+    updateAttr,
+    sendEquipInfo
 }

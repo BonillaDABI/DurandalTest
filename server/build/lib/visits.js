@@ -68,7 +68,18 @@ const insertVisit = (visit_type_id, site_id, technical_id, visit_name, descripti
     })
 }
 
-const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, is_active, description, creator_id, date) => {
+const sendVisitInfo = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT v.visit_name, v.is_active, v.description, vt.vt_name, s.site_name, c.business_name, u.name, u.first_surname, u.second_surname FROM visits v, visit_types vt, sites s, technicals t, users u, clients c WHERE v.visit_type_id = vt.id AND v.site_id = s.id AND s.client_id = c.id AND v.technical_id = t.id AND t.user_id = u.id AND v.id = ?', [id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows[0])))
+        })
+    })
+}
+
+const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, is_active, description, creator_id, date, updated_reason) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE visits SET ? WHERE id = ?',
             [{
@@ -79,8 +90,8 @@ const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, is_ac
                 description,
                 is_active,
                 updated_by: creator_id,
-                updated_at: date
-                //updated_reason,
+                updated_at: date,
+                updated_reason,
             }, id], (err, rows) => {
                 if (err) {
                     reject(err)
@@ -132,5 +143,6 @@ module.exports = {
     sendSites,
     sendTechnicals,
     sendVisitTypes,
-    updateVisit
+    updateVisit,
+    sendVisitInfo
 }
