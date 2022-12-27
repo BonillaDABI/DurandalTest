@@ -22,6 +22,9 @@ import { Grid, Typography } from "@mui/material";
 
 import ModalUUpdate from "./Components/Modal/Update/ModalUUpdate";
 import ModalAUpdate from "./Components/Modal/Update/ModalAUpdate";
+import ModalIUpdate from "./Components/Modal/Update/ModalIUpdate";
+import ModalEUpdate from "./Components/Modal/Update/ModalEUpdate";
+import ModalVUpdate from "./Components/Modal/Update/ModalVUpdate";
 
 
 // #region Activities Logs
@@ -625,6 +628,8 @@ export const ItemsTableAxios = () => {
     }, [])
 
     const [modalIDeleteShow, setModalIDeleteShow] = useState(false);
+    const [modalIUpdateShow, setModalIUpdateShow] = useState(false);
+
     const navigate = useNavigate();
 
     function manageItemDelete(itemInfo) {
@@ -644,6 +649,11 @@ export const ItemsTableAxios = () => {
         localStorage.setItem("itemUpdatedDateToDelete", itemUpdatedDate);
     }
 
+    function manageItemUpdate(itemInfo) {
+        var itemId = itemInfo.id;
+        localStorage.setItem("itemIdToDelete", itemId);
+    }
+
     const actionColumn = [
         {
             field: "action",
@@ -657,7 +667,12 @@ export const ItemsTableAxios = () => {
                             onHide={() => setModalIDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <ModalIUpdate
+                            show={modalIUpdateShow}
+                            onHide={() => setModalIUpdateShow(false)}
+
+                        />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalIUpdateShow(true); manageItemUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalIDeleteShow(true); manageItemDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
@@ -756,6 +771,8 @@ export const EquipsTableAxios = () => {
     }, [])
 
     const [modalEDeleteShow, setModalEDeleteShow] = useState(false);
+    const [modalEUpdateShow, setModalEUpdateShow] = useState(false);
+
     const navigate = useNavigate();
 
     function manageEquipDelete(equipInfo) {
@@ -782,6 +799,11 @@ export const EquipsTableAxios = () => {
         navigate("/equipLogs");
     }
 
+    function manageEquipUpdate(equipInfo) {
+        var equipId = equipInfo.id;
+        localStorage.setItem("equipIdForUpdate", equipId);
+    }
+
     const actionColumn = [
         {
             field: "action",
@@ -795,7 +817,12 @@ export const EquipsTableAxios = () => {
                             onHide={() => setModalEDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <ModalEUpdate
+                            show={modalEUpdateShow}
+                            onHide={() => setModalEUpdateShow(false)}
+
+                        />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEUpdateShow(true); manageEquipUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageEquipLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEDeleteShow(true); manageEquipDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
@@ -890,6 +917,8 @@ export const VisitsTableAxios = () => {
     }, [])
 
     const [modalVDeleteShow, setModalVDeleteShow] = useState(false);
+    const [modalVUpdateShow, setModalVUpdateShow] = useState(false);
+
     const navigate = useNavigate();
 
     function manageVisitDelete(visitInfo) {
@@ -917,6 +946,11 @@ export const VisitsTableAxios = () => {
         navigate("/visitLogs")
     }
 
+    function manageVisitUpdate(visitInfo) {
+        var visitId = visitInfo.id;
+        localStorage.setItem("visitIdForUpdate", visitId);
+    }
+
     const actionColumn = [
         {
             field: "action",
@@ -930,7 +964,12 @@ export const VisitsTableAxios = () => {
                             onHide={() => setModalVDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <ModalVUpdate
+                            show={modalVUpdateShow}
+                            onHide={() => setModalVUpdateShow(false)}
+
+                        />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalVUpdateShow(true); manageVisitUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageVisitLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalVDeleteShow(true); manageVisitDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>

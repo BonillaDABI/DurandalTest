@@ -107,7 +107,7 @@ router.delete("/deleteAttr/:id", authController.deleteAttr);
 
 router.get("/listEquipLogs/:id", authController.listequipLogs)
 
-router.patch("/updateEquip", authController.updateEquipment)
+router.patch("/updateEquip/:id", authController.updateEquipment)
 
 router.patch("/updateAttr", authController.updateEquipmentAttr)
 

@@ -4,9 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import "../../../SCSS/Components/_modal.scss"
 
-function ModalAUpdate(props) {
+function ModalEUpdate(props) {
     const successAlert = () => {
-        toast.success("Asset actualizado exitosamente en la base de datos.", {
+        toast.success("Equipo actualizado exitosamente en la base de datos.", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -19,7 +19,7 @@ function ModalAUpdate(props) {
       }
     
       const errorAlert = () => {
-        toast.error("Error al actualizar asset. Vuelve a intentarlo.", {
+        toast.error("Error al actualizar equipo. Vuelve a intentarlo.", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -31,41 +31,35 @@ function ModalAUpdate(props) {
         });
       }
     
-      axios.get("http://localhost:3001/autofillAssets", {
+      axios.get("http://localhost:3001/autofillBrands", {
+      })
+      .then((response) => {
+        const brandInfo = JSON.stringify(response.data);
+        console.log(brandInfo);
+        localStorage.setItem("brands", brandInfo)
     })
-    .then((response) => {
-      console.log(response.data)
-    const assetInfo = JSON.stringify(response.data);
-
-    console.log(assetInfo);
-    localStorage.setItem("assets", assetInfo)
-  })
-
-    var assets = JSON.parse(localStorage.getItem("assets"));
+    
+    var brands = JSON.parse(localStorage.getItem("brands"));
 
     const [name, setName] = useState("");
+    const [brandId, setBrand] = useState("");
     const [description, setDescription] = useState("");
-    const [siteId, setSiteId] = useState("");
-    const [equipmentId, setEquipmentId] = useState("");
-    const [assActiveStatus, setAssetAS] = useState("");
     const [status, setStatus] = useState("");
 
-    function updateAsset(){
-        var updateAssetId = localStorage.getItem("assetIdForUpdate");
-        axios.patch(`http://localhost:3001/updateAsset/${updateAssetId}`, { // url to POST
+    function updateEquip(){
+        var updateEquipId = localStorage.getItem("equipIdForUpdate");
+        axios.patch(`http://localhost:3001/updateEquip/${updateEquipId}`, { // url to POST
         'Authorization': "bearer " + localStorage.getItem('token'),
         //user_name: userName,
-            asset_name: name,
+            equip_name: name,
             description: description,
-            site_id: siteId,
-            equipment_id: equipmentId,
-            is_active: status,
-            asset_active_status_id: assActiveStatus
+            brand_id: brandId,
+            is_active: status
         },)
         .then((response) => {
             console.log(response);
             //alert("Cliente actualizado exitosamente en la base de datos.");
-            window.location.reload();
+            // window.location.reload();
         }, (error) => {
             console.log(error);
             //alert("Error al actualizar datos del cliente. Vuelve a intentarlo.");
@@ -75,9 +69,9 @@ function ModalAUpdate(props) {
     function hide(){
         props.onHide();
         successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 3600);
     }
 
     return (
@@ -89,7 +83,7 @@ function ModalAUpdate(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Editar asset
+                    Editar equipo
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -112,33 +106,11 @@ function ModalAUpdate(props) {
                 </div>
                 <div className='form-fields' id='large-form-field'>
                     <div className='input-container'>
-                        <span className="input-span">Estatus activo</span>
-                        <select className="input-field"  value={assActiveStatus} onChange={(e) => setAssetAS(e.target.value)} required>
+                        <span className="input-span">Marca</span>
+                        <select className="input-field"  value={brandId} onChange={(e) => setBrand(e.target.value)} required>
                             <option value="" disabled hidden className="options">Seleccionar...</option> 
-                            {assets.statuses.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.aas_name}</option>
-                            })};
-                        </select>
-                    </div>
-                </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Sitio</span>
-                        <select className="input-field"  value={siteId} onChange={(e) => setSiteId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
-                            {assets.sites.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.site_name}</option>
-                            })};
-                        </select>
-                    </div>
-                </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Equipo</span>
-                        <select className="input-field"  value={equipmentId} onChange={(e) => setEquipmentId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
-                            {assets.equips.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.equip_name}</option>
+                            {brands.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
                             })};
                         </select>
                     </div>
@@ -152,10 +124,10 @@ function ModalAUpdate(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='update-modal-button' onClick={() => {hide(); updateAsset()}}>Guardar cambios</button>
+                <button className='update-modal-button' onClick={() => {hide(); updateEquip()}}>Guardar cambios</button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default ModalAUpdate;
+export default ModalEUpdate;
