@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
 import "../../../SCSS/Components/_modal.scss"
 
-function ModalEditT(props) {
+function ModalTUpdate(props) {
     return (
         <Modal 
             {...props}
@@ -24,4 +24,4 @@ function ModalEditT(props) {
     );
 };
 
-export default ModalEditT;
+export default ModalTUpdate;

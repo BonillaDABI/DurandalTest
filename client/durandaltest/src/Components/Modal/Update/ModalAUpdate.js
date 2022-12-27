@@ -2,13 +2,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import "../../../SCSS/Components/_modal.scss"
 
-import "../../SCSS/Components/_modal.scss"
-
-function ModalA(props) {
+function ModalAUpdate(props) {
     const successAlert = () => {
-        toast.success("Asset creado exitosamente en la base de datos.", {
+        toast.success("Asset actualizado exitosamente en la base de datos.", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -21,7 +19,7 @@ function ModalA(props) {
       }
     
       const errorAlert = () => {
-        toast.error("Error al crear asset. Vuelve a intentarlo.", {
+        toast.error("Error al actualizar asset. Vuelve a intentarlo.", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -43,42 +41,43 @@ function ModalA(props) {
     localStorage.setItem("assets", assetInfo)
   })
 
-  var assets = JSON.parse(localStorage.getItem("assets"));
+    var assets = JSON.parse(localStorage.getItem("assets"));
 
-  
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [siteId, setSiteId] = useState("");
     const [equipmentId, setEquipmentId] = useState("");
     const [assActiveStatus, setAssetAS] = useState("");
+    const [status, setStatus] = useState("");
 
-
-    function createAsset () {
-        axios.post('http://localhost:3001/createAsset', { // url to POST
-            'Authorization': "bearer " + localStorage.getItem('token'),
+    function updateAsset(){
+        var updateAssetId = localStorage.getItem("assetIdForUpdate");
+        axios.patch(`http://localhost:3001/updateAsset/${updateAssetId}`, { // url to POST
+        'Authorization': "bearer " + localStorage.getItem('token'),
+        //user_name: userName,
             asset_name: name,
             description: description,
             site_id: siteId,
             equipment_id: equipmentId,
+            is_active: status,
             asset_active_status_id: assActiveStatus
-        })
+        },)
         .then((response) => {
             console.log(response);
+            //alert("Cliente actualizado exitosamente en la base de datos.");
+            //window.location.reload();
         }, (error) => {
             console.log(error);
-            errorAlert();
-            //alert("Error al crear asset. Vuelve a intentarlo.");
+            //alert("Error al actualizar datos del cliente. Vuelve a intentarlo.");
         });
-        
     }
 
     function hide(){
         props.onHide();
         successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Asset creado exitosamente en la base de datos.");
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 3600);
     }
 
     return (
@@ -86,12 +85,11 @@ function ModalA(props) {
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
-            backdropClassName="modal-backdrop"
             centered
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Nuevo asset
+                    Editar asset
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -103,6 +101,16 @@ function ModalA(props) {
                     </div>
                 </div>
                 <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Estatus</span>
+                        <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
+                            <option value="" selected disabled className="options">Seleccionar...</option> 
+                            <option value="1" className="options">Activo</option>
+                            <option value="0" className="options">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div className='form-fields' id='large-form-field'>
                     <div className='input-container'>
                         <span className="input-span">Estatus activo</span>
                         <select className="input-field"  value={assActiveStatus} onChange={(e) => setAssetAS(e.target.value)} required>
@@ -144,10 +152,10 @@ function ModalA(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createAsset(); hide()}}>Guardar</button>
+                <button className='update-modal-button' onClick={() => {hide(); updateAsset()}}>Guardar cambios</button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default ModalA;
+export default ModalAUpdate;

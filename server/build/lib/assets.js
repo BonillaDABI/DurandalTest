@@ -67,9 +67,9 @@ const insertAsset = (asset_name, description, site_id, equipment_id, asset_activ
     })
 }
 
-const updateAsset = (id, asset_name, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
+const updateAsset = (id, asset_name, is_active, description, site_id, equipment_id, asset_active_status_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('UPDATE assets SET ? WHERE id = ?',
+        await connection.query('UPDATE asset SET ? WHERE id = ?',
             [{
                 asset_name,
                 description,
@@ -79,7 +79,7 @@ const updateAsset = (id, asset_name, description, site_id, equipment_id, asset_a
                 asset_active_status_id,
                 updated_by: creator_id,
                 updated_at: date,
-                updated_reason,
+                //updated_reason,
             }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)

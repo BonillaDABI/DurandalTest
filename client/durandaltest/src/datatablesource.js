@@ -5,12 +5,12 @@ import React, { useState, useEffect } from "react";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { faClockRotateLeft, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
 import ModalCCDelete from "./Components/Modal/Delete/ModalCCDelete";
 import ModalTDelete from "./Components/Modal/Delete/ModalTDelete";
 import ModalSDelete from "./Components/Modal/Delete/ModalSDelete";
-
 import ModalADelete from "./Components/Modal/Delete/ModalADelete";
 import ModalVDelete from "./Components/Modal/Delete/ModalVDelete";
 import ModalEDelete from "./Components/Modal/Delete/ModalEDelete";
@@ -19,6 +19,10 @@ import ModalActDelete from "./Components/Modal/Delete/ModalActDelete";
 
 import { useNavigate } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
+
+import ModalUUpdate from "./Components/Modal/Update/ModalUUpdate";
+import ModalAUpdate from "./Components/Modal/Update/ModalAUpdate";
+
 
 // #region Activities Logs
 
@@ -1031,6 +1035,8 @@ export const AssetsTableAxios = () => {
     }, [])
 
     const [modalADeleteShow, setModalADeleteShow] = useState(false);
+    const [modalAUpdateShow, setModalAUpdateShow] = useState(false);
+
     const navigate = useNavigate();
 
     function manageAssetDelete(assetInfo) {
@@ -1056,6 +1062,11 @@ export const AssetsTableAxios = () => {
         navigate("/assetLogs")
     }
 
+    function manageAssetUpdate(assetInfo) {
+        var assetId = assetInfo.id;
+        localStorage.setItem("assetIdForUpdate", assetId);
+    }
+
     const actionColumn = [
         {
             field: "action",
@@ -1069,7 +1080,12 @@ export const AssetsTableAxios = () => {
                             onHide={() => setModalADeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <ModalAUpdate
+                            show={modalAUpdateShow}
+                            onHide={() => setModalAUpdateShow(false)}
+
+                        />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalAUpdateShow(true); manageAssetUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageAssetLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalADeleteShow(true); manageAssetDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
@@ -2188,8 +2204,8 @@ export const UserTableAxios = () => {
     const [modalUDeleteShow, setModalUDeleteShow] = useState(false);
 
     function manageUserDelete(userInfo) {
-        console.log(userInfo);
-        console.log(userInfo.id);
+        //console.log(userInfo);
+        //console.log(userInfo.id);
         var userId = userInfo.id;
         localStorage.setItem("userIdToDelete", userId);
 
@@ -2201,6 +2217,21 @@ export const UserTableAxios = () => {
         localStorage.setItem("userNameToDelete", userName);
         localStorage.setItem("userEmailToDelete", userEmail);
         localStorage.setItem("userCreatedDateToDelete", userCreatedDate);
+    }
+
+    const [modalUUpdateShow, setModalUUpdateShow] = useState(false);
+
+    function manageUserUpdate(userInfo) {
+        console.log(userInfo)
+        var userId = userInfo.id;
+        localStorage.setItem("userIdToUpdate", userId);
+        //console.log(userId);
+
+        var userName = userInfo.name;
+        var userEmail = userInfo.email;
+
+        localStorage.setItem("userNameToUpdate", userName);
+        localStorage.setItem("userEmailToUpdate", userEmail);
     }
 
     const actionColumn = [
@@ -2215,9 +2246,12 @@ export const UserTableAxios = () => {
                         <ModalUDelete
                             show={modalUDeleteShow}
                             onHide={() => setModalUDeleteShow(false)}
-
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <ModalUUpdate 
+                            show={modalUUpdateShow}
+                            onHide={() => setModalUUpdateShow(false)}
+                        />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalUUpdateShow(true); manageUserUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalUDeleteShow(true); manageUserDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
