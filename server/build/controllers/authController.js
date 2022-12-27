@@ -719,9 +719,9 @@ authController.updateAsset = async (req, res) => {
 
         const date = new Date()
 
-        const { name, description, site_id, equipment_id, asset_active_status_id } = req.body;
+        const { asset_name, is_active, description, site_id, equipment_id, asset_active_status_id } = req.body;
 
-        const updatedAsset = await Asset.updateAsset(id, name, description, site_id, equipment_id, asset_active_status_id, req.userID, date)
+        const updatedAsset = await Asset.updateAsset(id, asset_name, is_active, description, site_id, equipment_id, asset_active_status_id, req.userID, date)
 
         if (updatedAsset) {
             res.status(200).json('Asset actualizado.')
