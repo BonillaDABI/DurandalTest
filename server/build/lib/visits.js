@@ -68,7 +68,7 @@ const insertVisit = (visit_type_id, site_id, technical_id, visit_name, descripti
     })
 }
 
-const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, description, is_active, creator_id, date, updated_reason) => {
+const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, is_active, description, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE visits SET ? WHERE id = ?',
             [{
@@ -80,7 +80,7 @@ const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, descr
                 is_active,
                 updated_by: creator_id,
                 updated_at: date,
-                updated_reason,
+                //updated_reason,
             }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)

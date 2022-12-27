@@ -94,19 +94,20 @@ const insertItemVal = (item_id, item_attributes_id, value, creator_id, date) => 
     })
 }
 
-const updateItem = (id, name, description, cost, unit_id, currency_id, creator_id, date) => {
+const updateItem = (id, name, is_active, description, cost, unit_id, currency_id, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE item SET ? WHERE id = ?',
             [{
                 name,
                 description,
+                is_active,
                 cost,
                 unit_id,
                 currency_id,
                 is_active,
                 updated_by: creator_id,
                 updated_at: date,
-                updated_reason,
+                //updated_reason,
             }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)

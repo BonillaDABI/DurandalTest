@@ -101,17 +101,18 @@ const getEquipAttrs = (id) => {
     })
 }
 
-const updateEquipment = (id, equip_name, brand_id, description, creator_id, date) => {
+const updateEquipment = (id, equip_name, is_active, brand_id, description, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE equipments SET ? WHERE id = ?',
             [{
                 equip_name,
                 brand_id,
+                is_active,
                 description,
                 is_active,
                 updated_by: creator_id,
                 updated_at: date,
-                updated_reason,
+                //updated_reason,
             }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)
@@ -125,7 +126,7 @@ const updateEquipment = (id, equip_name, brand_id, description, creator_id, date
     })
 }
 
-const updateAttr = (id, name, description, dimensiones, creator_id, date) => {
+const updateAttr = (id, name, is_active, description, dimensiones, creator_id, date) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE equipment_attributes SET ? WHERE id = ?',
             [{
@@ -135,7 +136,7 @@ const updateAttr = (id, name, description, dimensiones, creator_id, date) => {
                 is_active,
                 updated_by: creator_id,
                 updated_at: date,
-                updated_reason,
+                //updated_reason,
             }, id], async (err, rows) => {
                 if (err) reject(err)
                 resolve(true)
