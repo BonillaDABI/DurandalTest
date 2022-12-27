@@ -743,7 +743,7 @@ authController.updateVisit = async (req, res) => {
 
         const { visit_type_id, site_id, technical_id, visit_name, description, is_active, updated_reason } = req.body;
 
-        const updatedVisit = await Visits.updateVisit(id, visit_type_id, site_id, technical_id, visit_name, description, is_active, req.userID, date, updated_reason)
+        const updatedVisit = await Visits.updateVisit(id, visit_type_id, site_id, technical_id, visit_name, is_active, description, req.userID, date, updated_reason)
 
         if (updatedVisit) {
             res.status(200).json('Visit actualizado.')

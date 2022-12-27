@@ -79,10 +79,13 @@ const updateVisit = (id, visit_type_id, site_id, technical_id, visit_name, is_ac
                 description,
                 is_active,
                 updated_by: creator_id,
-                updated_at: date,
+                updated_at: date
                 //updated_reason,
-            }, id], async (err, rows) => {
-                if (err) reject(err)
+            }, id], (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+
                 resolve(true)
 
                 // if (is_active === '1') {
