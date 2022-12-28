@@ -96,6 +96,24 @@ function ModalA(props) {
             </Modal.Header>
             <Modal.Body>
             <form>
+                <div id='large-form-field' className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Cliente</span>
+                        <input className="input-field" type="text" disabled placeholder="Ingresar..." required />
+                    </div>
+                </div>
+                <div id='large-form-field' className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Sitio</span>
+                        <select className="input-field"  value={siteId} onChange={(e) => setSiteId(e.target.value)} required>
+                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            {assets.sites.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.site_name}</option>
+                            })};
+                        </select>
+                    </div>
+                </div>
+                <div className="form-divider"></div>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Nombre</span>
@@ -113,18 +131,7 @@ function ModalA(props) {
                         </select>
                     </div>
                 </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Sitio</span>
-                        <select className="input-field"  value={siteId} onChange={(e) => setSiteId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
-                            {assets.sites.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.site_name}</option>
-                            })};
-                        </select>
-                    </div>
-                </div>
-                <div className='form-fields'>
+                <div id='large-form-field' className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Equipo</span>
                         <select className="input-field"  value={equipmentId} onChange={(e) => setEquipmentId(e.target.value)} required>

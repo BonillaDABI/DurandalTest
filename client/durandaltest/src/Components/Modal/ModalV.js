@@ -93,24 +93,13 @@ function ModalV(props) {
             </Modal.Header>
             <Modal.Body>
             <form>
-                <div className='form-fields'>
+                <div id='large-form-field' className='form-fields'>
                     <div className='input-container'>
-                        <span className="input-span">Nombre de la visita</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={visitName} onChange={(e) => setVisitName(e.target.value)} required />
+                        <span className="input-span">Cliente</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." disabled required />
                     </div>
                 </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Técnico</span>
-                        <select className="input-field"  value={visitTechId} onChange={(e) => setVisitTechId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
-                            {visits.techs.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.name}&nbsp;{item.first_surname}&nbsp;{item.second_surname}</option>
-                            })};
-                        </select>
-                    </div>
-                </div>
-                <div className='form-fields'>
+                <div id='large-form-field' className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Sitio de la visita</span>
                         <select className="input-field"  value={visitSiteId} onChange={(e) => setVisitSiteId(e.target.value)} required>
@@ -121,6 +110,13 @@ function ModalV(props) {
                         </select>
                     </div>
                 </div>
+                <div className="form-divider"></div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Nombre de la visita</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={visitName} onChange={(e) => setVisitName(e.target.value)} required />
+                    </div>
+                </div>                
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Tipo de visita</span>
@@ -128,6 +124,17 @@ function ModalV(props) {
                             <option value="" disabled hidden className="options">Seleccionar...</option> 
                             {visits.visitTypes.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.vt_name}</option>
+                            })};
+                        </select>
+                    </div>
+                </div>
+                <div id='large-form-field' className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Técnico</span>
+                        <select className="input-field"  value={visitTechId} onChange={(e) => setVisitTechId(e.target.value)} required>
+                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            {visits.techs.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.name}&nbsp;{item.first_surname}&nbsp;{item.second_surname}</option>
                             })};
                         </select>
                     </div>

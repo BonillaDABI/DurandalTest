@@ -101,6 +101,24 @@ function ModalAUpdate(props) {
             </Modal.Header>
             <Modal.Body>
             <form>
+                <div id='large-form-field' className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Cliente</span>
+                        <input className="input-field" type="text" placeholder={assetClientForUPlaceholder} disabled required />
+                    </div>
+                </div>
+                <div id='large-form-field' className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Sitio</span>
+                        <select className="input-field"  value={siteId} onChange={(e) => setSiteId(e.target.value)} required>
+                            <option value="" disabled hidden className="options">{assetSiteForUPlaceholder}</option> 
+                            {assets.sites.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.site_name}</option>
+                            })};
+                        </select>
+                    </div>
+                </div>
+                <div className="form-divider"></div>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Nombre</span>
@@ -117,24 +135,13 @@ function ModalAUpdate(props) {
                         </select>
                     </div>
                 </div>
-                <div className='form-fields' id='large-form-field'>
+                <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Estatus activo</span>
                         <select className="input-field"  value={assActiveStatus} onChange={(e) => setAssetAS(e.target.value)} required>
                             <option value="" disabled hidden className="options">{assetAASForUPlaceholder}</option> 
                             {assets.statuses.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.aas_name}</option>
-                            })};
-                        </select>
-                    </div>
-                </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Sitio</span>
-                        <select className="input-field"  value={siteId} onChange={(e) => setSiteId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">{assetSiteForUPlaceholder}</option> 
-                            {assets.sites.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.site_name}</option>
                             })};
                         </select>
                     </div>

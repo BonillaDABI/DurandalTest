@@ -86,6 +86,7 @@ function ModalVUpdate(props) {
     var visitTypeForUPlaceholder = localStorage.getItem("visitTypeForUPlaceholder")
     var visitDescriptionForUPlaceholder = localStorage.getItem("visitDescriptionForUPlaceholder")
     var visitTechForUPlaceholder = localStorage.getItem("visitTechForUPlaceholder")
+    var visitClientForUPlaceholder = localStorage.getItem("visitClientForUPlaceholder")
 
     return (
         <Modal 
@@ -101,7 +102,13 @@ function ModalVUpdate(props) {
             </Modal.Header>
             <Modal.Body>
             <form>
-            <div className='form-fields'>
+                <div id='large-form-field' className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Cliente</span>
+                        <input className="input-field" type="text" placeholder={visitClientForUPlaceholder} disabled required />
+                    </div>
+                </div>
+                <div id='large-form-field' className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Sitio de la visita</span>
                         <select className="input-field"  value={visitSiteId} onChange={(e) => setVisitSiteId(e.target.value)} required>
@@ -110,6 +117,13 @@ function ModalVUpdate(props) {
                                 return <option className="options" key={i} value={item.id}>{item.site_name}</option>
                             })};
                         </select>
+                    </div>
+                </div>
+                <div className="form-divider"></div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Nombre de la visita</span>
+                        <input className="input-field" type="text" placeholder={visitNameForUPlaceholder} value={visitName} onChange={(e) => setVisitName(e.target.value)} required />
                     </div>
                 </div>
                 <div className='form-fields'>
@@ -123,23 +137,6 @@ function ModalVUpdate(props) {
                         </select>
                     </div>
                 </div>
-                <div className='form-fields' id='large-form-field'>
-                    <div className='input-container'>
-                        <span className="input-span">Técnico</span>
-                        <select className="input-field"  value={visitTechId} onChange={(e) => setVisitTechId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">{visitTechForUPlaceholder}</option> 
-                            {visits.techs.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.name}&nbsp;{item.first_surname}&nbsp;{item.second_surname}</option>
-                            })};
-                        </select>
-                    </div>
-                </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Nombre de la visita</span>
-                        <input className="input-field" type="text" placeholder={visitNameForUPlaceholder} value={visitName} onChange={(e) => setVisitName(e.target.value)} required />
-                    </div>
-                </div>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Estatus</span>
@@ -149,6 +146,17 @@ function ModalVUpdate(props) {
                             <option value="0" className="options">Inactivo</option>
                         </select>
                      </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Técnico</span>
+                        <select className="input-field"  value={visitTechId} onChange={(e) => setVisitTechId(e.target.value)} required>
+                            <option value="" disabled hidden className="options">{visitTechForUPlaceholder}</option> 
+                            {visits.techs.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.name}&nbsp;{item.first_surname}&nbsp;{item.second_surname}</option>
+                            })};
+                        </select>
+                    </div>
                 </div>
                 <div id="description-field" className='form-fields'>
                     <div className='input-container'>
