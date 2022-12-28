@@ -30,14 +30,14 @@ function ModalVUpdate(props) {
     
         });
       }
-    
+
         axios.get("http://localhost:3001/autofillVisits", {
         })
         .then((response) => {
-        console.log(response.data)
+        //console.log(response.data)
         const visitsInfo = JSON.stringify(response.data);
 
-        console.log(visitsInfo);
+        //console.log(visitsInfo);
         localStorage.setItem("visits", visitsInfo)
     })
 
@@ -80,6 +80,13 @@ function ModalVUpdate(props) {
         }, 3600);
     }
 
+    var visitNameForUPlaceholder = localStorage.getItem("visitNameForUPlaceholder")
+    var visitStatusForUPlaceholder = localStorage.getItem("visitStatusForUPlaceholder")
+    var visitSiteForUPlaceholder = localStorage.getItem("visitSiteForUPlaceholder")
+    var visitTypeForUPlaceholder = localStorage.getItem("visitTypeForUPlaceholder")
+    var visitDescriptionForUPlaceholder = localStorage.getItem("visitDescriptionForUPlaceholder")
+    var visitTechForUPlaceholder = localStorage.getItem("visitTechForUPlaceholder")
+
     return (
         <Modal 
             {...props}
@@ -94,38 +101,11 @@ function ModalVUpdate(props) {
             </Modal.Header>
             <Modal.Body>
             <form>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Nombre de la visita</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={visitName} onChange={(e) => setVisitName(e.target.value)} required />
-                    </div>
-                </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Estatus</span>
-                        <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
-                            <option value="" selected disabled className="options">Seleccionar...</option>
-                            <option value="1" className="options">Activo</option>
-                            <option value="0" className="options">Inactivo</option>
-                        </select>
-                     </div>
-                </div>
-                <div className='form-fields' id='large-form-field'>
-                    <div className='input-container'>
-                        <span className="input-span">Técnico</span>
-                        <select className="input-field"  value={visitTechId} onChange={(e) => setVisitTechId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
-                            {visits.techs.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.name}&nbsp;{item.first_surname}&nbsp;{item.second_surname}</option>
-                            })};
-                        </select>
-                    </div>
-                </div>
-                <div className='form-fields'>
+            <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Sitio de la visita</span>
                         <select className="input-field"  value={visitSiteId} onChange={(e) => setVisitSiteId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            <option value="" disabled hidden className="options">{visitSiteForUPlaceholder}</option> 
                             {visits.sites.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.site_name}</option>
                             })};
@@ -135,18 +115,45 @@ function ModalVUpdate(props) {
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Tipo de visita</span>
-                        <select className="input-field"  value={visitTypeId} onChange={(e) => setVisitTypeId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                        <select className="input-field" value={visitTypeId} onChange={(e) => setVisitTypeId(e.target.value)} required>
+                            <option value="" disabled hidden className="options">{visitTypeForUPlaceholder}</option> 
                             {visits.visitTypes.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.vt_name}</option>
                             })};
                         </select>
                     </div>
                 </div>
+                <div className='form-fields' id='large-form-field'>
+                    <div className='input-container'>
+                        <span className="input-span">Técnico</span>
+                        <select className="input-field"  value={visitTechId} onChange={(e) => setVisitTechId(e.target.value)} required>
+                            <option value="" disabled hidden className="options">{visitTechForUPlaceholder}</option> 
+                            {visits.techs.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.name}&nbsp;{item.first_surname}&nbsp;{item.second_surname}</option>
+                            })};
+                        </select>
+                    </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Nombre de la visita</span>
+                        <input className="input-field" type="text" placeholder={visitNameForUPlaceholder} value={visitName} onChange={(e) => setVisitName(e.target.value)} required />
+                    </div>
+                </div>
+                <div className='form-fields'>
+                    <div className='input-container'>
+                        <span className="input-span">Estatus</span>
+                        <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
+                            <option value="" disabled hidden className="options">{visitStatusForUPlaceholder}</option>
+                            <option value="1" className="options">Activo</option>
+                            <option value="0" className="options">Inactivo</option>
+                        </select>
+                     </div>
+                </div>
                 <div id="description-field" className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Descripción</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                        <input className="input-field" type="text" placeholder={visitDescriptionForUPlaceholder} value={description} onChange={(e) => setDescription(e.target.value)} required />
                     </div>
                 </div>
             </form>

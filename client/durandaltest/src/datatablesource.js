@@ -618,7 +618,7 @@ export const ItemsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const itemData = response.data
-            console.log(itemData)
+            //console.log(itemData)
             setItemData(itemData)
         })
     }
@@ -633,8 +633,8 @@ export const ItemsTableAxios = () => {
     const navigate = useNavigate();
 
     function manageItemDelete(itemInfo) {
-        console.log(itemInfo);
-        console.log(itemInfo.id);
+        //console.log(itemInfo);
+        //console.log(itemInfo.id);
         var itemId = itemInfo.id;
         localStorage.setItem("itemIdToDelete", itemId);
 
@@ -652,6 +652,18 @@ export const ItemsTableAxios = () => {
     function manageItemUpdate(itemInfo) {
         var itemId = itemInfo.id;
         localStorage.setItem("itemIdToUpdate", itemId);
+
+        axios.get(`http://localhost:3001/autofillItem/${itemId}`, {
+        })
+        .then((response) => {
+            //console.log(response.data);
+            localStorage.setItem("itemNameForUPlaceholder", response.data.name);
+            localStorage.setItem("itemStatusForUPlaceholder", response.data.is_active);
+            localStorage.setItem("itemCostForUPlaceholder", response.data.cost);
+            localStorage.setItem("itemCurrencyForUPlaceholder", response.data.currency_name);
+            localStorage.setItem("itemUnitForUPlaceholder", response.data.unit_name);
+            localStorage.setItem("itemDescriptionForUPlaceholder", response.data.description);
+        })
     }
 
     const actionColumn = [
@@ -761,7 +773,7 @@ export const EquipsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const equipData = response.data
-            console.log(equipData)
+            //console.log(equipData)
             setEquipData(equipData)
         })
     }
@@ -776,17 +788,17 @@ export const EquipsTableAxios = () => {
     const navigate = useNavigate();
 
     function manageEquipDelete(equipInfo) {
-        console.log(equipInfo);
-        console.log(equipInfo.id);
+        //console.log(equipInfo);
+        //console.log(equipInfo.id);
         var equipId = equipInfo.id;
         localStorage.setItem("equipIdToDelete", equipId);
 
         var equipName = equipInfo.equip_name;
-        console.log(equipName);
+        //console.log(equipName);
         var equipBrand = equipInfo.brand_name;
-        console.log(equipBrand);
+        //console.log(equipBrand);
         var equipUpdatedDate = equipInfo.updated_at;
-        console.log(equipUpdatedDate);
+        //console.log(equipUpdatedDate);
 
         localStorage.setItem("equipNameToDelete", equipName);
         localStorage.setItem("equipBrandToDelete", equipBrand);
@@ -802,6 +814,16 @@ export const EquipsTableAxios = () => {
     function manageEquipUpdate(equipInfo) {
         var equipId = equipInfo.id;
         localStorage.setItem("equipIdForUpdate", equipId);
+
+        axios.get(`http://localhost:3001/autofillEquipo/${equipId}`, {
+        })
+        .then((response) => {
+            //console.log(response.data);
+            localStorage.setItem("equipNameForUPlaceholder", response.data.equip_name);
+            localStorage.setItem("equipStatusForUPlaceholder", response.data.is_active);
+            localStorage.setItem("equipBrandForUPlaceholder", response.data.brand_name);
+            localStorage.setItem("equipDescriptionForUPlaceholder", response.data.description);
+        })
     }
 
     const actionColumn = [
@@ -907,7 +929,7 @@ export const VisitsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const visitData = response.data
-            console.log(visitData)
+            //console.log(visitData)
             setVisitData(visitData)
         })
     }
@@ -923,7 +945,7 @@ export const VisitsTableAxios = () => {
 
     function manageVisitDelete(visitInfo) {
         //console.log(visitInfo);
-        console.log(visitInfo.id);
+        //console.log(visitInfo.id);
         var visitId = visitInfo.id;
         localStorage.setItem("visitIdToDelete", visitId);
 
@@ -949,6 +971,20 @@ export const VisitsTableAxios = () => {
     function manageVisitUpdate(visitInfo) {
         var visitId = visitInfo.id;
         localStorage.setItem("visitIdForUpdate", visitId);
+
+        axios.get(`http://localhost:3001/autofillVisit/${visitId}`, {
+        })
+        .then((response) => {
+            //console.log(response.data);
+            localStorage.setItem("visitNameForUPlaceholder", response.data.visit_name);
+            localStorage.setItem("visitStatusForUPlaceholder", response.data.is_active);
+            localStorage.setItem("visitSiteForUPlaceholder", response.data.site_name);
+            localStorage.setItem("visitTypeForUPlaceholder", response.data.vt_name);
+            localStorage.setItem("visitDescriptionForUPlaceholder", response.data.description);
+            var visitTechFullname = response.data.name + " " + response.data.first_surname + " " + response.data.second_surname;
+            localStorage.setItem("visitTechForUPlaceholder", visitTechFullname);
+            localStorage.setItem("visitClientForUPlaceholder", response.data.business_name);
+        })
     }
 
     const actionColumn = [
@@ -1064,7 +1100,7 @@ export const AssetsTableAxios = () => {
     const getData = async () => {
         await axios.get(endpoint).then((response) => {
             const assetData = response.data
-            console.log(assetData)
+            //console.log(assetData)
             setAssetData(assetData)
         })
     }
@@ -1079,8 +1115,8 @@ export const AssetsTableAxios = () => {
     const navigate = useNavigate();
 
     function manageAssetDelete(assetInfo) {
-        console.log(assetInfo);
-        console.log(assetInfo.id);
+        //console.log(assetInfo);
+        //console.log(assetInfo.id);
         var assetId = assetInfo.id;
         localStorage.setItem("assetIdToDelete", assetId);
 
@@ -1104,6 +1140,18 @@ export const AssetsTableAxios = () => {
     function manageAssetUpdate(assetInfo) {
         var assetId = assetInfo.id;
         localStorage.setItem("assetIdForUpdate", assetId);
+
+        axios.get(`http://localhost:3001/autofillAsset/${assetId}`, {
+        })
+        .then((response) => {
+            //console.log(response.data);
+            localStorage.setItem("assetNameForUPlaceholder", response.data.asset_name);
+            localStorage.setItem("assetStatusForUPlaceholder", response.data.is_active);
+            localStorage.setItem("assetAASForUPlaceholder", response.data.aas_name);
+            localStorage.setItem("assetSiteForUPlaceholder", response.data.site_name);
+            localStorage.setItem("assetDescriptionForUPlaceholder", response.data.description);
+            localStorage.setItem("assetClientForUPlaceholder", response.data.business_name);
+        })
     }
 
     const actionColumn = [

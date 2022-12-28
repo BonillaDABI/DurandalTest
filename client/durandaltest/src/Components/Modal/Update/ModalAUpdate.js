@@ -80,6 +80,13 @@ function ModalAUpdate(props) {
         }, 3600);
     }
 
+    var assetNameForUPlaceholder = localStorage.getItem("assetNameForUPlaceholder")
+    var assetStatusForUPlaceholder = localStorage.getItem("assetStatusForUPlaceholder")
+    var assetAASForUPlaceholder = localStorage.getItem("assetAASForUPlaceholder")
+    var assetSiteForUPlaceholder = localStorage.getItem("assetSiteForUPlaceholder")
+    var assetDescriptionForUPlaceholder = localStorage.getItem("assetDescriptionForUPlaceholder")
+    var assetClientForUPlaceholder = localStorage.getItem("assetClientForUPlaceholder")
+
     return (
         <Modal 
             {...props}
@@ -97,14 +104,14 @@ function ModalAUpdate(props) {
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Nombre</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                        <input className="input-field" type="text" placeholder={assetNameForUPlaceholder} value={name} onChange={(e) => setName(e.target.value)} required />
                     </div>
                 </div>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Estatus</span>
                         <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
-                            <option value="" selected disabled className="options">Seleccionar...</option> 
+                            <option value="" disabled hidden className="options">{assetStatusForUPlaceholder}</option> 
                             <option value="1" className="options">Activo</option>
                             <option value="0" className="options">Inactivo</option>
                         </select>
@@ -114,7 +121,7 @@ function ModalAUpdate(props) {
                     <div className='input-container'>
                         <span className="input-span">Estatus activo</span>
                         <select className="input-field"  value={assActiveStatus} onChange={(e) => setAssetAS(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            <option value="" disabled hidden className="options">{assetAASForUPlaceholder}</option> 
                             {assets.statuses.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.aas_name}</option>
                             })};
@@ -125,7 +132,7 @@ function ModalAUpdate(props) {
                     <div className='input-container'>
                         <span className="input-span">Sitio</span>
                         <select className="input-field"  value={siteId} onChange={(e) => setSiteId(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            <option value="" disabled hidden className="options">{assetSiteForUPlaceholder}</option> 
                             {assets.sites.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.site_name}</option>
                             })};
@@ -146,7 +153,7 @@ function ModalAUpdate(props) {
                 <div id="description-field" className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Descripción</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                        <input className="input-field" type="text" placeholder={assetDescriptionForUPlaceholder} value={description} onChange={(e) => setDescription(e.target.value)} required />
                     </div>
                 </div>
             </form>

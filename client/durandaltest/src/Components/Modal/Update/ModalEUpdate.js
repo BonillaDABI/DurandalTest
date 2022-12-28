@@ -35,7 +35,7 @@ function ModalEUpdate(props) {
     })
         .then((response) => {
             const brandInfo = JSON.stringify(response.data);
-            console.log(brandInfo);
+            //console.log(brandInfo);
             localStorage.setItem("brands", brandInfo)
         })
 
@@ -74,6 +74,11 @@ function ModalEUpdate(props) {
         }, 3600);
     }
 
+    var equipNameForUPlaceholder = localStorage.getItem("equipNameForUPlaceholder")
+    var equipStatusForUPlaceholder = localStorage.getItem("equipStatusForUPlaceholder")
+    var equipBrandForUPlaceholder = localStorage.getItem("equipBrandForUPlaceholder")
+    var equipDescriptionForUPlaceholder = localStorage.getItem("equipDescriptionForUPlaceholder")
+
     return (
         <Modal
             {...props}
@@ -91,14 +96,14 @@ function ModalEUpdate(props) {
                     <div className='form-fields'>
                         <div className='input-container'>
                             <span className="input-span">Nombre</span>
-                            <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                            <input className="input-field" type="text" placeholder={equipNameForUPlaceholder} value={name} onChange={(e) => setName(e.target.value)} required />
                         </div>
                     </div>
                     <div className='form-fields'>
                         <div className='input-container'>
                             <span className="input-span">Estatus</span>
                             <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
-                                <option value="" selected disabled className="options">Seleccionar...</option>
+                                <option value="" disabled hidden className="options">{equipStatusForUPlaceholder}</option>
                                 <option value="1" className="options">Activo</option>
                                 <option value="0" className="options">Inactivo</option>
                             </select>
@@ -108,7 +113,7 @@ function ModalEUpdate(props) {
                         <div className='input-container'>
                             <span className="input-span">Marca</span>
                             <select className="input-field" value={brandId} onChange={(e) => setBrand(e.target.value)} required>
-                                <option value="" disabled hidden className="options">Seleccionar...</option>
+                                <option value="" disabled hidden className="options">{equipBrandForUPlaceholder}</option>
                                 {brands.map((item, i) => {
                                     return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
                                 })};
@@ -118,7 +123,7 @@ function ModalEUpdate(props) {
                     <div id="description-field" className='form-fields'>
                         <div className='input-container'>
                             <span className="input-span">Descripción</span>
-                            <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                            <input className="input-field" type="text" placeholder={equipDescriptionForUPlaceholder} value={description} onChange={(e) => setDescription(e.target.value)} required />
                         </div>
                     </div>
                 </form>

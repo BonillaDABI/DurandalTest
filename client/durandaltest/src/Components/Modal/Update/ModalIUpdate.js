@@ -84,6 +84,13 @@ function ModalIUpdate(props) {
         }, 3600);
     }
 
+    var itemNameForUPlaceholder = localStorage.getItem("itemNameForUPlaceholder")
+    var itemStatusForUPlaceholder = localStorage.getItem("itemStatusForUPlaceholder")
+    var itemCostForUPlaceholder = localStorage.getItem("itemCostForUPlaceholder")
+    var itemCurrencyForUPlaceholder = localStorage.getItem("itemCurrencyForUPlaceholder")
+    var itemUnitForUPlaceholder = localStorage.getItem("itemUnitForUPlaceholder")
+    var itemDescriptionForUPlaceholder = localStorage.getItem("itemDescriptionForUPlaceholder")
+
     return (
         <Modal 
             {...props}
@@ -101,14 +108,14 @@ function ModalIUpdate(props) {
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Nombre</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                        <input className="input-field" type="text" placeholder={itemNameForUPlaceholder} value={name} onChange={(e) => setName(e.target.value)} required />
                     </div>
                 </div>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Estatus</span>
                         <select className="input-field" value={status} onChange={(e) => setStatus(e.target.value)} required>
-                            <option value="" selected disabled className="options">Seleccionar...</option>
+                            <option value="" disabled hidden className="options">{itemStatusForUPlaceholder}</option>
                             <option value="1" className="options">Activo</option>
                             <option value="0" className="options">Inactivo</option>
                         </select>
@@ -117,14 +124,14 @@ function ModalIUpdate(props) {
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Costo</span>
-                        <input className="input-field" type="number" placeholder="Ingresar..." value={cost} onChange={(e) => setCost(e.target.value)} required />
+                        <input className="input-field" type="number" placeholder={itemCostForUPlaceholder} value={cost} onChange={(e) => setCost(e.target.value)} required />
                     </div>
                 </div>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Divisa</span>
                         <select className="input-field"  value={currencyId} onChange={(e) => setCurrency(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            <option value="" disabled hidden className="options">{itemCurrencyForUPlaceholder}</option> 
                             {currencies.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.currency_name}</option>
                             })};
@@ -135,7 +142,7 @@ function ModalIUpdate(props) {
                     <div className='input-container'>
                         <span className="input-span">Unidad</span>
                         <select className="input-field"  value={unitId} onChange={(e) => setUnit(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            <option value="" disabled hidden className="options">{itemUnitForUPlaceholder}</option> 
                             {units.map((item, i) => {
                                 return <option className="options" key={i} value={item.id}>{item.unit_name}</option>
                             })};
@@ -145,7 +152,7 @@ function ModalIUpdate(props) {
                 <div id="description-field" className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Descripción</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                        <input className="input-field" type="text" placeholder={itemDescriptionForUPlaceholder} value={description} onChange={(e) => setDescription(e.target.value)} required />
                     </div>
                 </div>
             </form>
