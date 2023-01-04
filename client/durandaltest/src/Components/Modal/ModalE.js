@@ -47,6 +47,14 @@ function ModalE(props) {
     const [brandId, setBrand] = useState("");
     const [description, setDescription] = useState("");
 
+    function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Equipo creado exitosamente en la base de datos.");
+    }
 
     function createEquip () {
         
@@ -58,21 +66,13 @@ function ModalE(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
             //alert("Error al crear equipo. Vuelve a intentarlo.");
         });
         
-    }
-
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Equipo creado exitosamente en la base de datos.");
     }
 
     return (
@@ -116,7 +116,7 @@ function ModalE(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createEquip(); hide()}}>Guardar</button>
+                <button className='save-modal-button' onClick={() => {createEquip()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

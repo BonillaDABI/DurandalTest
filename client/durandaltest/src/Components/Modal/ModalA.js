@@ -52,6 +52,15 @@ function ModalA(props) {
     const [equipmentId, setEquipmentId] = useState("");
     const [assActiveStatus, setAssetAS] = useState("");
 
+    function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Asset creado exitosamente en la base de datos.");
+    }
+
 
     function createAsset () {
         axios.post('http://localhost:3001/createAsset', { // url to POST
@@ -64,22 +73,14 @@ function ModalA(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
             //alert("Error al crear asset. Vuelve a intentarlo.");
         });
         
-    }
-
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Asset creado exitosamente en la base de datos.");
-    }
+    }    
 
     return (
         <Modal 
@@ -95,7 +96,7 @@ function ModalA(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form>
+            <form id='assets-form'>
                 <div id='large-form-field' className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Cliente</span>
@@ -151,7 +152,7 @@ function ModalA(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createAsset(); hide()}}>Guardar</button>
+                <button type='submit' form='assets-form' className='save-modal-button' onClick={() => {createAsset()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

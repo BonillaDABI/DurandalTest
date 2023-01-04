@@ -30,6 +30,7 @@ import VisitLogs from "./Pages/VisitLogs";
 import EquipLogs from "./Pages/EquipLogs";
 
 import { DarkModeContext } from "./Context/darkModeContext";
+import EquipAttr from "./Pages/EquipAttr";
 
 
 function App() {
@@ -54,10 +55,10 @@ function App() {
           <Route exact path="/visitLogs" element={<VisitLogs />} />
           <Route exact path="/equipLogs" element={<EquipLogs />} />
 
-
           <Route exact path="/assets" element={<Assets />} /> 
           <Route exact path="/activities" element={<Activities />} /> 
           <Route exact path="/equipments" element={<Equipments />} /> 
+          <Route exact path="/equipmentAttr" element={<EquipAttr />} /> 
           <Route exact path="/items" element={<Items />} /> 
           <Route exact path="/visits" element={<Visits />} /> 
 

@@ -53,6 +53,15 @@ function ModalU(props) {
     const [password, setPW] = useState("");
     const [role, setRole] = useState("");
 
+    function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Usuario creado exitosamente en la base de datos.");
+    }
+
     function createUser () {
         axios.post('http://localhost:3001/register', { // url to POST
         //user_name: userName,
@@ -67,21 +76,13 @@ function ModalU(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
             //alert("Error al crear usuario. Vuelve a intentarlo.");
         });
     } 
-    
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Usuario creado exitosamente en la base de datos.");
-    }
   
     return (
         <Modal 
@@ -97,7 +98,7 @@ function ModalU(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form>
+            <form id='users-form'>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Correo electrónico</span>
@@ -147,7 +148,7 @@ function ModalU(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createUser(); hide()}}>Guardar</button>
+                <button type='submit' form='users-form' className='save-modal-button' onClick={() => {createUser()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

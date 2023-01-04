@@ -27,6 +27,7 @@ import ModalEUpdate from "./Components/Modal/Update/ModalEUpdate";
 import ModalVUpdate from "./Components/Modal/Update/ModalVUpdate";
 
 
+
 // #region Activities Logs
 
 // #endregion
@@ -915,6 +916,65 @@ export const EquipsTableAxios = () => {
             components={{ Toolbar: GridToolbar }}
         />
     )
+}
+// #endregion
+
+// #region EquipAtt
+
+export const EquipAttTableAxios = () => {
+    const [equipAttData, setEquipAttData] = useState([])
+
+    // var logEquipId = localStorage.getItem("equipIdForLog")
+    // console.log(logEquipId)
+
+    // const endpoint = `http://localhost:3001/listEquipLogs/${logEquipId}`;
+
+    // const getData = async () => {
+    //     await axios.get(endpoint).then((response) => {
+    //         console.log(response.data);
+    //         const equipLogData = response.data;
+    //         setEquipLogData(equipLogData);
+    //     })
+    // }
+
+    // useEffect(() => {
+    //     getData()
+    // }, [])
+
+    // Columnas
+    const equipAttColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 70
+        },
+        {
+            field: 'equipment_attributes_name',
+            headerName: 'Atributo',
+            width: 250
+        },
+        {
+            field: 'value',
+            headerName: 'Valor',
+            width: 70
+        }
+    ];
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc' }],
+                },
+            }}
+            rows={equipAttData}
+            columns={equipAttColumns}
+            pageSize={5}
+            disableSelectionOnClick
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            components={{ Toolbar: GridToolbar }}
+        />
+    );
 }
 // #endregion
 

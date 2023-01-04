@@ -46,6 +46,15 @@ function ModalCC(props) {
       const [password, setPW] = useState("");
       const [contactTypeId, setContactTypeId] = useState("");
 
+      function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Contacto creado exitosamente en la base de datos.");
+    }
+
     function createContact () {
         var client_id = localStorage.getItem("client_id");
 
@@ -60,6 +69,7 @@ function ModalCC(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
@@ -67,14 +77,6 @@ function ModalCC(props) {
         });
     }
 
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Contacto creado exitosamente en la base de datos.");
-    }
     var business_name = localStorage.getItem("business_name");
     //console.log(business_name);
     return (
@@ -92,7 +94,7 @@ function ModalCC(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form className='contact-form'>
+            <form className='contact-form' id='cc-form'>
                 <div className='form-fields' id="large-form-field">
                     <div className='input-container'>
                         <span className="input-span">Cliente</span>
@@ -148,7 +150,7 @@ function ModalCC(props) {
             </form> 
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createContact(); hide()}}>Guardar</button>
+                <button type='submit' form='cc-form' className='save-modal-button' onClick={() => {createContact()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

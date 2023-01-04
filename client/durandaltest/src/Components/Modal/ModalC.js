@@ -63,6 +63,15 @@ function ModalC(props) {
     const [taxId, setTaxId] = useState("");
     const [parentId, setParentId] = useState("");
 
+    function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Cliente creado exitosamente en la base de datos.");
+    }
+
     function createClient () {
         axios.post('http://localhost:3001/createClient', {
             'Authorization': "bearer " + localStorage.getItem('token'),
@@ -77,20 +86,12 @@ function ModalC(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
             //alert("Error al crear cliente. Vuelve a intentarlo.");
         });
-    }
-
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Cliente creado exitosamente en la base de datos.");
     }
 
     return (
@@ -107,7 +108,7 @@ function ModalC(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form className='client-form'>
+            <form className='client-form' id='clients-form'>
                 <div className='form-fields' id="large-form-field">
                     <div className='input-container'>
                         <span className="input-span">Nombre del negocio</span>
@@ -173,7 +174,7 @@ function ModalC(props) {
             </form> 
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createClient(); hide()}}>Guardar</button>
+                <button type='submit' form='clients-form' className='save-modal-button' onClick={() => {createClient()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

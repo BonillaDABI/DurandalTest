@@ -52,6 +52,14 @@ function ModalT(props) {
     const [phone, setPhone] = useState("");
     const [nacimiento, setNacimiento] = useState("");
 
+    function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Técnico creado exitosamente en la base de datos.");
+    }
 
     function createTech () {
         axios.post('http://localhost:3001/createTech', { // url to POST
@@ -66,20 +74,12 @@ function ModalT(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
             //alert("Error al crear técnico. Vuelve a intentarlo.");
         });
-    }
-
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Técnico creado exitosamente en la base de datos.");
     }
 
     return (
@@ -96,7 +96,7 @@ function ModalT(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form>
+            <form id='techs-form'>
                 <div className='form-fields' id="large-form-field">
                     <div className='input-container'>
                         <span className="input-span">Correo electrónico</span>
@@ -146,7 +146,7 @@ function ModalT(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createTech(); hide()}}>Guardar</button>
+                <button type='submit' form='techs-form' className='save-modal-button' onClick={() => {createTech()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

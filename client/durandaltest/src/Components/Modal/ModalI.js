@@ -55,6 +55,14 @@ function ModalI(props) {
     const [unitId, setUnit] = useState("");
     const [currencyId, setCurrency] = useState("");
     
+    function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Item creado exitosamente en la base de datos.");
+    }
 
     function createItem () {
         axios.post('http://localhost:3001/createItem', { // url to POST
@@ -67,21 +75,13 @@ function ModalI(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
             //alert("Error al crear item. Vuelve a intentarlo.");
         });
         
-    }
-
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Item creado exitosamente en la base de datos.");
     }
 
     return (
@@ -98,7 +98,7 @@ function ModalI(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form>
+            <form id='items-form'>
                 <div className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Nombre</span>
@@ -142,7 +142,7 @@ function ModalI(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createItem(); hide()}}>Guardar</button>
+                <button type='submit' form='items-form' className='save-modal-button' onClick={() => {createItem()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

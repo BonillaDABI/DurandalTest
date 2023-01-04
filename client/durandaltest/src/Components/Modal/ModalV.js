@@ -51,6 +51,15 @@ function ModalV(props) {
     const [visitName, setVisitName] = useState("");
     const [description, setDescription] = useState("");
 
+    function hide(){
+        props.onHide();
+        successAlert();
+        setTimeout(() => {
+            window.location.reload();
+        }, 3600);
+        //alert("Visita creada exitosamente en la base de datos.");
+    }
+
     function createVisit () {
         axios.post('http://localhost:3001/createVisit', { // url to POST
             'Authorization': "bearer " + localStorage.getItem('token'),
@@ -62,6 +71,7 @@ function ModalV(props) {
         })
         .then((response) => {
             console.log(response);
+            hide();
         }, (error) => {
             console.log(error);
             errorAlert();
@@ -69,14 +79,7 @@ function ModalV(props) {
         });
     }
 
-    function hide(){
-        props.onHide();
-        successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
-        //alert("Visita creada exitosamente en la base de datos.");
-    }
+   
 
     return (
         <Modal 
@@ -92,7 +95,7 @@ function ModalV(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form>
+            <form id='visits-form'>
                 <div id='large-form-field' className='form-fields'>
                     <div className='input-container'>
                         <span className="input-span">Cliente</span>
@@ -148,7 +151,7 @@ function ModalV(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createVisit(); hide()}}>Guardar</button>
+                <button type="submit" form='visits-form' className='save-modal-button' onClick={() => {createVisit()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );
