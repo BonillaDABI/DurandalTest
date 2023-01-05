@@ -14,7 +14,7 @@ const Datatable = () => {
         <div className="datatable" id="datatable-att">
             <ToastContainer />
             <span className="dabiWebText">DABI WEB / Atributos </span>
-            <button className="add-button" onClick={() => setModalEqAttShow(true)}>Agregar <FontAwesomeIcon icon={faAdd}/></button>
+            <button id="add-attribute-btn" className="add-button" onClick={() => setModalEqAttShow(true)}>Agregar <FontAwesomeIcon icon={faAdd}/></button>
             
             <ModalEqAtt
                 show={modalEqAttShow}

@@ -58,7 +58,12 @@ function EquipAttr(){
         })
         .then((response) => {
             successAlert();
+            // setTimeout(() => {
+            //   window.location.reload();
+            //   document.getElementById('add-attribute-btn').disabled = false;
+            // }, 3600);
             console.log(response);
+            //localStorage.setItem("equipIdForAtt", )
         }, (error) => {
             console.log(error);
             errorAlert();
@@ -74,24 +79,28 @@ function EquipAttr(){
           <div className="equip-form-container">
             <h1 className="equip-title">Nuevo equipo</h1>
             <form id="equip-form-id">
-              <div className='form-fields'>
-                  <div className='input-container'>
-                      <span className="input-span">Nombre</span>
-                      <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
-                  </div>
-              </div>
-              <div className='form-fields'>
-                  <div className='input-container'>
-                      <span className="input-span">Marca</span>
-                      <select className="input-field"  value={brandId} onChange={(e) => setBrand(e.target.value)} required>
-                          <option value="" disabled hidden className="options">Seleccionar...</option> 
-                          {brands.map((item, i) => {
-                              return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
-                          })};
-                      </select>
-                  </div>
-              </div>
-              <div id="description-field" className='form-fields'>
+
+             <div className="row">
+                <div className='form-fields column'>
+                    <div className='input-container'>
+                        <span className="input-span">Nombre</span>
+                        <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                    </div>
+                </div>
+                <div className='form-fields column'>
+                    <div className='input-container'>
+                        <span className="input-span">Marca</span>
+                        <select className="input-field"  value={brandId} onChange={(e) => setBrand(e.target.value)} required>
+                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                            {brands.map((item, i) => {
+                                return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
+                            })};
+                        </select>
+                    </div>
+                </div>
+              </div> 
+
+              <div id='description-field' className='form-fields'>
                   <div className='input-container'>
                       <span className="input-span">Descripción</span>
                       <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />

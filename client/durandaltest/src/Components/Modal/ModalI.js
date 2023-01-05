@@ -107,7 +107,7 @@ function ModalI(props) {
                 </div>
                 <div className='form-fields'>
                     <div className='input-container'>
-                        <span className="input-span">Costo</span>
+                        <span className="input-span">Importe</span>
                         <input className="input-field" type="number" placeholder="Ingresar..." value={cost} onChange={(e) => setCost(e.target.value)} required />
                     </div>
                 </div>

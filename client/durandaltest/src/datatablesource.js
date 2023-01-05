@@ -25,6 +25,9 @@ import ModalAUpdate from "./Components/Modal/Update/ModalAUpdate";
 import ModalIUpdate from "./Components/Modal/Update/ModalIUpdate";
 import ModalEUpdate from "./Components/Modal/Update/ModalEUpdate";
 import ModalVUpdate from "./Components/Modal/Update/ModalVUpdate";
+import { Stack } from "@mui/system";
+import ModalEqAttDelete from "./Components/Modal/Delete/ModalEqAtt";
+import ModalEqAttUpdate from "./Components/Modal/Update/ModalEqAttUpdate";
 
 
 
@@ -941,6 +944,43 @@ export const EquipAttTableAxios = () => {
     //     getData()
     // }, [])
 
+    const [modalEqAttDeleteShow, setModalEqAttDeleteShow] = useState(false);
+    const [modalEqAttUpdateShow, setModalEqAttUpdateShow] = useState(false);
+
+    function manageEqAttUpdate(){
+
+    }
+
+    function manageEqAttDelete(){
+        
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalEqAttDelete
+                            show={modalEqAttDeleteShow}
+                            onHide={() => setModalEqAttDeleteShow(false)}
+
+                        />
+                        <ModalEqAttUpdate
+                            show={modalEqAttUpdateShow}
+                            onHide={() => setModalEqAttUpdateShow(false)}
+
+                        />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEqAttUpdateShow(true); manageEqAttUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEqAttDeleteShow(true); manageEqAttDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
     // Columnas
     const equipAttColumns = [
         {
@@ -957,6 +997,11 @@ export const EquipAttTableAxios = () => {
             field: 'value',
             headerName: 'Valor',
             width: 70
+        },
+        {
+            field: 'dimensions',
+            headerName: 'Dimensiones',
+            width: 120
         }
     ];
     return (
@@ -967,12 +1012,15 @@ export const EquipAttTableAxios = () => {
                 },
             }}
             rows={equipAttData}
-            columns={equipAttColumns}
+            columns={equipAttColumns.concat(actionColumn)}
             pageSize={5}
             disableSelectionOnClick
             rowsPerPageOptions={[5]}
-            checkboxSelection
-            components={{ Toolbar: GridToolbar }}
+            components={{ Toolbar: GridToolbar, NoRowsOverlay: () => (
+                <Stack height="100%" alignItems="center" justifyContent="center">
+                    El equipo no tiene atributos asignados
+                </Stack>
+            ) }}
         />
     );
 }

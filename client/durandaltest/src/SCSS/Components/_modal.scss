@@ -1,5 +1,9 @@
 @import "../_variables.scss";
 
+.create-att-form, .asign-att-form {
+    margin-top: 15px;
+}
+
 .modal-backdrop {
     opacity:0.5 !important;
 }

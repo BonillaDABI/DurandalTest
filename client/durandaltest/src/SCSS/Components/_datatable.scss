@@ -32,6 +32,12 @@
         font-weight: 600;
     }
 
+    .add-button:disabled {
+        background-color: #EBEBE4;
+        font-weight: 600;
+        color: black;
+    }
+
     .MuiDataGrid-columnHeaders {
         background-color: $table-header;
     }
