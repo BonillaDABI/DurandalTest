@@ -112,6 +112,17 @@ const getEquipAttrs = (id) => {
     })
 }
 
+const sendAttrs = () => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT id, name, dimensiones FROM equipment_attributes WHERE is_active = 1', (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 const updateEquipment = (id, equip_name, is_active, brand_id, description, creator_id, date, updated_reason) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE equipments SET ? WHERE id = ?',
@@ -159,6 +170,7 @@ const updateAttr = (id, name, is_active, description, dimensiones, creator_id, d
             })
     })
 }
+
 
 const deleteById = (id) => {
     return new Promise(async (resolve, reject) => {
@@ -218,5 +230,6 @@ module.exports = {
     getEquipmentByID,
     updateEquipment,
     updateAttr,
-    sendEquipInfo
+    sendEquipInfo,
+    sendAttrs
 }

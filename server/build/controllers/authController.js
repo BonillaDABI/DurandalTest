@@ -873,13 +873,21 @@ authController.sendVisitInfo = async (req, res) => {
 authController.updateEquipmentInfo = async (req, res) => {
     const id = req.params.id
     var equipInfo = await Equipo.sendEquipInfo(id)
+    const equipAttrInfo = await Equipo.getEquipAttrs(id)
     if (equipInfo.is_active === 1) {
         equipInfo.is_active = "Activo"
     } else {
         equipInfo.is_active = "Inactivo"
     }
 
-    res.json(equipInfo)
+    res.json({ equipInfo, equipAttrInfo })
+
+}
+
+authController.autofillAttrs = async (req, res) => {
+    const AttrsInfo = await Equipo.sendAttrs()
+
+    res.json(AttrsInfo)
 
 }
 

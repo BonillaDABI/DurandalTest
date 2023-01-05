@@ -113,6 +113,8 @@ router.patch("/updateAttr", authController.updateEquipmentAttr)
 
 router.get("/autofillEquipo/:id", authController.updateEquipmentInfo)
 
+router.get("/autofillAttrs", authController.autofillAttrs)
+
 //Items
 
 router.get("/listItems", authController.listItems)
