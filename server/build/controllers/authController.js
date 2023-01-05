@@ -894,13 +894,8 @@ authController.autofillAttrs = async (req, res) => {
 authController.listAttrByEqID = async (req, res) => {
     const id = req.params.id
     const equipAttrInfo = await Equipo.getEquipAttrs(id)
-    if (equipInfo.is_active === 1) {
-        equipInfo.is_active = "Activo"
-    } else {
-        equipInfo.is_active = "Inactivo"
-    }
 
-    res.json({ equipInfo, equipAttrInfo })
+    res.json(equipAttrInfo)
 
 }
 

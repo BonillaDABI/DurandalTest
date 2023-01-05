@@ -115,6 +115,8 @@ router.get("/autofillEquipo/:id", authController.updateEquipmentInfo)
 
 router.get("/autofillAttrs", authController.autofillAttrs)
 
+router.get("/listAttr/:id", authController.listAttrByEqID)
+
 //Items
 
 router.get("/listItems", authController.listItems)
