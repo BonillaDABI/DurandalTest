@@ -1107,7 +1107,6 @@ authController.createEquipment = async (req, res) => {
 
         const createdEquipInfo = await Equipo.getEquipmentByID(createdEquipID)
 
-
         if (createdEquipID) {
             res.status(200).json({ createdEquipID, createdEquipInfo })
         } else {

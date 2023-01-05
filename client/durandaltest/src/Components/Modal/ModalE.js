@@ -16,11 +16,11 @@ function ModalE(props) {
             pauseOnHover: false,
             draggable: true,
             progress: undefined,
-    
+
         });
-      }
-    
-      const errorAlert = () => {
+    }
+
+    const errorAlert = () => {
         toast.error("Error al crear equipo. Vuelve a intentarlo.", {
             position: "top-right",
             autoClose: 2000,
@@ -29,25 +29,25 @@ function ModalE(props) {
             pauseOnHover: false,
             draggable: true,
             progress: undefined,
-    
+
         });
-      }
-    
-      axios.get("http://localhost:3001/autofillBrands", {
-      })
-      .then((response) => {
-        const brandInfo = JSON.stringify(response.data);
-        console.log(brandInfo);
-        localStorage.setItem("brands", brandInfo)
+    }
+
+    axios.get("http://localhost:3001/autofillBrands", {
     })
-    
+        .then((response) => {
+            const brandInfo = JSON.stringify(response.data);
+            console.log(brandInfo);
+            localStorage.setItem("brands", brandInfo)
+        })
+
     var brands = JSON.parse(localStorage.getItem("brands"));
-    
+
     const [name, setName] = useState("");
     const [brandId, setBrand] = useState("");
     const [description, setDescription] = useState("");
 
-    function hide(){
+    function hide() {
         props.onHide();
         successAlert();
         setTimeout(() => {
@@ -56,27 +56,28 @@ function ModalE(props) {
         //alert("Equipo creado exitosamente en la base de datos.");
     }
 
-    function createEquip () {
-        
+    function createEquip() {
+
         axios.post('http://localhost:3001/createEquip', { // url to POST
             'Authorization': "bearer " + localStorage.getItem('token'),
             name: name,
             brand_id: brandId,
             description: description
         })
-        .then((response) => {
-            console.log(response);
-            hide();
-        }, (error) => {
-            console.log(error);
-            errorAlert();
-            //alert("Error al crear equipo. Vuelve a intentarlo.");
-        });
-        
+            .then((response) => {
+                localStorage.setItem('equipID', response.data.createdEquipID)
+                console.log(response.data.createdEquipID);
+                hide();
+            }, (error) => {
+                console.log(error);
+                errorAlert();
+                //alert("Error al crear equipo. Vuelve a intentarlo.");
+            });
+
     }
 
     return (
-        <Modal 
+        <Modal
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
@@ -89,34 +90,34 @@ function ModalE(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Nombre</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                <form>
+                    <div className='form-fields'>
+                        <div className='input-container'>
+                            <span className="input-span">Nombre</span>
+                            <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                        </div>
                     </div>
-                </div>
-                <div className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Marca</span>
-                        <select className="input-field"  value={brandId} onChange={(e) => setBrand(e.target.value)} required>
-                            <option value="" disabled hidden className="options">Seleccionar...</option> 
-                            {brands.map((item, i) => {
-                                return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
-                            })};
-                        </select>
+                    <div className='form-fields'>
+                        <div className='input-container'>
+                            <span className="input-span">Marca</span>
+                            <select className="input-field" value={brandId} onChange={(e) => setBrand(e.target.value)} required>
+                                <option value="" disabled hidden className="options">Seleccionar...</option>
+                                {brands.map((item, i) => {
+                                    return <option className="options" key={i} value={item.id}>{item.brand_name}</option>
+                                })};
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div id="description-field" className='form-fields'>
-                    <div className='input-container'>
-                        <span className="input-span">Descripción</span>
-                        <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                    <div id="description-field" className='form-fields'>
+                        <div className='input-container'>
+                            <span className="input-span">Descripción</span>
+                            <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             </Modal.Body>
             <Modal.Footer>
-                <button className='save-modal-button' onClick={() => {createEquip()}}>Guardar</button>
+                <button className='save-modal-button' onClick={() => { createEquip() }}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );
