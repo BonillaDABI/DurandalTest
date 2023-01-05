@@ -40,7 +40,7 @@ function ModalEqAtt(props) {
     const [value, setValor] = useState("");
 
     function createEquipAtt() {
-    
+
         axios.post('http://localhost:3001/createEqAttr', { // url to POST
             'Authorization': "bearer " + localStorage.getItem('token'),
             name: name,
@@ -50,7 +50,7 @@ function ModalEqAtt(props) {
             value: value
         })
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 hide();
             }, (error) => {
                 console.log(error);
@@ -75,21 +75,21 @@ function ModalEqAtt(props) {
 
     axios.get("http://localhost:3001/autofillAttrs", {
     })
-    .then((response) => {
-        const attrInfo = JSON.stringify(response.data);
-        //console.log(rolesInfo);
-        localStorage.setItem("attributes", attrInfo)
-        //console.log(localStorage.getItem("roles"));
-    })
-    
+        .then((response) => {
+            const attrInfo = JSON.stringify(response.data);
+            //console.log(rolesInfo);
+            localStorage.setItem("attributes", attrInfo)
+            //console.log(localStorage.getItem("roles"));
+        })
+
     var attributes = JSON.parse(localStorage.getItem("attributes"));
-    console.log(attributes)
+    // console.log(attributes)
 
     const [tabIndex, setTabIndex] = useState(0);
 
     const handleTabChange = (event, newTabIndex) => {
         setTabIndex(newTabIndex);
-      };
+    };
 
     return (
         <Modal
@@ -107,20 +107,20 @@ function ModalEqAtt(props) {
             <Modal.Body>
                 <Box>
                     <Box>
-                        <Tabs 
-                        value={tabIndex} 
-                        onChange={handleTabChange}
-                        textColor="inherit"
-                        variant="fullWidth"
-                        TabIndicatorProps={{sx: {backgroundColor: '#4a4a4a'}}} 
-                        sx={{
-                            "& button": {color: '#4a4a4a'},
-                            "& button:active": {color: '#dc1f0f'},
-                            "& button:Mui-selected": {color: '#dc1f0f'}
-                        }}
+                        <Tabs
+                            value={tabIndex}
+                            onChange={handleTabChange}
+                            textColor="inherit"
+                            variant="fullWidth"
+                            TabIndicatorProps={{ sx: { backgroundColor: '#4a4a4a' } }}
+                            sx={{
+                                "& button": { color: '#4a4a4a' },
+                                "& button:active": { color: '#dc1f0f' },
+                                "& button:Mui-selected": { color: '#dc1f0f' }
+                            }}
                         >
-                        <Tab label="Atributo existente"></Tab>
-                        <Tab label="Nuevo atributo"></Tab>
+                            <Tab label="Atributo existente"></Tab>
+                            <Tab label="Nuevo atributo"></Tab>
                         </Tabs>
                     </Box>
                     {tabIndex === 0 && (
@@ -129,8 +129,8 @@ function ModalEqAtt(props) {
                                 <div className='form-fields'>
                                     <div className='input-container'>
                                         <span className="input-span">Atributo</span>
-                                        <select className="input-field"  required>
-                                            <option value="" selected disabled hidden className="options">Seleccionar...</option> 
+                                        <select className="input-field" required>
+                                            <option value="" selected disabled hidden className="options">Seleccionar...</option>
                                             {attributes.map((item, i) => {
                                                 return <option className="options" key={i} value={item.id}>{item.name}</option>
                                             })};

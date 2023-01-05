@@ -891,6 +891,19 @@ authController.autofillAttrs = async (req, res) => {
 
 }
 
+authController.listAttrByEqID = async (req, res) => {
+    const id = req.params.id
+    const equipAttrInfo = await Equipo.getEquipAttrs(id)
+    if (equipInfo.is_active === 1) {
+        equipInfo.is_active = "Activo"
+    } else {
+        equipInfo.is_active = "Inactivo"
+    }
+
+    res.json({ equipInfo, equipAttrInfo })
+
+}
+
 authController.updateItemInfo = async (req, res) => {
     const id = req.params.id
     var itemInfo = await Item.sendItemInfo(id)
@@ -1116,7 +1129,7 @@ authController.createEquipment = async (req, res) => {
         const createdEquipInfo = await Equipo.getEquipmentByID(createdEquipID)
 
         if (createdEquipID) {
-            res.status(200).json({ createdEquipID, createdEquipInfo })
+            res.status(200).json({ createdEquipID })
         } else {
             res.status(400).json('Error al crear equipo')
         }

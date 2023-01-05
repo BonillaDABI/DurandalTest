@@ -194,7 +194,7 @@ const deleteAttrById = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connection.query(
-                ' DELETE FROM `equipment_attributes` WHERE `id` = ?  ', id,
+                ' DELETE FROM `equipment_values` WHERE `id` = ?  ', id,
                 function (err, rows) {
                     if (err) {
                         reject(err)
