@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react"
-import Sidebar from "../Components/Sidebar/Sidebar"
+import NewSidebar from "../Components/ProSidebar/ProSidebar";
 import Navbar from "../Components/Navbar/Navbar"
 
 //import { ToastContainer, toast } from 'react-toastify';
@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   return (
     <div className="home">
-      <Sidebar />
+      <NewSidebar />
       <div className="homeContainer">
         <Navbar />
           <div className="content">

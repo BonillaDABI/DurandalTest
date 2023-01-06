@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../SCSS/Elements/_design.scss"
-import Sidebar from "../Components/Sidebar/Sidebar";
+import NewSidebar from "../Components/ProSidebar/ProSidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import Datatable from "../Components/Datatable/DatatableP";
 
@@ -10,7 +10,7 @@ import "../SCSS/Elements/_tables.scss"
 function ListPermissions() { 
   return (
     <div className="list">
-      <Sidebar />
+      <NewSidebar />
       <div className="listContainer">
         <Navbar />
         <Datatable />

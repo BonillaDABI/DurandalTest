@@ -4,13 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { DarkModeContextProvider } from './Context/darkModeContext';
+import { ProSidebarProvider } from 'react-pro-sidebar';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <DarkModeContextProvider>
-      <App />
+      <ProSidebarProvider>
+        <App />
+      </ProSidebarProvider>
     </DarkModeContextProvider>
+    
   </React.StrictMode>
 );
 

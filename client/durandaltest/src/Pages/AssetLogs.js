@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-
-import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import Datatable from "../Components/Datatable/DatatableALogs";
 
 import "../SCSS/Elements/_tables.scss"
+import NewSidebar from "../Components/ProSidebar/ProSidebar";
 
 
 function AssetLogs() {    
   return (
     <div className="list">
-      <Sidebar />
+      <NewSidebar />
         <div className="listContainer">
             <Navbar />
             <Datatable />

@@ -2,7 +2,7 @@ import React from "react";
 
 
 import "../SCSS/Elements/_design.scss"
-import Sidebar from "../Components/Sidebar/Sidebar";
+import NewSidebar from "../Components/ProSidebar/ProSidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import Datatable from "../Components/Datatable/DatatableR";
 
@@ -11,7 +11,7 @@ import "../SCSS/Elements/_tables.scss"
 function ListRoles() {
   return (
       <div className="list">
-        <Sidebar />
+        <NewSidebar />
         <div className="listContainer">
           <Navbar />
           <Datatable />
