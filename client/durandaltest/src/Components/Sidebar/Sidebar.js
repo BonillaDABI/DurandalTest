@@ -85,7 +85,7 @@ const Sidebar = () => {
                             <span>Activos</span>
                         </li>
                     </Link>                 
-                    <p className="title">FUNCIONES</p>
+                    {/* <p className="title">FUNCIONES</p>
                     <Link to="#" style={{textDecoration: 'none'}} >
                         <li>
                             <FontAwesomeIcon icon={faCalendarDays} className="icon"/>
@@ -103,7 +103,7 @@ const Sidebar = () => {
                             <FontAwesomeIcon icon={faLocationDot} className="icon"/>
                             <span>Tracking</span>
                         </li>
-                    </Link>
+                    </Link> */}
                     
                     <p className="title">EXTRAS / USUARIO</p>
                     {/* <li>
