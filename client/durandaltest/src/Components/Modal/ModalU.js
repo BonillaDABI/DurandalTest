@@ -148,7 +148,7 @@ function ModalU(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button type='submit' form='users-form' className='save-modal-button' onClick={() => {createUser()}}>Guardar</button>
+                <button type="button" form='users-form' className='save-modal-button' onClick={() => {createUser()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

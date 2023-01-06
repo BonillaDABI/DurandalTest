@@ -103,7 +103,7 @@
 //           </div>
 //           <div className="cu-button-container">
 
-//             <button className="cu-button" type="submit" onClick={() => createUser()}>
+//             <button className="cu-button" type="button" onClick={() => createUser()}>
 //               Create
 //             </button>
 //           </div>

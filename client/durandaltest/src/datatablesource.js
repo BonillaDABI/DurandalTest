@@ -26,7 +26,7 @@ import ModalIUpdate from "./Components/Modal/Update/ModalIUpdate";
 import ModalEUpdate from "./Components/Modal/Update/ModalEUpdate";
 import ModalVUpdate from "./Components/Modal/Update/ModalVUpdate";
 import { Stack } from "@mui/system";
-import ModalEqAttDelete from "./Components/Modal/Delete/ModalEqAtt";
+import ModalEqAttDelete from "./Components/Modal/Delete/ModalEqAttDelete";
 import ModalEqAttUpdate from "./Components/Modal/Update/ModalEqAttUpdate";
 
 
@@ -927,22 +927,22 @@ export const EquipsTableAxios = () => {
 export const EquipAttTableAxios = () => {
     const [equipAttData, setEquipAttData] = useState([])
 
-    // var logEquipId = localStorage.getItem("equipIdForLog")
-    // console.log(logEquipId)
+    var attEquipId = localStorage.getItem("equipIdForAtt")
+    //console.log(attEquipId)
 
-    // const endpoint = `http://localhost:3001/listEquipLogs/${logEquipId}`;
+    const endpoint = `http://localhost:3001/listAttr/${attEquipId}`;
 
-    // const getData = async () => {
-    //     await axios.get(endpoint).then((response) => {
-    //         console.log(response.data);
-    //         const equipLogData = response.data;
-    //         setEquipLogData(equipLogData);
-    //     })
-    // }
+    const getData = async () => {
+        await axios.get(endpoint).then((response) => {
+            //console.log(response.data);
+            const equipAttData = response.data;
+            setEquipAttData(equipAttData);
+        })
+    }
 
-    // useEffect(() => {
-    //     getData()
-    // }, [])
+    useEffect(() => {
+        getData()
+    }, [])
 
     const [modalEqAttDeleteShow, setModalEqAttDeleteShow] = useState(false);
     const [modalEqAttUpdateShow, setModalEqAttUpdateShow] = useState(false);
@@ -951,8 +951,19 @@ export const EquipAttTableAxios = () => {
 
     }
 
-    function manageEqAttDelete(){
-        
+    function manageEqAttDelete(eqAttInfo){
+        //console.log(eqAttInfo);
+        var equipAttName = eqAttInfo.name;
+        var equipAttDim = eqAttInfo.dimensiones;
+        var equipAttVal = eqAttInfo.value;
+
+        var equipAttId = eqAttInfo.id;
+        //console.log(equipAttId)
+        localStorage.setItem("equipAttIdToDelete", equipAttId);
+
+        localStorage.setItem("equipAttNameToDelete", equipAttName);
+        localStorage.setItem("equipAttDimToDelete", equipAttDim);
+        localStorage.setItem("equipAttValToDelete", equipAttVal);
     }
 
     const actionColumn = [
@@ -989,7 +1000,7 @@ export const EquipAttTableAxios = () => {
             width: 70
         },
         {
-            field: 'equipment_attributes_name',
+            field: 'name',
             headerName: 'Atributo',
             width: 250
         },
@@ -999,7 +1010,7 @@ export const EquipAttTableAxios = () => {
             width: 70
         },
         {
-            field: 'dimensions',
+            field: 'dimensiones',
             headerName: 'Dimensiones',
             width: 120
         }
@@ -1015,6 +1026,7 @@ export const EquipAttTableAxios = () => {
             columns={equipAttColumns.concat(actionColumn)}
             pageSize={5}
             disableSelectionOnClick
+            onCellEditCommit={getData}
             rowsPerPageOptions={[5]}
             components={{ Toolbar: GridToolbar, NoRowsOverlay: () => (
                 <Stack height="100%" alignItems="center" justifyContent="center">

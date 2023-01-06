@@ -15,7 +15,7 @@ const CreateR = () => {
                 
               </div>
               <div className="cu-button-container">
-                <button className="cu-button" type="submit" onClick={() => createRole()}>
+                <button className="cu-button" type="button" onClick={() => createRole()}>
                   Create
                 </button>
               </div>

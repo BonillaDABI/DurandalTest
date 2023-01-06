@@ -152,7 +152,7 @@ function ModalA(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button type='submit' form='assets-form' className='save-modal-button' onClick={() => {createAsset()}}>Guardar</button>
+                <button type="button" form='assets-form' className='save-modal-button' onClick={() => {createAsset()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

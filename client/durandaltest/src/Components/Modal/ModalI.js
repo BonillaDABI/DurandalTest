@@ -142,7 +142,7 @@ function ModalI(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button type='submit' form='items-form' className='save-modal-button' onClick={() => {createItem()}}>Guardar</button>
+                <button type="button" form='items-form' className='save-modal-button' onClick={() => {createItem()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

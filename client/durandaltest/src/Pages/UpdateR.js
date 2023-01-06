@@ -15,7 +15,7 @@ const UpdateR = () => {
                 
               </div>
               <div className="cu-button-container">
-                <button className="cu-button" type="submit" onClick={() => updateRole()}>
+                <button className="cu-button" type="button" onClick={() => updateRole()}>
                   Update
                 </button>
               </div>

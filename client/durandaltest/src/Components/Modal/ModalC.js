@@ -174,7 +174,7 @@ function ModalC(props) {
             </form> 
             </Modal.Body>
             <Modal.Footer>
-                <button type='submit' form='clients-form' className='save-modal-button' onClick={() => {createClient()}}>Guardar</button>
+                <button type="button" form='clients-form' className='save-modal-button' onClick={() => {createClient()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

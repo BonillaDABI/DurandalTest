@@ -146,7 +146,7 @@ function ModalT(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button type='submit' form='techs-form' className='save-modal-button' onClick={() => {createTech()}}>Guardar</button>
+                <button type="button" form='techs-form' className='save-modal-button' onClick={() => {createTech()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

@@ -113,7 +113,7 @@
 //             />
 //           </div>
 //           <div className="cu-button-container">
-//             <button className="cu-button" type="submit" onClick={() => updateUser()}>
+//             <button className="cu-button" type="button" onClick={() => updateUser()}>
 //               Update
 //             </button>
 //           </div>

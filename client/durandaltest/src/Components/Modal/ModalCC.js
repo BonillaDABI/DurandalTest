@@ -150,7 +150,7 @@ function ModalCC(props) {
             </form> 
             </Modal.Body>
             <Modal.Footer>
-                <button type='submit' form='cc-form' className='save-modal-button' onClick={() => {createContact()}}>Guardar</button>
+                <button type="button" form='cc-form' className='save-modal-button' onClick={() => {createContact()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );

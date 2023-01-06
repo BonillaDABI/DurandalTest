@@ -46,7 +46,7 @@ function ModalEqAtt(props) {
             name: name,
             dimensiones: dimensiones,
             description: description,
-            equipment_id: localStorage.getItem('equipID'),
+            equipment_id: localStorage.getItem('equipIdForAtt'),
             value: value
         })
             .then((response) => {
@@ -67,9 +67,9 @@ function ModalEqAtt(props) {
     function hide() {
         props.onHide();
         successAlert();
-        setTimeout(() => {
-            window.location.reload();
-        }, 3600);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 3600);
         //alert("Atributo creado exitosamente en la base de datos.");
     }
 
@@ -145,7 +145,7 @@ function ModalEqAtt(props) {
                                 </div>
                             </form>
                             <Modal.Footer>
-                                <button type='submit' form='asign-att-form' className='save-modal-button' onClick={() => { asignEquipAtt() }}>Asignar</button>
+                                <button type="button" form='asign-att-form' className='save-modal-button' onClick={() => { asignEquipAtt() }}>Asignar</button>
                             </Modal.Footer>
                         </Box>
                     )}
@@ -178,7 +178,7 @@ function ModalEqAtt(props) {
                                 </div>
                             </form>
                             <Modal.Footer>
-                                <button type='submit' form='create-att-form' className='save-modal-button' onClick={() => { createEquipAtt() }}>Guardar</button>
+                                <button type="button" form='create-att-form' className='save-modal-button' onClick={() => { createEquipAtt() }}>Guardar</button>
                             </Modal.Footer>
                         </Box>
                     )}

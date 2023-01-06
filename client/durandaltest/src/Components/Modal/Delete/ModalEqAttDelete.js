@@ -6,21 +6,20 @@ import { faWarning, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icon
 import "../../../SCSS/Components/_modal.scss"
 
 function ModalEqAttDelete(props) {
-    // var deleteItemName = localStorage.getItem("itemNameToDelete");
-    // var deleteItemCurrency = localStorage.getItem("itemCurrencyToDelete");
-    // var deleteItemUnit = localStorage.getItem("itemUnitToDelete");
-    // var deleteItemUpdatedDate = localStorage.getItem("itemUpdatedDateToDelete");
-
+    var deleteEquipAttName = localStorage.getItem("equipAttNameToDelete");
+    var deleteEquipAttDim = localStorage.getItem("equipAttDimToDelete");
+    var deleteEquipAttVal = localStorage.getItem("equipAttValToDelete");
 
     const deleteAtt = () => {
-        // var deleteAttId = localStorage.getItem("itemIdToDelete");
-        // const response = axios.delete(`http://localhost:3001/deleteItem/${deleteItemId}`);
+        var deleteAttId = localStorage.getItem("equipAttIdToDelete");
+        //console.log(deleteAttId);
+        const response = axios.delete(`http://localhost:3001/deleteAttr/${deleteAttId}`);
         // console.log(deleteItemId);
     } 
     
     function hideS(){
         props.onHide();
-        window.location.reload();
+        //window.location.reload();
     }
 
     function hideN(){
@@ -41,7 +40,9 @@ function ModalEqAttDelete(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-
+                <span className='delete-info'><strong>Nombre:</strong> {deleteEquipAttName}</span><br />
+                <span className='delete-info'><strong>Dimensiones:</strong> {deleteEquipAttDim}</span><br />
+                <span className='delete-info'><strong>Valor:</strong> {deleteEquipAttVal}</span>
             </Modal.Body>
             <Modal.Footer>
                 <button className='modal-button' onClick={() => {deleteAtt(); hideS()}}><FontAwesomeIcon icon={faWarning}/> Si, quiero eliminar esto.</button>

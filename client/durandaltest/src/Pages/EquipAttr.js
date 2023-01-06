@@ -39,7 +39,7 @@ function EquipAttr() {
   })
     .then((response) => {
       const brandInfo = JSON.stringify(response.data);
-      console.log(brandInfo);
+      //console.log(brandInfo);
       localStorage.setItem("brands", brandInfo)
     })
 
@@ -49,7 +49,7 @@ function EquipAttr() {
   const [brandId, setBrand] = useState("");
   const [description, setDescription] = useState("");
 
-  function createEquipment2() {
+  function createEquipment() {
 
     axios.post('http://localhost:3001/createEquip', { // url to POST
       'Authorization': "bearer " + localStorage.getItem('token'),
@@ -58,9 +58,11 @@ function EquipAttr() {
       description: description
     })
       .then((response) => {
+        console.log(response.data)
         const equipId = JSON.stringify(response.data.createdEquipID);
-        localStorage.setItem('testID', equipId)
-        console.log(localStorage.getItem('testID'));
+        localStorage.setItem('equipIdForAtt', equipId)
+        
+        //document.getElementById('add-attribute-btn').disabled = false;
       }, (error) => {
         console.log(error);
         errorAlert();
@@ -106,7 +108,7 @@ function EquipAttr() {
             </div>
           </form>
           <div className="button-container">
-            <button type="button" onClick={() => { createEquipment2() }} className="save-button" form="equip-form-id">Guardar</button>
+            <button type="button" onClick={() => { createEquipment() }} className="save-button" form="equip-form-id">Guardar</button>
           </div>
         </div>
 

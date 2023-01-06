@@ -151,7 +151,7 @@ function ModalV(props) {
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <button type="submit" form='visits-form' className='save-modal-button' onClick={() => {createVisit()}}>Guardar</button>
+                <button type="button" form='visits-form' className='save-modal-button' onClick={() => {createVisit()}}>Guardar</button>
             </Modal.Footer>
         </Modal>
     );
