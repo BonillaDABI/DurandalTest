@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import NewSidebar from "../Components/ProSidebar/ProSidebar";
-import Navbar from "../Components/Navbar/Navbar";
 import DatatableC from "../Components/Datatable/DatatableClientC";
 import DatatableS from "../Components/Datatable/DatatableS";
 
@@ -54,10 +52,7 @@ function ClientInfo() {
   //console.log(clientTax);
   return (
     <div className="list">
-      <NewSidebar />
       <div className="listContainer">
-        <Navbar />
-        <br />
         <ClientBreadcrumbs />
         
         <form className="update-client-form">

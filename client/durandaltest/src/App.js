@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css'
 import "./Style/dark.scss"
@@ -31,44 +31,55 @@ import EquipLogs from "./Pages/EquipLogs";
 
 import { DarkModeContext } from "./Context/darkModeContext";
 import EquipAttr from "./Pages/EquipAttr";
+import NewSidebar from "./Components/ProSidebar/ProSidebar";
+import Navbar from "./Components/Navbar/Navbar";
 
 
 function App() {
 
   const { darkMode } = useContext(DarkModeContext)
 
-  return (
-    <div className={darkMode ? "app dark" : "app"}>
-      <BrowserRouter>
-        <Routes>
-          <Route exact path="/" element={<Login />} />
-          <Route exact path="/recovery" element={<Recovery />} />
-          
-          <Route exact path="/listAll" element={<ListUsers />} />
-          <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
-          <Route exact path="/clients" element={<Clients />} />
-          <Route exact path="/clients/clientInfo" element={<ClientInfo />} />
-          <Route exact path="/tecnicos" element={<Tecnicos />} />
-          <Route exact path="/tecnicos/tecnicosLogs" element={<TechLogs />} />
-          <Route exact path="/siteLogs" element={<SiteLogs />} />
-          <Route exact path="/assetLogs" element={<AssetLogs />} />
-          <Route exact path="/visitLogs" element={<VisitLogs />} />
-          <Route exact path="/equipLogs" element={<EquipLogs />} />
-
-          <Route exact path="/assets" element={<Assets />} /> 
-          <Route exact path="/activities" element={<Activities />} /> 
-          <Route exact path="/equipments" element={<Equipments />} /> 
-          <Route exact path="/equipmentAttr" element={<EquipAttr />} /> 
-          <Route exact path="/items" element={<Items />} /> 
-          <Route exact path="/visits" element={<Visits />} /> 
-
-          {/* <Route exact path="/create" element={<Create />} />
-          <Route exact path="/update" element={<Update />} />
-          <Route exact path="/listAllR" element={<ListRoles />} />
-          <Route exact path="/listAllP" element={<ListPermissions />} /> */}
-        </Routes>
-      </BrowserRouter>
+  const Layout = () => (
+    <>
+      <div className={darkMode ? "app dark" : "app"}>
+      <div className="app">
+        <NewSidebar />
+        <main className="content">   
+            <Navbar />
+            <Outlet className="page-content" />
+        </main>   
+      </div>
     </div>
+    </>
+  )
+
+  return (
+    <Routes>
+      <Route element={<Layout />}>       
+        <Route exact path="/listAll" element={<ListUsers />} />
+        <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
+        <Route exact path="/clients" element={<Clients />} />
+        <Route exact path="/clients/clientInfo" element={<ClientInfo />} />
+        <Route exact path="/tecnicos" element={<Tecnicos />} />
+
+        <Route exact path="/tecnicos/tecnicosLogs" element={<TechLogs />} />
+        <Route exact path="/siteLogs" element={<SiteLogs />} />
+        <Route exact path="/assetLogs" element={<AssetLogs />} />
+        <Route exact path="/visitLogs" element={<VisitLogs />} />
+        <Route exact path="/equipLogs" element={<EquipLogs />} />
+
+        <Route exact path="/assets" element={<Assets />} /> 
+        <Route exact path="/activities" element={<Activities />} /> 
+        <Route exact path="/equipments" element={<Equipments />} /> 
+        <Route exact path="/equipmentAttr" element={<EquipAttr />} /> 
+        <Route exact path="/items" element={<Items />} /> 
+        <Route exact path="/visits" element={<Visits />} />
+        
+        <Route path='*' element={<>not found</>}/> 
+      </Route>
+      <Route exact path="/" element={<Login />} />
+      <Route exact path="/recovery" element={<Recovery />} />
+    </Routes>
   );
 }
 

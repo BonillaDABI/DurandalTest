@@ -29,16 +29,17 @@ const NewSidebar = () => {
         <Box
             sx={{
                 "& .icon": {
-                    color: 'red !important',
+                    color: 'red ',
                 },
                 "& .ps-menu-button:hover": {
-                    background: '#f3f8fb !important',
+                    background: '#f3f8fb',
                 },
                 "& .ps-menu-button::active": {
                     background: 'black !important',
                 },
-                
-                
+                "& .ps-sidebar-container":{
+                    background: '#F5F6F8',
+                },              
             }}
         >
             <Sidebar style={{ height: "100vh" }} rtl={false}>
@@ -63,7 +64,7 @@ const NewSidebar = () => {
                 </Menu>
                 <Menu>
                     {toggled ? (
-                        <MenuItem disabled>------</MenuItem>
+                        <MenuItem disabled>---------</MenuItem>
                     ): (
                         <MenuItem disabled>Generales</MenuItem>
                     )}
@@ -88,7 +89,7 @@ const NewSidebar = () => {
                 </Menu>
                 <Menu>
                     {toggled ? (
-                        <MenuItem disabled>------</MenuItem>
+                        <MenuItem disabled>---------</MenuItem>
                     ): (
                         <MenuItem disabled>Modulos</MenuItem>
                     )}
@@ -123,7 +124,7 @@ const NewSidebar = () => {
                         Activos
                     </MenuItem>
                 </Menu>
-                <Menu>
+                {/* <Menu>
                     {toggled ? (
                         <MenuItem disabled>------</MenuItem>
                     ): (
@@ -135,7 +136,7 @@ const NewSidebar = () => {
                     >
                         Logout
                     </MenuItem>
-                </Menu>
+                </Menu> */}
             </Sidebar>
         </Box>
     );

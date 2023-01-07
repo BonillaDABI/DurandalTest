@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import NewSidebar from "../Components/ProSidebar/ProSidebar";
-import Navbar from "../Components/Navbar/Navbar";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -73,9 +71,7 @@ function EquipAttr() {
 
   return (
     <div className="list">
-      <NewSidebar />
       <div className="listContainer">
-        <Navbar />
         <div className="equip-form-container">
           <h1 className="equip-title">Nuevo equipo</h1>
           <form id="equip-form-id">

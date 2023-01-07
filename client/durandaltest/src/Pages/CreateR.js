@@ -1,4 +1,3 @@
-import NavBar from "../Components/Navbar";
 
 const CreateR = () => {
     const createRole = () => {
@@ -7,7 +6,6 @@ const CreateR = () => {
 
     return (
         <div className="cu-container">
-          <NavBar />
           <div className="cu-content-container">
             <form className="cu-form">
               <h1 className="title">DABI Durandal | Create - Roles</h1>

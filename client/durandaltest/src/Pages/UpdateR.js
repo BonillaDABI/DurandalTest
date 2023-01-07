@@ -1,5 +1,3 @@
-import NavBar from "../Components/Navbar";
-
 const UpdateR = () => {
     const updateRole = () => {
         
@@ -7,7 +5,6 @@ const UpdateR = () => {
 
     return (
         <div className="cu-container">
-          <NavBar />
           <div className="cu-content-container">
             <form className="cu-form">
               <h1 className="title">DABI Durandal | Update - Roles</h1>

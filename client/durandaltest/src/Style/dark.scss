@@ -1,48 +1,77 @@
 .app.dark {
-    background-color: #222;
-    color: whitesmoke;
+    .content {
+        background-color: #F5F6F8;
+    }
+
+    .ps-sidebar-container, .navbar {
+        background-color: black;
+    }
+
+    .ps-sidebar-container {
+        .icon, .ps-menu-label {
+            color: whitesmoke;
+        }
+
+        .ps-menu-button:hover {
+            background: red;
+        }
+    }
 
     .navbar {
-        color: #999;
-        border-color: #444;
+        margin-left: -1px;
+        .navbar-search-bar {
+            background-color: whitesmoke;
+        }
 
-        .search {
-            border-color: gray;
+        .navbar-icons {
+            color: whitesmoke;
         }
     }
 
-    .sidebar {
-        background-color: #111;
-        border-color: #444;
+    // background-color: #222;
+    // color: whitesmoke;
 
-        .top {
-            .logo {
-                color: #999;
-            }
-        }
+    // .navbar {
+    //     color: #999;
+    //     border-color: #444;
 
-        hr {
-            border-color: #444;
-        }
+    //     .search {
+    //         border-color: gray;
+    //     }
+    // }
 
-        ul {
-            li {
-                &:hover{
-                    background-color: #444;
-                }
+    // .sidebar {
+    //     background-color: #111;
+    //     border-color: #444;
 
-                .icon {
-                    color: #999;
-                }
+    //     .top {
+    //         .logo {
+    //             color: #999;
+    //         }
+    //     }
 
-                span {
-                    color: whitesmoke;
-                }
-            }
-        }
-    }
+    //     hr {
+    //         border-color: #444;
+    //     }
 
-    h1, td {
-        color: black;
-    }
+    //     ul {
+    //         li {
+    //             &:hover{
+    //                 background-color: #444;
+    //             }
+
+    //             .icon {
+    //                 color: #999;
+    //             }
+
+    //             span {
+    //                 color: whitesmoke;
+    //             }
+    //         }
+    //     }
+    // }
+
+    // h1, td {
+    //     color: black;
+    // }
 }
