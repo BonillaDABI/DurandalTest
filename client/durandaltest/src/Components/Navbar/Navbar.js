@@ -56,8 +56,10 @@ const Navbar = () => {
             <Box
                 className="navbar-search-bar"
                 display="flex"
-                backgroundColor="#dc1f0f"
-                borderRadius="3px"
+                backgroundColor="whitesmoke"
+                borderColor="#888"
+                border={3}
+                borderRadius="6px"
             >
                 <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Buscar..."></InputBase>
                 <IconButton type="button" sx={{ p: 1 }}>

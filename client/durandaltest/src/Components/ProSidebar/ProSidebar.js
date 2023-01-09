@@ -3,8 +3,18 @@ import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../Context/darkModeContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faAddressBook, faBell, faBook, faBorderAll, faBox, faBoxesPacking, faBoxesStacked, faCalendarDays, faGear, faHelmetSafety, faKey, faListCheck, faLocationArrow, faLocationDot, faRightFromBracket, faScrewdriverWrench, faSquarePollVertical, faUser, faUserGear, faUsers, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Box } from "@mui/material";
+
+import { faBars, faAddressBook, faBell, faBook, faBorderAll, faBox, faBoxesPacking, faBoxesStacked, faCalendarDays, faGear, faHelmetSafety, faKey, faListCheck, faLocationArrow, faLocationDot, faRightFromBracket, faScrewdriverWrench, faSquarePollVertical, faUser, faUserGear, faUsers, faHome } from '@fortawesome/free-solid-svg-icons';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
+import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import HandymanOutlinedIcon from '@mui/icons-material/HandymanOutlined';
+import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 
 const NewSidebar = () => {
     const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
@@ -57,7 +67,7 @@ const NewSidebar = () => {
                 <Menu>
                     <MenuItem 
                         routerLink={<Link to="/dashboard" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faHome} className="icon"/>}
+                        icon={<HomeOutlinedIcon className="icon"/>}
                     >
                         Inicio
                     </MenuItem>
@@ -70,19 +80,19 @@ const NewSidebar = () => {
                     )}
                     <MenuItem 
                         routerLink={<Link to="/clients" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faBook} className="icon"/>}
+                        icon={<MenuBookOutlinedIcon className="icon"/>}
                     >
                         Clientes
                     </MenuItem>
                     <MenuItem 
                         routerLink={<Link to="/tecnicos" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faHelmetSafety} className="icon"/>}
+                        icon={<EngineeringOutlinedIcon className="icon"/>}
                     >
                         Técnicos
                     </MenuItem>
                     <MenuItem 
                         routerLink={<Link to="/ListAll" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faUsers} className="icon"/>}
+                        icon={<GroupOutlinedIcon className="icon"/>}
                     >
                         Usuarios
                     </MenuItem>
@@ -95,31 +105,31 @@ const NewSidebar = () => {
                     )}
                     <MenuItem 
                         routerLink={<Link to="/visits" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faLocationArrow} className="icon"/>}
+                        icon={<NearMeOutlinedIcon className="icon"/>}
                     >
                         Visitas
                     </MenuItem>
                     <MenuItem 
                         routerLink={<Link to="/activities" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faListCheck} className="icon"/>}
+                        icon={<FormatListBulletedOutlinedIcon className="icon"/>}
                     >
                         Actividades
                     </MenuItem>
                     <MenuItem 
                         routerLink={<Link to="/equipments" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faScrewdriverWrench} className="icon"/>}
+                        icon={<HandymanOutlinedIcon className="icon"/>}
                     >
                         Equipos
                     </MenuItem>
                     <MenuItem 
                         routerLink={<Link to="/items" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faBox} className="icon"/>}
+                        icon={<CategoryOutlinedIcon className="icon"/>}
                     >
                         Items
                     </MenuItem>
                     <MenuItem 
                         routerLink={<Link to="/assets" style={{textDecoration: 'none'}}></Link>}
-                        icon={<FontAwesomeIcon icon={faBoxesPacking} className="icon"/>}
+                        icon={<Inventory2OutlinedIcon className="icon"/>}
                     >
                         Activos
                     </MenuItem>

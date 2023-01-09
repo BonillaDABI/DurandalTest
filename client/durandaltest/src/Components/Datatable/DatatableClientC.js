@@ -11,7 +11,7 @@ const Datatable = () => {
     const [modalClientCShow, setModalClientCShow] = React.useState(false);
 
     return (
-        <div className="datatable">
+        <div className="datatable" id="datatable-cc">
             <ToastContainer />
             <span className="dabiWebText">DABI WEB / Contactos </span>
             <button className="add-button" onClick={() => setModalClientCShow(true)}>Agregar <FontAwesomeIcon icon={faUserPlus}/></button>

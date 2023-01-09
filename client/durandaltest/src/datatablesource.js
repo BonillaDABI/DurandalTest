@@ -28,7 +28,8 @@ import ModalVUpdate from "./Components/Modal/Update/ModalVUpdate";
 import { Stack } from "@mui/system";
 import ModalEqAttDelete from "./Components/Modal/Delete/ModalEqAttDelete";
 import ModalEqAttUpdate from "./Components/Modal/Update/ModalEqAttUpdate";
-
+import ModalSiteADelete from "./Components/Modal/Delete/ModalSiteADelete";
+import ModalSiteAUpdate from "./Components/Modal/Update/ModalSiteAUpdate";
 
 
 // #region Activities Logs
@@ -105,7 +106,7 @@ export const AssetLogsTableAxios = () => {
             <Grid item xs={6}>
                 <div
                     style={{
-                        height: "650%",
+                        height: "600%",
                         width: "100%",
                         display: "block",
                         marginLeft: "auto",
@@ -247,7 +248,7 @@ export const EquipLogsTableAxios = () => {
             <Grid item xs={6}>
                 <div
                     style={{
-                        height: "650%",
+                        height: "600%",
                         width: "100%",
                         display: "block",
                         marginLeft: "auto",
@@ -388,7 +389,7 @@ export const VisitLogsTableAxios = () => {
             <Grid item xs={6}>
                 <div
                     style={{
-                        height: "650%",
+                        height: "600%",
                         width: "100%",
                         display: "block",
                         marginLeft: "auto",
@@ -1026,7 +1027,6 @@ export const EquipAttTableAxios = () => {
             columns={equipAttColumns.concat(actionColumn)}
             pageSize={5}
             disableSelectionOnClick
-            onCellEditCommit={getData}
             rowsPerPageOptions={[5]}
             components={{ Toolbar: GridToolbar, NoRowsOverlay: () => (
                 <Stack height="100%" alignItems="center" justifyContent="center">
@@ -1441,7 +1441,7 @@ export const SiteLogsTableAxios = () => {
             <Grid item xs={6}>
                 <div
                     style={{
-                        height: "650%",
+                        height: "600%",
                         width: "100%",
                         display: "block",
                         marginLeft: "auto",
@@ -1590,7 +1590,7 @@ export const TechLogsTableAxios = () => {
             <Grid item xs={6}>
                 <div
                     style={{
-                        height: "700%",
+                        height: "500%",
                         width: "100%",
                         display: "block",
                         marginLeft: "auto",
@@ -1670,6 +1670,116 @@ export const TechLogsTableAxios = () => {
 }
 //#endregion
 
+// #region SiteAssets
+export const SiteAssetsTableAxios = () => {
+    const [siteAssetData, setSiteAssetData] = useState([])
+
+    // var attEquipId = localStorage.getItem("siteIdForUpda")
+    //console.log(attEquipId)
+
+    // const endpoint = `http://localhost:3001/listAttr/${attEquipId}`;
+
+    // const getData = async () => {
+    //     await axios.get(endpoint).then((response) => {
+    //         //console.log(response.data);
+    //         const equipAttData = response.data;
+    //         setEquipAttData(equipAttData);
+    //     })
+    // }
+
+    // useEffect(() => {
+    //     getData()
+    // }, [])
+
+    const [modalSiteADeleteShow, setModalSiteADeleteShow] = useState(false);
+    const [modalSiteAUpdateShow, setModalSiteAUpdateShow] = useState(false);
+
+    function manageSiteAUpdate(){
+
+    }
+
+    function manageSiteADelete(siteAInfo){
+        //console.log(eqAttInfo);
+        // var equipAttName = eqAttInfo.name;
+        // var equipAttDim = eqAttInfo.dimensiones;
+        // var equipAttVal = eqAttInfo.value;
+
+        // var equipAttId = eqAttInfo.id;
+        // //console.log(equipAttId)
+        // localStorage.setItem("equipAttIdToDelete", equipAttId);
+
+        // localStorage.setItem("equipAttNameToDelete", equipAttName);
+        // localStorage.setItem("equipAttDimToDelete", equipAttDim);
+        // localStorage.setItem("equipAttValToDelete", equipAttVal);
+    }
+
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Detalle",
+            width: 120,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <ModalSiteADelete
+                            show={modalSiteADeleteShow}
+                            onHide={() => setModalSiteADeleteShow(false)}
+
+                        />
+                        <ModalSiteAUpdate
+                            show={modalSiteAUpdateShow}
+                            onHide={() => setModalSiteAUpdateShow(false)}
+
+                        />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSiteAUpdateShow(true); manageSiteAUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSiteADeleteShow(true); manageSiteADelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+    // Columnas
+    const siteAColumns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 70
+        },
+        {
+            field: 'asset_name',
+            headerName: 'Asset',
+            width: 120
+        },
+        {
+            field: 'equip-name',
+            headerName: 'Equipo',
+            width: 120
+        }
+    ];
+    return (
+        <DataGrid
+            initialState={{
+                sorting: {
+                    sortModel: [{ field: 'id', sort: 'desc' }],
+                },
+            }}
+            rows={siteAssetData}
+            columns={siteAColumns.concat(actionColumn)}
+            pageSize={5}
+            disableSelectionOnClick
+            rowsPerPageOptions={[5]}
+            components={{ Toolbar: GridToolbar, NoRowsOverlay: () => (
+                <Stack height="100%" alignItems="center" justifyContent="center">
+                    El sitio no tiene assets asignados
+                </Stack>
+            ) }}
+        />
+    );
+}
+
+//#endregion
+
 // #region Sites
 
 export const SitesTableAxios = () => {
@@ -1723,6 +1833,12 @@ export const SitesTableAxios = () => {
         navigate("/siteLogs")
     }
 
+    function manageUpdateSite(siteInfo) {
+        var siteId = siteInfo.id;
+        localStorage.setItem("siteIdForUpdate", siteId);
+        navigate("/clients/clientInfo/siteAssets")
+    }
+
     const actionColumn = [
         {
             field: "action",
@@ -1736,7 +1852,7 @@ export const SitesTableAxios = () => {
                             onHide={() => setModalSDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageUpdateSite(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageSiteLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
                         <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSDeleteShow(true); manageSiteDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
                     </div>

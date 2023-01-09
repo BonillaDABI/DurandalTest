@@ -33,6 +33,7 @@ import { DarkModeContext } from "./Context/darkModeContext";
 import EquipAttr from "./Pages/EquipAttr";
 import NewSidebar from "./Components/ProSidebar/ProSidebar";
 import Navbar from "./Components/Navbar/Navbar";
+import SiteAssets from "./Pages/SiteAssets";
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
         <Route exact path="/dashboard" element={<Dashboard />} /> {/* PENDING */}
         <Route exact path="/clients" element={<Clients />} />
         <Route exact path="/clients/clientInfo" element={<ClientInfo />} />
+        <Route exact path="/clients/clientInfo/siteAssets" element={<SiteAssets />} />
         <Route exact path="/tecnicos" element={<Tecnicos />} />
 
         <Route exact path="/tecnicos/tecnicosLogs" element={<TechLogs />} />

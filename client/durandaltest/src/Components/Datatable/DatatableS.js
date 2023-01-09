@@ -11,7 +11,7 @@ const Datatable = () => {
     const [modalSitesShow, setModalSitesShow] = React.useState(false);
 
     return (
-        <div className="datatable">
+        <div className="datatable" id="datatable-sites">
             <ToastContainer />
             <span className="dabiWebText">DABI WEB / Sitios </span>
             <button className="add-button" onClick={() => setModalSitesShow(true)}>Agregar <FontAwesomeIcon icon={faPlus}/></button>

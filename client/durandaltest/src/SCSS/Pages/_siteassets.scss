@@ -1,13 +1,13 @@
 @import "../_variables.scss";
 
-.equip-title {
+.site-title {
     margin-bottom: 10px;
     font-family: $general-font;
     font-weight: 800;
     font-size: 20px;
 }
 
-#equip-form-id {
+#site-form-id {
     display: flex;
 
     #description-field {
@@ -72,4 +72,3 @@
 .button-container {
     margin-bottom: 2px;
 }
-

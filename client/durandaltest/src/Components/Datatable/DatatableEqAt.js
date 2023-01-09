@@ -26,4 +26,4 @@ const Datatable = () => {
     )
 }
 
-export default Datatable
+export default Datatable;
