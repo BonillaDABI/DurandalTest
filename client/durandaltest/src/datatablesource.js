@@ -5,6 +5,9 @@ import React, { useState, useEffect } from "react";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { faClockRotateLeft, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 
 import ModalUDelete from "./Components/Modal/Delete/ModalUDelete";
 import ModalCDelete from "./Components/Modal/Delete/ModalCDelete";
@@ -512,7 +515,7 @@ export const ActivitiesTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -521,9 +524,9 @@ export const ActivitiesTableAxios = () => {
                             onHide={() => setModalActDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageActLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalActDeleteShow(true); manageActDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageActLogs(params.row) }}><HistoryOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalActDeleteShow(true); manageActDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -675,7 +678,7 @@ export const ItemsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -689,8 +692,8 @@ export const ItemsTableAxios = () => {
                             onHide={() => setModalIUpdateShow(false)}
 
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalIUpdateShow(true); manageItemUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalIDeleteShow(true); manageItemDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalIUpdateShow(true); manageItemUpdate(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalIDeleteShow(true); manageItemDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -835,7 +838,7 @@ export const EquipsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -849,9 +852,9 @@ export const EquipsTableAxios = () => {
                             onHide={() => setModalEUpdateShow(false)}
 
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEUpdateShow(true); manageEquipUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageEquipLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEDeleteShow(true); manageEquipDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEUpdateShow(true); manageEquipUpdate(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageEquipLogs(params.row) }}><HistoryOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEDeleteShow(true); manageEquipDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -971,7 +974,7 @@ export const EquipAttTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -985,8 +988,8 @@ export const EquipAttTableAxios = () => {
                             onHide={() => setModalEqAttUpdateShow(false)}
 
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEqAttUpdateShow(true); manageEqAttUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEqAttDeleteShow(true); manageEqAttDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEqAttUpdateShow(true); manageEqAttUpdate(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalEqAttDeleteShow(true); manageEqAttDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -1111,7 +1114,7 @@ export const VisitsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -1125,9 +1128,9 @@ export const VisitsTableAxios = () => {
                             onHide={() => setModalVUpdateShow(false)}
 
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalVUpdateShow(true); manageVisitUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageVisitLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalVDeleteShow(true); manageVisitDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalVUpdateShow(true); manageVisitUpdate(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageVisitLogs(params.row) }}><HistoryOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalVDeleteShow(true); manageVisitDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -1278,7 +1281,7 @@ export const AssetsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -1292,9 +1295,9 @@ export const AssetsTableAxios = () => {
                             onHide={() => setModalAUpdateShow(false)}
 
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalAUpdateShow(true); manageAssetUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageAssetLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalADeleteShow(true); manageAssetDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalAUpdateShow(true); manageAssetUpdate(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageAssetLogs(params.row) }}><HistoryOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalADeleteShow(true); manageAssetDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -1717,7 +1720,7 @@ export const SiteAssetsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -1731,8 +1734,8 @@ export const SiteAssetsTableAxios = () => {
                             onHide={() => setModalSiteAUpdateShow(false)}
 
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSiteAUpdateShow(true); manageSiteAUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSiteADeleteShow(true); manageSiteADelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSiteAUpdateShow(true); manageSiteAUpdate(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSiteADeleteShow(true); manageSiteADelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -1843,7 +1846,7 @@ export const SitesTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -1852,9 +1855,9 @@ export const SitesTableAxios = () => {
                             onHide={() => setModalSDeleteShow(false)}
 
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageUpdateSite(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageSiteLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSDeleteShow(true); manageSiteDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageUpdateSite(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageSiteLogs(params.row) }}><HistoryOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalSDeleteShow(true); manageSiteDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -1984,7 +1987,7 @@ export const ClientContactsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -1993,8 +1996,8 @@ export const ClientContactsTableAxios = () => {
                             onHide={() => setModalCCDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCCDeleteShow(true); manageContactDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCCDeleteShow(true); manageContactDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -2121,7 +2124,7 @@ export const ContactsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -2130,8 +2133,8 @@ export const ContactsTableAxios = () => {
                             onHide={() => setModalCCDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCCDeleteShow(true); manageContactDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCCDeleteShow(true); manageContactDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -2265,7 +2268,7 @@ export const AgentsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -2274,9 +2277,9 @@ export const AgentsTableAxios = () => {
                             onHide={() => setModalTDeleteShow(false)}
 
                         />
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageTechLogs(params.row) }}><FontAwesomeIcon icon={faClockRotateLeft} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalTDeleteShow(true); manageTechDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" />
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageTechLogs(params.row) }}><HistoryOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalTDeleteShow(true); manageTechDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -2417,7 +2420,7 @@ export const ClientsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 140,
+            width: 160,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -2427,8 +2430,8 @@ export const ClientsTableAxios = () => {
 
                         />
 
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageClientInfo(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCDeleteShow(true); manageClientDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { manageClientInfo(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalCDeleteShow(true); manageClientDelete(params.row) }}><DeleteOutlinedIcon  className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -2561,7 +2564,7 @@ export const UserTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: (params) => {
                 return (
 
@@ -2574,8 +2577,8 @@ export const UserTableAxios = () => {
                             show={modalUUpdateShow}
                             onHide={() => setModalUUpdateShow(false)}
                         />
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalUUpdateShow(true); manageUserUpdate(params.row) }}><FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" /></button>
-                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalUDeleteShow(true); manageUserDelete(params.row) }}><FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalUUpdateShow(true); manageUserUpdate(params.row) }}><ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" /></button>
+                        <button style={{ background: "none", border: "none", padding: 0, marginTop: "5px" }} onClick={() => { setModalUDeleteShow(true); manageUserDelete(params.row) }}><DeleteOutlinedIcon className="detail-icons" id="delete-icon" /></button>
                     </div>
                 )
             }
@@ -2671,12 +2674,12 @@ export const PermissionsTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" />
+                        <ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" />
+                        <DeleteOutlinedIcon  className="detail-icons" id="delete-icon" />
                     </div>
                 )
             }
@@ -2740,12 +2743,12 @@ export const RolesTableAxios = () => {
         {
             field: "action",
             headerName: "Detalle",
-            width: 120,
+            width: 160,
             renderCell: () => {
                 return (
                     <div className="cellAction">
-                        <FontAwesomeIcon icon={faPenToSquare} className="detail-icons" id="update-icon" />
-                        <FontAwesomeIcon icon={faTrashCan} className="detail-icons" id="delete-icon" />
+                        <ModeEditOutlineOutlinedIcon className="detail-icons" id="update-icon" />
+                        <DeleteOutlinedIcon  className="detail-icons" id="delete-icon" />
                     </div>
                 )
             }

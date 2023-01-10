@@ -53,8 +53,9 @@ function ClientInfo() {
   return (
     <div className="list">
       <div className="listContainer">
+        <br />
         <ClientBreadcrumbs />
-        
+        <br />
         <form className="update-client-form">
           <div className='form-fields' id="large-form-field">
             <div className='mini-input-container'>

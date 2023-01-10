@@ -10,6 +10,7 @@ function TechLogs() {
   return (
     <div className="list">
         <div className="listContainer">
+        <br />
             <TechBreadcrumbs />
             <Datatable />
         </div>
