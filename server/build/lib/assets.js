@@ -104,6 +104,15 @@ const updateAsset = (id, asset_name, is_active, description, site_id, equipment_
     })
 }
 
+const getAssetEquips = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT a.id, a.asset_name, a.description, e.equip_name, aas.aas_name, a.is_active FROM asset a, equipments e, asset_active_statuses aas WHERE a.site_id = 1 AND a.equipment_id = e.id AND a.asset_active_status_id = aas.id', [id], (err, rows) => {
+            if (err) reject(err)
+            resolve(JSON.parse(JSON.stringify(rows)))
+        })
+    })
+}
+
 const deleteById = (id) => {
     return new Promise(async (resolve, reject) => {
         try {

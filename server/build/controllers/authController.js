@@ -155,7 +155,7 @@ authController.listSitesByClientID = async (req, res) => {
     }
 }
 
-authController.listSitesByID = async (req, res) => {
+authController.listSiteInfoByID = async (req, res) => {
     const id = req.params.id
     var sites = await Site.getSitesByID(id)
     moment.locale('es-mx')
@@ -172,7 +172,7 @@ authController.listSitesByID = async (req, res) => {
 
         res.json(sites)
     } else {
-        res.status(400).send('Error al obtener sitios')
+        res.status(400).send('Error al obtener sitio')
     }
 }
 
@@ -839,6 +839,19 @@ authController.sendCountryDetails = async (req, res) => {
     const cities = await Site.sendCityDetails()
     const colonies = await Site.sendColonyDetails()
     res.json({ countries, states, cities, colonies })
+}
+
+authController.sendSiteAssets = async (req, res) => {
+    const id = req.params.id
+
+    var siteAssets = await Site.getSitesAssets(id)
+    if (siteAssets.is_active === 1) {
+        siteAssets.is_active = "Activo"
+    } else {
+        siteAssets.is_active = "Inactivo"
+    }
+
+    res.json(siteAssets)
 }
 
 authController.sendBrands = async (req, res) => {

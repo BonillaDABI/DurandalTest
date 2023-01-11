@@ -63,7 +63,9 @@ router.get("/listSites", authController.listSites)
 
 router.get("/listClientSites/:id", authController.listSitesByClientID)
 
-router.get("/listSitesByID/:id", authController.listSitesByID)
+router.get("/listSitesByID/:id", authController.listSiteInfoByID)
+
+router.get("/listSiteAssets/:id", authController.sendSiteAssets)
 
 router.get("/listClient/:id", authController.listClientByID)
 
