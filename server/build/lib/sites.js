@@ -48,7 +48,7 @@ const getSitesByClientID = (client_id) => {
 
 const getSitesByID = (id) => {
     return new Promise(async (resolve, reject) => {
-        await connection.query('SELECT s.id, s.site_name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.name, st.name, ci.name, col.name, s.created_at, s.is_active FROM sites s, clients cl, colony col, city ci, state st, country co WHERE s.client_id = cl.id AND s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id AND s.id = ?', [id], (err, rows) => {
+        await connection.query('SELECT s.id, s.site_name, s.address_street, s.address_number, s.address_postal_code, s.is_active, cl.business_name, co.co_name, st.st_name, ci.ci_name, col.col_name, s.created_at, s.is_active FROM sites s, clients cl, colony col, city ci, state st, country co WHERE s.client_id = cl.id AND s.address_country_id = co.id AND s.address_state_id = st.id AND s.address_city_id = ci.id AND s.address_colony_id = col.id AND s.id = ?', [id], (err, rows) => {
             if (err) reject(err)
             resolve(JSON.parse(JSON.stringify(rows)))
         });

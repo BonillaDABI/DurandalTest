@@ -5,12 +5,13 @@ import Datatable from "../Components/Datatable/DatatableELogs";
 import "../SCSS/Elements/_tables.scss"
 
 
-function EquipLogs() {    
+function EquipLogs() {
   return (
+
     <div className="list">
-        <div className="listContainer">
-            <Datatable />
-        </div>
+      <div className="listContainer">
+        <Datatable />
+      </div>
     </div>
   );
 }

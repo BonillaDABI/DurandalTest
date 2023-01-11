@@ -143,6 +143,8 @@ router.get("/autofillAssets", authController.sendSitesAndEquips)
 
 router.post("/createAsset", authController.protect, authController.createAsset)
 
+router.post("/createAsset/:id", authController.protect, authController.createAssetBySiteID)
+
 router.patch("/updateAsset/:id", authController.protect, authController.updateAsset)
 
 router.get("/listAssetLogs/:id", authController.listAssetsLogs)
@@ -150,6 +152,8 @@ router.get("/listAssetLogs/:id", authController.listAssetsLogs)
 router.delete("/deleteAsset/:id", authController.deleteAsset);
 
 router.get("/autofillAsset/:id", authController.updateAssetInfo)
+
+router.get("/autofillCompleteAsset/:id", authController.completeAssetInfo)
 
 //Visits
 

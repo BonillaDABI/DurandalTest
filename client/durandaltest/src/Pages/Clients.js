@@ -5,6 +5,7 @@ import "../SCSS/Elements/_tables.scss"
 
 function Clients() {
   return (
+
     <div className="list">
       <div className="listContainer">
         <Datatable />

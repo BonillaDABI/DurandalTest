@@ -78,6 +78,17 @@ const sendAssetInfo = (id) => {
     })
 }
 
+const sendCompleteAssetInfo = (id) => {
+    return new Promise(async (resolve, reject) => {
+        await connection.query('SELECT a.asset_name, aas.aas_name, a.description, c.business_name, s.site_name FROM asset a, sites s, clients c, asset_active_statuses aas WHERE a.site_id = s.id AND s.client_id = c.id AND a.asset_active_status_id = aas.id AND a.id = ?', [id], (err, rows) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(JSON.parse(JSON.stringify(rows[0])))
+        })
+    })
+}
+
 const updateAsset = (id, asset_name, is_active, description, site_id, equipment_id, asset_active_status_id, creator_id, date, updated_reason) => {
     return new Promise(async (resolve, reject) => {
         await connection.query('UPDATE asset SET ? WHERE id = ?',
@@ -149,5 +160,6 @@ module.exports = {
     sendEquipments,
     updateAsset,
     sendAssetsStatus,
-    sendAssetInfo
+    sendAssetInfo,
+    sendCompleteAssetInfo
 }

@@ -951,6 +951,19 @@ authController.updateAssetInfo = async (req, res) => {
 
 }
 
+authController.completeAssetInfo = async (req, res) => {
+    const id = req.params.id
+    var completeAssetInfo = await Asset.sendCompleteAssetInfo(id)
+    if (completeAssetInfo.is_active === 1) {
+        completeAssetInfo.is_active = "Activo"
+    } else {
+        completeAssetInfo.is_active = "Inactivo"
+    }
+
+    res.json(completeAssetInfo)
+
+}
+
 // authController.sendParentID = async (req, res) => {
 //     //Mandar parents_id
 //     const parentsID = await Client.sendParentsID()
@@ -1223,6 +1236,28 @@ authController.createAsset = async (req, res) => {
         const date = new Date()
 
         const { name, description, site_id, equipment_id, asset_active_status_id } = req.body;
+
+        const createdAsset = await Asset.insertAsset(name, description, site_id, equipment_id, asset_active_status_id, req.userID, date)
+
+        if (createdAsset) {
+            res.status(200).json('Asset creado.')
+        } else {
+            res.status(400).json('Error al crear asset')
+        }
+
+    } else {
+        res.status(400).json('No tienes permiso.')
+    }
+}
+
+authController.createAssetBySiteID = async (req, res) => {
+
+    if (req.userPermissions.includes(1)) {
+        const date = new Date()
+
+        const site_id = req.params.id;
+
+        const { name, description, equipment_id, asset_active_status_id } = req.body;
 
         const createdAsset = await Asset.insertAsset(name, description, site_id, equipment_id, asset_active_status_id, req.userID, date)
 

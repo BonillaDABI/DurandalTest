@@ -6,6 +6,7 @@ import "../SCSS/Elements/_tables.scss"
 
 function Contacts() {
   return (
+
     <div className="list">
       <div className="listContainer">
         <Datatable />

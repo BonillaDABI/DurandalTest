@@ -15,11 +15,12 @@ const Dashboard = () => {
   })
 
   return (
+
     <div className="home">
       <div className="homeContainer">
-          <div className="content">
-            <h1>Dashboard Test</h1>
-          </div>
+        <div className="content">
+          <h1>Dashboard Test</h1>
+        </div>
       </div>
     </div>
   );

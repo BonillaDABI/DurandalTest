@@ -5,6 +5,7 @@ import axios from "axios";
 
 import "../SCSS/Pages/_equipattr.scss"
 import Datatable from "../Components/Datatable/DatatableEqAt";
+import ModalEqAtt from "../Components/Modal/ModalEqAtt";
 
 function EquipAttr() {
   const successAlert = () => {
@@ -53,13 +54,13 @@ function EquipAttr() {
       'Authorization': "bearer " + localStorage.getItem('token'),
       name: name,
       brand_id: brandId,
-      description: description
+      description: description,
     })
       .then((response) => {
         console.log(response.data)
         const equipId = JSON.stringify(response.data.createdEquipID);
         localStorage.setItem('equipIdForAtt', equipId)
-        
+
         //document.getElementById('add-attribute-btn').disabled = false;
       }, (error) => {
         console.log(error);

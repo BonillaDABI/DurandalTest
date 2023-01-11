@@ -4,12 +4,13 @@ import Datatable from "../Components/Datatable/DatatableALogs";
 
 import "../SCSS/Elements/_tables.scss"
 
-function AssetLogs() {    
+function AssetLogs() {
   return (
+
     <div className="list">
-        <div className="listContainer">
-            <Datatable />
-        </div>
+      <div className="listContainer">
+        <Datatable />
+      </div>
     </div>
   );
 }
