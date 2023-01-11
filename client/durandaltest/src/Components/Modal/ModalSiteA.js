@@ -1,3 +1,5 @@
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Tab, Tabs } from '@mui/material';
 import axios from 'axios';
 import { useState } from 'react';
@@ -34,29 +36,30 @@ function ModalSiteA(props) {
         });
     }
 
-    // const [name, setName] = useState("");
-    // const [dimensiones, setDimensiones] = useState("");
-    // const [description, setDescription] = useState("");
-    // const [value, setValor] = useState("");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [siteId, setSiteId] = useState("");
+    const [equipmentId, setEquipmentId] = useState("");
+    const [assActiveStatus, setAssetAS] = useState("");
 
     function createSiteAsset() {
 
-        // axios.post('http://localhost:3001/createEqAttr', { // url to POST
-        //     'Authorization': "bearer " + localStorage.getItem('token'),
-        //     name: name,
-        //     dimensiones: dimensiones,
-        //     description: description,
-        //     equipment_id: localStorage.getItem('equipIdForAtt'),
-        //     value: value
-        // })
-        //     .then((response) => {
-        //         // console.log(response);
-        //         hide();
-        //     }, (error) => {
-        //         console.log(error);
-        //         errorAlert();
-        //         //alert("Error al crear atributo. Vuelve a intentarlo.");
-        //     });
+        axios.post('http://localhost:3001/createEqAttr', { // url to POST
+            'Authorization': "bearer " + localStorage.getItem('token'),
+            asset_name: name,
+            description: description,
+            site_id: siteId,
+            equipment_id: equipmentId,
+            asset_active_status_id: assActiveStatus
+        })
+            .then((response) => {
+                // console.log(response);
+                hide();
+            }, (error) => {
+                console.log(error);
+                errorAlert();
+                //alert("Error al crear atributo. Vuelve a intentarlo.");
+            });
 
     }
 
@@ -73,16 +76,15 @@ function ModalSiteA(props) {
         //alert("Asset creado exitosamente en la base de datos.");
     }
 
-    // axios.get("http://localhost:3001/autofillAssets", {
-    // })
-    //     .then((response) => {
-    //         const assetInfo = JSON.stringify(response.data);
-    //         //console.log(assetInfo);
-    //         localStorage.setItem("assets", assetInfo)
-    //     })
+    axios.get("http://localhost:3001/autofillAssets", {
+    })
+        .then((response) => {
+            const assetInfo = JSON.stringify(response.data);
+            //console.log(assetInfo);
+            localStorage.setItem("assets", assetInfo)
+        })
 
-    // var assets = JSON.parse(localStorage.getItem("assets"));
-    // console.log(attributes)
+    var assets = JSON.parse(localStorage.getItem("assets"));
 
     const [tabIndex, setTabIndex] = useState(0);
 
@@ -135,7 +137,54 @@ function ModalSiteA(props) {
                     {tabIndex === 1 && (
                         <Box>
                             <form className='create-asset-form'>
-                                
+                                <div id='large-form-field' className='form-fields'>
+                                    <div className='input-container'>
+                                        <span className="input-span">Cliente</span>
+                                        <input className="input-field" type="text" disabled placeholder="Ingresar..." required />
+                                    </div>
+                                </div>
+                                <div id='large-form-field' className='form-fields'>
+                                    <div className='input-container'>
+                                        <span className="input-span">Sitio</span>
+                                        <input className="input-field" type="text" disabled placeholder="Ingresar..." required />
+                                    </div>
+                                </div>
+                                <div className="form-divider"></div>
+                                <div className='form-fields'>
+                                    <div className='input-container'>
+                                        <span className="input-span">Nombre</span>
+                                        <input className="input-field" type="text" placeholder="Ingresar..." value={name} onChange={(e) => setName(e.target.value)} required />
+                                    </div>
+                                </div>
+                                <div className='form-fields'>
+                                    <div className='input-container'>
+                                        <span className="input-span">Estatus activo</span>
+                                        <select className="input-field"  value={assActiveStatus} onChange={(e) => setAssetAS(e.target.value)} required>
+                                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                                            {assets.statuses.map((item, i) => {
+                                                return <option className="options" key={i} value={item.id}>{item.aas_name}</option>
+                                            })};
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id='large-form-field' className='form-fields' style={{ alignItems: 'center' }}>
+                                    <div className='input-container'>
+                                        <span className="input-span">Equipo</span>
+                                        <select className="input-field"  value={equipmentId} onChange={(e) => setEquipmentId(e.target.value)} required>
+                                            <option value="" disabled hidden className="options">Seleccionar...</option> 
+                                            {assets.equips.map((item, i) => {
+                                                return <option className="options" key={i} value={item.id}>{item.equip_name}</option>
+                                            })};
+                                        </select>
+                                    </div>
+                                    <button style={{ height: '100%', width: '50px', background: "none", border: "none", marginTop: '10px'}}><FontAwesomeIcon icon={faCirclePlus} className="create-equip-icon"/></button>
+                                </div>
+                                <div id="description-field" className='form-fields'>
+                                    <div className='input-container'>
+                                        <span className="input-span">Descripción</span>
+                                        <input className="input-field" type="text" placeholder="Ingresar..." value={description} onChange={(e) => setDescription(e.target.value)} required />
+                                    </div>
+                                </div>
                             </form>
                             <Modal.Footer>
                                 <button type="button" form='create-asset-form' className='save-modal-button' onClick={() => { createSiteAsset() }}>Guardar</button>

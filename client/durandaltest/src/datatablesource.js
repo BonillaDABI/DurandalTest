@@ -1790,7 +1790,7 @@ export const SitesTableAxios = () => {
     const [sitesData, setSitesData] = useState([])
 
     var clientId = localStorage.getItem("client_id")
-    console.log(clientId)
+    //console.log(clientId)
 
     const endpoint = `http://localhost:3001/listClientSites/${clientId}`;
 
@@ -1839,6 +1839,16 @@ export const SitesTableAxios = () => {
     function manageUpdateSite(siteInfo) {
         var siteId = siteInfo.id;
         localStorage.setItem("siteIdForUpdate", siteId);
+
+        axios.get(`http://localhost:3001/listSitesByID/${siteId}`, {
+        })
+        .then((response) => {
+            localStorage.setItem("siteNameForUPlaceholder", siteInfo.name);
+            localStorage.setItem("siteANumberForUPlaceholder", siteInfo.address_number);
+            localStorage.setItem("siteAPCForUPlaceholder", siteInfo.address_postal_code);
+            localStorage.setItem("siteAStreetForUPlaceholder", siteInfo.address_street);
+        })
+
         navigate("/clients/clientInfo/siteAssets")
     }
 

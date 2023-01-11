@@ -17,6 +17,20 @@ function ClientInfo() {
   const [rfc, setRFC] = useState("");
   const [taxId, setTaxId] = useState("");
 
+  axios.get("http://localhost:3001/autofillCountryDetails", {
+    })
+        .then((response) => {
+            const countriesInfo = JSON.stringify(response.data.countries);
+            const statesInfo = JSON.stringify(response.data.states);
+            const citiesInfo = JSON.stringify(response.data.cities);
+            const coloniesInfo = JSON.stringify(response.data.colonies);
+
+            localStorage.setItem("countries", countriesInfo)
+            localStorage.setItem("states", statesInfo)
+            localStorage.setItem("cities", citiesInfo)
+            localStorage.setItem("colonies", coloniesInfo)
+        })
+
   var clients = JSON.parse(localStorage.getItem("clients"));
 
   function updateClient() {
